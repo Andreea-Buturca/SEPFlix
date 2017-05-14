@@ -5,8 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import server.controller.connectionREST.ConnectionREST;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
@@ -24,7 +28,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //launch(args);
-        String salt = "moj tajny kod";
+       /* String salt = "moj tajny kod";
         String pass = "Marek";
         String pass2 = "Marek";
 
@@ -41,7 +45,13 @@ public class Main extends Application {
         salt = null;
         pass = null;
         pass2 = null;
-        System.gc();
+        System.gc();*/
+
+       ConnectionREST connectionREST = new ConnectionREST();
+        Thread thread = new Thread(ConnectionREST.getRequest("S", "s"));
+        thread.start();
+        ConnectionREST.getRequest("search/movie", "&query=Pe");
+        System.out.println("som tu");
 
     }
 
