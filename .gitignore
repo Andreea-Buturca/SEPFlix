@@ -152,3 +152,7 @@ gen### Example user template template
 
 # IntelliJ project files
 gen
+
+
+# Documentation folder
+Documentation
