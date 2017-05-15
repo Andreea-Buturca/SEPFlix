@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import server.controller.connectionDB.DatabaseConnection;
 import server.controller.connectionREST.ConnectionREST;
 import server.controller.connectionSocket.ServerConnection;
 
@@ -24,6 +25,7 @@ public class Main extends Application {
 
         ServerConnection serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
         ConnectionREST connectionREST = new ConnectionREST();
         //Thread thread = new Thread(connectionREST.getRequest("S", "s"));
         //thread.start();
