@@ -23,6 +23,31 @@ public class Main extends Application {
 
     }
 
+    /*@Override
+        public void start(Stage primaryStage) throws IOException {
+
+            // loading FXML resources
+            // note that we don't need PaneTwo in this class
+
+            URL menuBarUrl = getClass().getResource("menubar.fxml");
+            MenuBar bar = FXMLLoader.load( menuBarUrl );
+
+            URL paneOneUrl = getClass().getResource("paneone.fxml");
+            AnchorPane paneOne = FXMLLoader.load( paneOneUrl );
+
+
+            // constructing our scene using the static root
+
+            root.setTop(bar);
+            root.setCenter(paneOne);
+
+            Scene scene = new Scene(root, 350, 480);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        }*/
+
 
     public static void main(String[] args) {
         //launch(args);
