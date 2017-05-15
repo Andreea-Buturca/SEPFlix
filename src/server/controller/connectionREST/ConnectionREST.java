@@ -1,3 +1,4 @@
+/*
 package server.controller.connectionREST;
 
 import com.google.gson.Gson;
@@ -12,9 +13,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+*/
 /**
  * Created by aykon on 10-May-17.
- */
+ *//*
+
 public class ConnectionREST implements Runnable {
 
     private final String baseUrl = "https://api.themoviedb.org/3/";
@@ -38,9 +41,11 @@ public class ConnectionREST implements Runnable {
             String output = br.readLine();
             System.out.println("Output from Server .... \n");
             System.out.println(output);
-            /*while ((output = br.readLine()) != null) {
+            */
+/*while ((output = br.readLine()) != null) {
                 System.out.println(output);
-            }*/
+            }*//*
+
 
             conn.disconnect();
 
@@ -79,9 +84,11 @@ public class ConnectionREST implements Runnable {
             String output = br.readLine();
             System.out.println("Output from Server .... \n");
             System.out.println(output);
-           /* while ((output = br.readLine()) != null) {
+           */
+/* while ((output = br.readLine()) != null) {
                 System.out.println(output);
-            }*/
+            }*//*
+
 
             conn.disconnect();
 
@@ -98,3 +105,4 @@ public class ConnectionREST implements Runnable {
 
     }
 }
+*/

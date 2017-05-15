@@ -4,16 +4,23 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class Main extends Application {
 
-    @Override
+    private static BorderPane root = new BorderPane();
+
+    /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
@@ -21,18 +28,18 @@ public class Main extends Application {
         primaryStage.show();
 
 
-    }
+    }*/
 
-    /*@Override
+    @Override
         public void start(Stage primaryStage) throws IOException {
 
             // loading FXML resources
             // note that we don't need PaneTwo in this class
 
-            URL menuBarUrl = getClass().getResource("menubar.fxml");
+            URL menuBarUrl = getClass().getResource("view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load( menuBarUrl );
 
-            URL paneOneUrl = getClass().getResource("paneone.fxml");
+            URL paneOneUrl = getClass().getResource("view/registerUser.fxml");
             AnchorPane paneOne = FXMLLoader.load( paneOneUrl );
 
 
@@ -41,16 +48,16 @@ public class Main extends Application {
             root.setTop(bar);
             root.setCenter(paneOne);
 
-            Scene scene = new Scene(root, 350, 480);
+            Scene scene = new Scene(root, 1000, 600);
 
             primaryStage.setScene(scene);
             primaryStage.show();
 
-        }*/
+        }
 
 
     public static void main(String[] args) {
-        //launch(args);
+        launch(args);
         String salt = "moj tajny kod";
         String pass = "Marek";
         String pass2 = "Marek";

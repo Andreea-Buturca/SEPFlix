@@ -1,3 +1,4 @@
+/*
 package server;
 
 import javafx.application.Application;
@@ -28,7 +29,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //launch(args);
-       /* String salt = "moj tajny kod";
+       */
+/* String salt = "moj tajny kod";
         String pass = "Marek";
         String pass2 = "Marek";
 
@@ -45,7 +47,8 @@ public class Main extends Application {
         salt = null;
         pass = null;
         pass2 = null;
-        System.gc();*/
+        System.gc();*//*
+
 
        ConnectionREST connectionREST = new ConnectionREST();
         Thread thread = new Thread(ConnectionREST.getRequest("S", "s"));
@@ -74,3 +77,4 @@ public class Main extends Application {
         return generatedPassword;
     }
 }
+*/
