@@ -43,9 +43,9 @@ public class ClientConnection {
         }
     }
 
-    public void sendSmtToServer() {
+    public void sendSmtToServer(String json) {
         try {
-            outToServer.writeObject("Some message");
+            outToServer.writeObject(json);
         } catch (IOException e) {
             e.printStackTrace();
         }

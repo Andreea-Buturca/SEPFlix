@@ -11,6 +11,8 @@ import server.controller.connectionSocket.ServerConnection;
 
 public class Main extends Application {
 
+    public static DatabaseConnection databaseConnection;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("./view/sample.fxml"));
@@ -25,10 +27,8 @@ public class Main extends Application {
 
         ServerConnection serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
-        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection = new DatabaseConnection();
         ConnectionREST connectionREST = new ConnectionREST();
-        //Thread thread = new Thread(connectionREST.getRequest("S", "s"));
-        //thread.start();
         connectionREST.getRequest("search/movie", "&query=Pe");
         System.out.println("som tu");
 

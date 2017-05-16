@@ -15,7 +15,7 @@ import java.net.URL;
 public class Main extends Application {
 
     private static BorderPane root = new BorderPane();
-
+    public static ClientConnection clientConnection;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -53,8 +53,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
-        ClientConnection clientConnection = new ClientConnection();
+        clientConnection = new ClientConnection();
 
         launch(args);
     }
