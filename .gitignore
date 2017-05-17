@@ -158,4 +158,4 @@ gen
 Documentation
 
 # Custom db connection parameters
-DBConnectionParameters.java
+DBParameters.java

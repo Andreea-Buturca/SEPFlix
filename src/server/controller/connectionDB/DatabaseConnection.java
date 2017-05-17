@@ -12,10 +12,10 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
-    private final String URL = DBConnectionParameters.getURL();
-    private final String USER = DBConnectionParameters.getUSER();
-    private final String PASSWORD = DBConnectionParameters.getPASSWORD();
-    private final String DATABASE = DBConnectionParameters.getDATABASE();
+    private final String URL = DBParameters.getURL();
+    private final String USER = DBParameters.getUSER();
+    private final String PASSWORD = DBParameters.getPASSWORD();
+    private final String DATABASE = DBParameters.getDATABASE();
     Connection connection = null;
 
     public DatabaseConnection() {
