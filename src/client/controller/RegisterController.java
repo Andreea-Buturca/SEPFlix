@@ -47,7 +47,7 @@ public class RegisterController {
     }
 
 
-    //todo add it to some helper
+    //todo add it to some helper and hash password
     private static String get_SHA_512_SecurePassword(String passwordToHash) {
         String salt = "myTopSecredSalt";
         String generatedPassword = null;

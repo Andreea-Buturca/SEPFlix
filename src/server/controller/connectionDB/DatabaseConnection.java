@@ -2,10 +2,7 @@ package server.controller.connectionDB;
 
 import server.model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by martin on 15/05/2017.
@@ -57,5 +54,25 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getUserByUserName(String userName) {
+        User user = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE user_name = ? LIMIT 1;"
+            );
+            statement.setString(1, userName);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User(resultSet);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

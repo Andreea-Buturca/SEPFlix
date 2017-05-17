@@ -3,6 +3,9 @@ package server.model;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * Created by andreea on 5/15/2017.
@@ -13,6 +16,27 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+
+    public User(HashMap<String, String> data) {
+        this.userName = data.get("Username");
+        setPassword(data.get("Password"));
+        this.firstName = data.get("FirstName");
+        this.lastName = data.get("SecondName");
+        this.email = data.get("Email");
+    }
+
+    public User(ResultSet resultSet) {
+        try {
+            this.userName = resultSet.getString("user_name");
+            setPassword(resultSet.getString("password"));
+            this.firstName = resultSet.getString("name");
+            this.lastName = resultSet.getString("sure_name");
+            this.email = resultSet.getString("email");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public User(String userName, String password, String firstName, String lastName, String email) {
         this.userName = userName;
@@ -78,6 +102,17 @@ public class User {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+    public HashMap<String, String> toHashMap() {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("Username", getUserName());
+        //data.put("Password", getFirstName());
+        data.put("FirstName", getLastName());
+        data.put("SecondName", getLastName());
+        data.put("Email", getEmail());
+
+        return data;
     }
 
     public String toString() {
