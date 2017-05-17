@@ -50,7 +50,11 @@ public class ShowprofileController implements Initializable{
             //todo validation
             // TODO: 17-May-17 the password is empty for now since password from server is hashed
             Helper.addDataToRequest("Username", usernameField.getText());
-            Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
+            if (!passwordField.getText().isEmpty()) {
+                Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
+            }else {
+                Helper.addDataToRequest("Password",Main.loggedUser.getPassword());
+            }
             Helper.addDataToRequest("FirstName", nameField.getText());
             Helper.addDataToRequest("SecondName", surnameField.getText());
             Helper.addDataToRequest("Email", emailField.getText());
