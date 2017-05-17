@@ -17,20 +17,21 @@ public class User {
     private String lastName;
     private String email;
 
-    public User(HashMap<String, String> data) {
+    public User(HashMap<String, String> data, boolean hashPassword) {
         this.userName = data.get("Username");
-        setPassword(data.get("Password"));
+        setPassword(data.get("Password"), hashPassword);
         this.firstName = data.get("FirstName");
         this.lastName = data.get("SecondName");
         this.email = data.get("Email");
     }
 
-    public User(ResultSet resultSet) {
+    public User(ResultSet resultSet, boolean hashPassword) {
         try {
             this.userName = resultSet.getString("user_name");
-            setPassword(resultSet.getString("password"));
+            setPassword(resultSet.getString("password"), hashPassword);
+            ;
             this.firstName = resultSet.getString("name");
-            this.lastName = resultSet.getString("sure_name");
+            this.lastName = resultSet.getString("surname");
             this.email = resultSet.getString("email");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,9 +39,9 @@ public class User {
 
     }
 
-    public User(String userName, String password, String firstName, String lastName, String email) {
+    public User(String userName, String password, String firstName, String lastName, String email, boolean hashPassword) {
         this.userName = userName;
-        setPassword(password);
+        setPassword(password, hashPassword);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -78,8 +79,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = this.get_SHA_512_SecurePassword(password);
+    public void setPassword(String password, boolean hashPassword) {
+        if (hashPassword) {
+            this.password = this.get_SHA_512_SecurePassword(password);
+        } else {
+            this.password = password;
+        }
     }
 
     public void setUserName(String userName) {

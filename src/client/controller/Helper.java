@@ -1,12 +1,15 @@
 package client.controller;
 
+import client.Main;
+import com.google.gson.Gson;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Marek on 17-May-17.
@@ -86,4 +89,37 @@ public class Helper {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    protected static String get_SHA_512_SecurePassword(String passwordToHash) {
+        String salt = "myTopSecredSalt";
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes("UTF-8"));
+            byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
+    //todo find better spot for these 2 methods Marek
+
+    private static Map<String, String> data = new HashMap<>();
+
+    protected static void addDataToRequest(String name, String item) {
+        data.put(name, item);
+    }
+
+    protected static void sendRequest() {
+        String json = new Gson().toJson(data);
+        Main.clientConnection.sendSmtToServer(json);
+        data.clear();
+    }
+
 }

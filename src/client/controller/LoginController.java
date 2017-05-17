@@ -14,7 +14,10 @@ public class LoginController {
     public Button loginButton;
 
     public void logIn(ActionEvent actionEvent) {
-        // TODO: 17-May-17 send request to server 
-
+        //todo validation
+        Helper.addDataToRequest("Action", "login");
+        Helper.addDataToRequest("Username", usernameField.getText());
+        Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
+        Helper.sendRequest();
     }
 }

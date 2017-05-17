@@ -41,7 +41,7 @@ public class DatabaseConnection {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO users " +
-                            "(user_name, name, sure_name, email, password)" +
+                            "(user_name, name, surname, email, password)" +
                             "VALUES (?,?,?,?,?)"
             );
             statement.setString(1, user.getUserName());
@@ -66,7 +66,7 @@ public class DatabaseConnection {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = new User(resultSet);
+                user = new User(resultSet, false);
             }
             resultSet.close();
             statement.close();
@@ -74,5 +74,24 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void updateUserInformations(User user) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE users " +
+                            "SET name = ?, surname = ?, email = ?, PASSWORD = ?" +
+                            "WHERE user_name = ?;"
+            );
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getUserName());
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

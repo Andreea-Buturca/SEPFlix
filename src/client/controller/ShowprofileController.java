@@ -29,13 +29,21 @@ public class ShowprofileController {
     }
 
     public void save(ActionEvent actionEvent) {
-        // TODO: 17-May-17 send edited data to server and change them
-
         usernameField.setEditable(false);
         nameField.setEditable(false);
         surnameField.setEditable(false);
         emailField.setEditable(false);
         passwordField.setEditable(false);
+
+        Helper.addDataToRequest("Action", "editProfile");
+        //todo change to username from user object
+        //todo validation
+        Helper.addDataToRequest("Username", usernameField.getText());
+        Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
+        Helper.addDataToRequest("FirstName", nameField.getText());
+        Helper.addDataToRequest("SecondName", surnameField.getText());
+        Helper.addDataToRequest("Email", emailField.getText());
+        Helper.sendRequest();
     }
 
     public void revert(ActionEvent actionEvent) {

@@ -25,6 +25,7 @@ public class ServerCommunication implements Runnable {
     public void run() {
         try {
             while (true) {
+                //todo handle status if something invalid
                 String json = (String) inFromClient.readObject();
                 //todo access to model through something
                 System.out.println(json);
@@ -32,8 +33,29 @@ public class ServerCommunication implements Runnable {
 
                 switch (data.get("Action")) {
                     case "register":
-                        User user = new User(data.get("Username"), data.get("Password"), data.get("FirstName"), data.get("SecondName"), data.get("Email"));
-                        Main.databaseConnection.registerUser(user);
+                        User userRegister = new User(data, false);
+                        Main.databaseConnection.registerUser(userRegister);
+                        break;
+                    case "login":
+                        HashMap<String, String> returnData = new HashMap<>();
+                        returnData.put("Action", "login");
+                        User userLogin = Main.databaseConnection.getUserByUserName(data.get("Username"));
+                        if (userLogin != null) {
+                            if (userLogin.getPassword().equals(data.get("Password"))) {
+                                returnData.putAll(userLogin.toHashMap());
+                                returnData.put("Status", "success");
+                            } else {
+                                returnData.put("Status", "error");
+                            }
+                        } else {
+                            returnData.put("Status", "error");
+                        }
+                        sendSmtToClient(new Gson().toJson(returnData));
+                        break;
+                    case "editProfile":
+                        User userEdit = new User(data, false);
+                        Main.databaseConnection.updateUserInformations(userEdit);
+                        break;
                 }
 
             }
@@ -44,6 +66,7 @@ public class ServerCommunication implements Runnable {
 
     public void sendSmtToClient(String json) {
         try {
+            System.out.println(json);
             outToClient.writeObject(json);
         } catch (IOException e) {
             e.printStackTrace();
