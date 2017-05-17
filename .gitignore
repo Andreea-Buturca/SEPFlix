@@ -159,3 +159,4 @@ Documentation
 
 # Custom db connection parameters
 DBConnectionParameters.java
+src/server/controller/connectionDB/DBConnectionParameters.java
