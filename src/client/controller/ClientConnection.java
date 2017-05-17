@@ -10,15 +10,14 @@ import java.net.Socket;
  */
 public class ClientConnection {
 
+    private static ClientConnection clientConnection;
     private final int PORT = 6666;
     private String host = "localhost";
     private ObjectInputStream inFromServer;
     private ObjectOutputStream outToServer;
     private Socket socket;
 
-    //todo singleton
-
-    public ClientConnection() {
+    private ClientConnection() {
         try {
             socket = new Socket(host, PORT);
             outToServer = new ObjectOutputStream(socket.getOutputStream());
@@ -30,6 +29,14 @@ public class ClientConnection {
         }
     }
 
+    public static ClientConnection getClientConnection()
+    {
+        if(clientConnection==null)
+        {
+            clientConnection= new ClientConnection();
+        }
+        return clientConnection;
+    }
     public ClientConnection(String host) {
         this.host = host;
         try {
