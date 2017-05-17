@@ -29,7 +29,6 @@ public class User {
         try {
             this.userName = resultSet.getString("user_name");
             setPassword(resultSet.getString("password"), hashPassword);
-            ;
             this.firstName = resultSet.getString("name");
             this.lastName = resultSet.getString("surname");
             this.email = resultSet.getString("email");
@@ -112,7 +111,7 @@ public class User {
     public HashMap<String, String> toHashMap() {
         HashMap<String, String> data = new HashMap<>();
         data.put("Username", getUserName());
-        //data.put("Password", getFirstName());
+        data.put("Password", getPassword());
         data.put("FirstName", getLastName());
         data.put("SecondName", getLastName());
         data.put("Email", getEmail());

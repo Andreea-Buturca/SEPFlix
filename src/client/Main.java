@@ -8,6 +8,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import server.model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ public class Main extends Application {
 
     private static BorderPane root = new BorderPane();
     public static ClientConnection clientConnection;
+    public static User loggedUser;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
