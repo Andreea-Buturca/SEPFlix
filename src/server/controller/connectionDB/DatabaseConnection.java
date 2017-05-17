@@ -12,12 +12,10 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
-    //Default for localhost
-    //final String URL = "localhost:5432/";
-    private final String URL = "postgresql.websupport.sk/";
-    private final String USER = "movieSepDB";
-    private final String PASSWORD = "movieSepDB";
-    private final String DATABASE = "movieSepDB";
+    private final String URL = DBConnectionParameters.getURL();
+    private final String USER = DBConnectionParameters.getUSER();
+    private final String PASSWORD = DBConnectionParameters.getPASSWORD();
+    private final String DATABASE = DBConnectionParameters.getDATABASE();
     Connection connection = null;
 
     public DatabaseConnection() {
