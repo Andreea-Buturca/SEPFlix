@@ -12,13 +12,18 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
+    private final String URL = DBConnectionParameters.getURL();
+    private final String USER = DBConnectionParameters.getUSER();
+    private final String PASSWORD = DBConnectionParameters.getPASSWORD();
+    private final String DATABASE = DBConnectionParameters.getDATABASE();
+    private static DatabaseConnection databaseConnection;
     private final String URL = DBParameters.getURL();
     private final String USER = DBParameters.getUSER();
     private final String PASSWORD = DBParameters.getPASSWORD();
     private final String DATABASE = DBParameters.getDATABASE();
     Connection connection = null;
 
-    public DatabaseConnection() {
+    private DatabaseConnection() {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(
@@ -30,6 +35,13 @@ public class DatabaseConnection {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static DatabaseConnection getDatabaseConnection() {
+        if (databaseConnection == null) {
+            databaseConnection = new DatabaseConnection();
+        }
+        return databaseConnection;
     }
 
     public void registerUser(User user) {

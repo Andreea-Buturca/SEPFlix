@@ -27,7 +27,7 @@ public class Main extends Application {
 
         ServerConnection serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
-        databaseConnection = new DatabaseConnection();
+        databaseConnection = DatabaseConnection.getDatabaseConnection();
         ConnectionREST connectionREST = new ConnectionREST();
         connectionREST.getRequest("search/movie", "&query=Pe");
         System.out.println("som tu");
