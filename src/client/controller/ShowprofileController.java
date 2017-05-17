@@ -37,4 +37,15 @@ public class ShowprofileController {
         emailField.setEditable(false);
         passwordField.setEditable(false);
     }
+
+    public void revert(ActionEvent actionEvent) {
+        // TODO: 17-May-17 loads old data to all fields without saving
+
+        usernameField.setEditable(true);
+        nameField.setEditable(true);
+        surnameField.setEditable(true);
+        emailField.setEditable(true);
+        passwordField.setEditable(true);
+
+    }
 }
