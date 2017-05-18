@@ -3,7 +3,6 @@ package client.controller;
 import client.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -15,13 +14,13 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created by Marek on 15-May-17.
+ * Created by Marek on 18-May-17.
  */
-public class MenuController {
+public class MenuLoggedController {
 
     public MenuItem list;
-    public MenuItem logIn;
-    public MenuItem register;
+    public MenuItem myprofile;
+    public MenuItem logout;
     public MenuItem homescreen;
 
     public void changeViewMenu(ActionEvent actionEvent) throws IOException {
@@ -30,7 +29,7 @@ public class MenuController {
 
         if ((actionEvent.getSource() == homescreen)) {
             root = new BorderPane();
-            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
             URL paneOneUrl = getClass().getResource("../view/homeScreen.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
@@ -38,19 +37,11 @@ public class MenuController {
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
             //root = FXMLLoader.load(getClass().getResource("../View/createTour.fxml"));
-        } else if ((actionEvent.getSource() == logIn)) {
+        } else if ((actionEvent.getSource() == myprofile)) {
             root = new BorderPane();
-            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/login.fxml");
-            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
-            root.setTop(bar);
-            root.setCenter(paneOne);
-        } else if ((actionEvent.getSource() == register)) {
-            root = new BorderPane();
-            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
-            MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/registerUser.fxml");
+            URL paneOneUrl = getClass().getResource("../view/showProfile.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
@@ -60,7 +51,19 @@ public class MenuController {
             Main.stage.setScene(scene);
             Main.stage.show();
         }
-
     }
 
+    public void logout(ActionEvent actionEvent) throws IOException {
+        Main.loggedUser=null;
+        BorderPane root = new BorderPane();
+        URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+        MenuBar bar = FXMLLoader.load(menuBarUrl);
+        URL paneOneUrl = getClass().getResource("../view/homeScreen.fxml");
+        AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+        root.setTop(bar);
+        root.setCenter(paneOne);
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        Main.stage.show();
+    }
 }

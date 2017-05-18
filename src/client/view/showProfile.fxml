@@ -47,7 +47,6 @@
             <Tooltip text="Allows you to edit your data." />
          </tooltip>
       </Button>
-      <TextField fx:id="usernameField" editable="false" layoutX="210.0" layoutY="86.0" AnchorPane.leftAnchor="275.0" />
       <TextField fx:id="nameField" editable="false" layoutX="220.0" layoutY="163.0" AnchorPane.leftAnchor="275.0" />
       <TextField fx:id="surnameField" editable="false" layoutX="227.0" layoutY="223.0" AnchorPane.leftAnchor="275.0" />
       <TextField fx:id="emailField" editable="false" layoutX="227.0" layoutY="283.0" AnchorPane.leftAnchor="275.0" />
@@ -66,11 +65,19 @@
             </ContextMenu>
          </contextMenu>
       </Button>
-      <ImageView fitHeight="300.0" fitWidth="450.0" layoutX="492.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="232.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="123.0">
+      <ImageView fitHeight="300.0" fitWidth="450.0" layoutX="500.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="307.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="48.0">
          <image>
             <Image url="@logo.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="passwordField" editable="false" layoutX="275.0" layoutY="343.0" AnchorPane.leftAnchor="275.0" />
+      <Label fx:id="usernameField" layoutX="275.0" layoutY="80.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="changepassButton" layoutX="275.0" layoutY="343.0" mnemonicParsing="false" onAction="#changePass" prefHeight="25.0" prefWidth="149.0" text="Change Password" AnchorPane.leftAnchor="275.0" />
+      <PasswordField fx:id="oldPassField" layoutX="467.0" layoutY="308.0" promptText="Old Password" visible="false" />
+      <PasswordField fx:id="newPassField" layoutX="467.0" layoutY="343.0" promptText="New Password" visible="false" />
+      <PasswordField fx:id="confirmPassField" layoutX="467.0" layoutY="378.0" promptText="Confirm Password" visible="false" />
    </children>
 </AnchorPane>
