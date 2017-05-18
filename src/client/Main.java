@@ -50,6 +50,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1000, 600);
 
         primaryStage.setScene(scene);
+        primaryStage.setTitle("SEPFlix");
         primaryStage.show();
         stage = primaryStage;
     }

@@ -112,7 +112,7 @@ public class User {
         HashMap<String, String> data = new HashMap<>();
         data.put("Username", getUserName());
         data.put("Password", getPassword());
-        data.put("FirstName", getLastName());
+        data.put("FirstName", getFirstName());
         data.put("SecondName", getLastName());
         data.put("Email", getEmail());
 

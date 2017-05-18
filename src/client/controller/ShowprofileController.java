@@ -83,6 +83,14 @@ public class ShowprofileController implements Initializable {
         surnameField.setEditable(false);
         emailField.setEditable(false);
 
+        oldPassField.setVisible(false);
+        oldPassField.setText("");
+        newPassField.setVisible(false);
+        newPassField.setText("");
+        confirmPassField.setVisible(false);
+        confirmPassField.setText("");
+        changepassButton.setVisible(false);
+
     }
 
 
