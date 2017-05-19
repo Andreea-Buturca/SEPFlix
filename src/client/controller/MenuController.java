@@ -37,7 +37,13 @@ public class MenuController {
             root.setTop(bar);
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
-            //root = FXMLLoader.load(getClass().getResource("../View/createTour.fxml"));
+            root = new BorderPane();
+            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+            root.setTop(bar);
+            root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == logIn)) {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
