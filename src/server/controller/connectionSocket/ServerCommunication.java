@@ -42,7 +42,7 @@ public class ServerCommunication implements Runnable {
                         User userLogin = Main.databaseConnection.getUserByUserName(data.get("Username"));
                         if (userLogin != null) {
                             if (userLogin.getPassword().equals(data.get("Password"))) {
-                                returnData.putAll(userLogin.toHashMap());
+                                returnData.putAll(userLogin.toHashMap(false));
                                 returnData.put("Status", "success");
                             } else {
                                 returnData.put("Status", "error");
@@ -53,9 +53,17 @@ public class ServerCommunication implements Runnable {
                         sendSmtToClient(new Gson().toJson(returnData));
                         break;
                     case "editProfile":
+                        System.out.println(data.toString());
+                        if (data.get("NewPassword") != null) {
+                            if (!(Main.databaseConnection.getUserByUserName(data.get("Username")).getPassword().equals(data.get("OldPassword")))) {
+                                //todo send alert to client
+                                break;
+                            }
+                        }
                         User userEdit = new User(data, false);
                         Main.databaseConnection.updateUserInformations(userEdit);
                         break;
+                    //case ""
                 }
 
             }

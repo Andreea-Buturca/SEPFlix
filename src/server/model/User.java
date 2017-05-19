@@ -108,10 +108,12 @@ public class User {
         return generatedPassword;
     }
 
-    public HashMap<String, String> toHashMap() {
+    public HashMap<String, String> toHashMap(boolean addPassword) {
         HashMap<String, String> data = new HashMap<>();
         data.put("Username", getUserName());
-        data.put("Password", getPassword());
+        if (addPassword) {
+            data.put("Password", getPassword());
+        }
         data.put("FirstName", getFirstName());
         data.put("SecondName", getLastName());
         data.put("Email", getEmail());
