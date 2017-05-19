@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-/**
+/** The class represents the movies
  * Created by andreea on 5/19/2017.
  */
 public class Movies {
