@@ -31,18 +31,18 @@ public class MenuLoggedController {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/homeScreen.fxml");
+            URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
-            root = new BorderPane();
+           /* root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
             URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            root.setCenter(paneOne);
+            root.setCenter(paneOne);*/
         } else if ((actionEvent.getSource() == myprofile)) {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
