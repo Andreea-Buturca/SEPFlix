@@ -1,13 +1,14 @@
 package server.model;
 
+import com.google.gson.internal.StringMap;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 /** The class represents the movies
  * Created by andreea on 5/19/2017.
  */
-public class Movies {
+public class Movie {
     private String poster;
     private String title;
     private String releaseYear;
@@ -17,7 +18,7 @@ public class Movies {
     private double ratingSepFlix;
     private String overview;
 
-    public Movies(String poster, String title, String releaseYEar) {
+    public Movie(String poster, String title, String releaseYEar) {
         this.poster = poster;
         this.title = title;
         this.releaseYear = releaseYEar;
@@ -27,7 +28,7 @@ public class Movies {
         this.overview = "";
     }
 
-    public Movies(String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
+    public Movie(String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
         this.poster = poster;
         this.title = title;
         this.releaseYear = releaseYEar;
@@ -37,19 +38,19 @@ public class Movies {
         this.overview = overview;
     }
 
-    public Movies(HashMap<String, String> data) {
-        this.poster = data.get("Poster");
-        this.title = data.get("Title");
-        this.releaseYear = data.get("ReleaseYear");
-        if (data.get("Genres") != null) {
-            this.genres = data.get("Genres");
-            this.ratingImbd = Double.parseDouble(data.get("RatingImdb"));
-            this.ratingSepFlix = Double.parseDouble(data.get("RatingSepFlix"));
-            this.overview = data.get("overview");
+    public Movie(StringMap<Object> data) {
+        this.poster = (String) data.get("Poster");
+        this.title = (String) data.get("Title");
+        this.releaseYear = (String) data.get("ReleaseYear");
+        if ((String) data.get("Genres") != null) {
+            this.genres = (String) data.get("Genres");
+            this.ratingImbd = Double.parseDouble((String) data.get("RatingImdb"));
+            this.ratingSepFlix = Double.parseDouble((String) data.get("RatingSepFlix"));
+            this.overview = (String) data.get("overview");
         }
     }
 
-    public Movies(ResultSet resultSet) {
+    public Movie(ResultSet resultSet) {
         try {
             this.poster = resultSet.getString("poster");
             this.title = resultSet.getString("title");
