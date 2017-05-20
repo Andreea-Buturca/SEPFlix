@@ -12,6 +12,7 @@ import server.controller.connectionSocket.ServerConnection;
 public class Main extends Application {
 
     public static DatabaseConnection databaseConnection;
+    public static ConnectionREST connectionREST;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,8 +29,9 @@ public class Main extends Application {
         ServerConnection serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
         databaseConnection = DatabaseConnection.getDatabaseConnection();
-        ConnectionREST connectionREST = new ConnectionREST();
-        connectionREST.getRequest("search/movie", "&query=Pe");
+        connectionREST = new ConnectionREST();
+        System.out.println(connectionREST.getLatestMovies("movie/popular"));
+        //connectionREST.getRequest("search/movie", "&query=Pe");
         System.out.println("som tu");
 
     }

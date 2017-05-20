@@ -2,13 +2,13 @@ package client.controller;
 
 import client.Main;
 import com.google.gson.Gson;
+import com.google.gson.internal.StringMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -110,9 +110,9 @@ public class Helper {
 
     //todo find better spot for these 2 methods Marek
 
-    private static Map<String, String> data = new HashMap<>();
+    private static Map<String, Object> data = new StringMap<>();
 
-    protected static void addDataToRequest(String name, String item) {
+    protected static void addDataToRequest(String name, Object item) {
         data.put(name, item);
     }
 
