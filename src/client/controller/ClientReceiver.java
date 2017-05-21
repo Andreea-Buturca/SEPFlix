@@ -3,10 +3,16 @@ package client.controller;
 import client.Main;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import server.model.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +20,7 @@ import java.util.ArrayList;
  */
 public class ClientReceiver implements Runnable {
     private ObjectInputStream inFromServer;
+
 
     public ClientReceiver(ObjectInputStream inFromServer) {
         this.inFromServer = inFromServer;
@@ -31,11 +38,16 @@ public class ClientReceiver implements Runnable {
                     case "login":
                         if (response.get("Status").equals("success")) {
                             Main.loggedUser = new User(response, false);
+                            Main.loginC.errorCode = 1;
                             // TODO: 17-May-17 password from server is hashed, i need method to unhash it.
                             // TODO: 17-May-17 bring model classes to client I guess
+
+                        } else {
+                            Main.loginC.errorCode = 2;
                         }
                     case "LatestMovies":
                         ArrayList<StringMap<Object>> latestMovies = (ArrayList<StringMap<Object>>) response.get("LatestMovies");
+                        Main.latestMovies = latestMovies;
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

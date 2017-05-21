@@ -1,6 +1,9 @@
 package client;
 
 import client.controller.ClientConnection;
+import client.controller.ListMainController;
+import client.controller.LoginController;
+import com.google.gson.internal.StringMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,13 +15,17 @@ import server.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
     private static BorderPane root = new BorderPane();
     public static ClientConnection clientConnection;
     public static User loggedUser;
+    public static LoginController loginC;
     public static Stage stage;
+    public static ListMainController listMain;
+    public static ArrayList<StringMap<Object>> latestMovies;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
