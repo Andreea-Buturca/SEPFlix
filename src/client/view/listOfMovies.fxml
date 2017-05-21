@@ -10,9 +10,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.ListMainController">
    <children>
-      <ScrollPane layoutX="368.0" layoutY="176.0" prefHeight="480.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <ScrollPane layoutX="20.0" layoutY="100.0" prefHeight="480.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="100.0">
          <content>
-            <TilePane fx:id="tilepane" prefHeight="487.0" prefWidth="1003.0" />
+            <TilePane fx:id="tilepane" prefHeight="487.0" prefWidth="960.0" />
          </content>
       </ScrollPane>
       <Label layoutX="34.0" layoutY="24.0" text="Popular movies" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">

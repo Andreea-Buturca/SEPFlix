@@ -97,9 +97,6 @@ public class ListMainController implements Initializable {
         imageview.setImage(new Image(imageURL));
         id.setText(movieID);
 
-        imageview.setFitWidth(250);
-        imageview.setFitHeight(200);
-
         tilepane.getChildren().add(tile);
     }
 

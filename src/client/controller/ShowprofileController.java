@@ -69,6 +69,7 @@ public class ShowprofileController implements Initializable {
             Helper.addDataToRequest("SecondName", surnameField.getText());
             Helper.addDataToRequest("Email", emailField.getText());
             Helper.sendRequest();
+            // TODO: 21-May-17 Save data on server
         }
     }
 
