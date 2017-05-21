@@ -16,6 +16,9 @@ public class ListMainController {
     public void showSearchBar(ActionEvent actionEvent) {
         searchField.setVisible(true);
         searchButton.setVisible(false);
+
+        Helper.addDataToRequest("Action", "LatestMovies");
+        Helper.sendRequest();
     }
 
     public void searchMovie(ActionEvent actionEvent) {
