@@ -32,7 +32,8 @@ public class Main extends Application {
         new Thread(serverConnection).start();
         databaseConnection = DatabaseConnection.getDatabaseConnection();
         connectionREST = new ConnectionREST();
-        System.out.println(connectionREST.getLatestMovies());
+        //System.out.println(connectionREST.getLatestMovies());
+        System.out.println(connectionREST.getMovie(283995));
         //connectionREST.getRequest("search/movie", "&query=Pe");
         System.out.println("som tu");
     }

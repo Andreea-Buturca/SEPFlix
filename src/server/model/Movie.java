@@ -4,12 +4,14 @@ import com.google.gson.internal.StringMap;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * The class represents the movies
  * Created by andreea on 5/19/2017.
  */
 public class Movie {
+    private double id;
     private String poster;
     private String title;
     private String releaseYear;
@@ -19,7 +21,8 @@ public class Movie {
     private double ratingSepFlix;
     private String overview;
 
-    public Movie(String poster, String title, String releaseYear, double ratingImbd) {
+    public Movie(double id, String poster, String title, String releaseYear, double ratingImbd) {
+        this.id = id;
         this.poster = poster;
         this.title = title;
         this.releaseYear = releaseYear;
@@ -29,7 +32,8 @@ public class Movie {
         this.overview = "";
     }
 
-    public Movie(String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
+    public Movie(double id, String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
+        this.id = id;
         this.poster = poster;
         this.title = title;
         this.releaseYear = releaseYEar;
@@ -40,20 +44,26 @@ public class Movie {
     }
 
     public Movie(StringMap<Object> data) {
+        this.id = (Double) data.get("id");
         this.poster = (String) data.get("poster_path");
         this.title = (String) data.get("title");
         this.releaseYear = (String) data.get("release_date");
         this.ratingImbd = (Double) data.get("vote_average");
-        //todo big movie object arrayList genders
-        if ((String) data.get("Genres") != null) {
-            this.genres = (String) data.get("Genres");
-            this.ratingSepFlix = Double.parseDouble((String) data.get("RatingSepFlix"));
+        if ((ArrayList<StringMap<Object>>) data.get("genres") != null) {
+            for (StringMap<Object> genre : (ArrayList<StringMap<Object>>) data.get("genres")) {
+                if (this.genres == null) {
+                    this.genres = (String) genre.get("name");
+                } else {
+                    this.genres = this.genres + ", " + (String) genre.get("name");
+                }
+            }
             this.overview = (String) data.get("overview");
         }
     }
 
     public Movie(ResultSet resultSet) {
         try {
+            this.id = resultSet.getDouble("id");
             this.poster = resultSet.getString("poster");
             this.title = resultSet.getString("title");
             this.releaseYear = resultSet.getString("release_year");
@@ -87,6 +97,14 @@ public class Movie {
 
     public String getGenres() {
         return genres;
+    }
+
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
     }
 
     public double getRatingSepFlix() {
@@ -128,12 +146,16 @@ public class Movie {
     public StringMap<Object> toStringMap() {
 
         StringMap<Object> movie = new StringMap<>();
+        movie.put("id", this.id);
         movie.put("poster_path", this.poster);
         movie.put("title", this.title);
         movie.put("release_date", this.releaseYear);
         movie.put("vote_average", this.ratingImbd);
         //todo big movie object arrayList genders
-
+        if (this.genres != null) {
+            movie.put("genres", this.genres);
+            movie.put("overview", this.overview);
+        }
         return movie;
     }
 

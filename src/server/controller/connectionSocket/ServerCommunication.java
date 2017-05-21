@@ -2,6 +2,7 @@ package server.controller.connectionSocket;
 
 import com.google.gson.internal.StringMap;
 import server.Main;
+import server.model.Movie;
 import server.model.User;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class ServerCommunication implements Runnable {
                 //todo access to model through something
                 System.out.println(json);
                 StringMap<Object> data = Main.gson.fromJson(json, StringMap.class);
+                StringMap<Object> returnData = new StringMap<>();
 
                 switch ((String) data.get("Action")) {
                     case "register":
@@ -36,7 +38,6 @@ public class ServerCommunication implements Runnable {
                         Main.databaseConnection.registerUser(userRegister);
                         break;
                     case "login":
-                        StringMap<Object> returnData = new StringMap<>();
                         returnData.put("Action", "login");
                         User userLogin = Main.databaseConnection.getUserByUserName((String) data.get("Username"));
                         if (userLogin != null) {
@@ -50,6 +51,7 @@ public class ServerCommunication implements Runnable {
                             returnData.put("Status", "error");
                         }
                         sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
                         break;
                     case "editProfile":
                         System.out.println(data.toString());
@@ -63,11 +65,24 @@ public class ServerCommunication implements Runnable {
                         Main.databaseConnection.updateUserInformations(userEdit);
                         break;
                     case "LatestMovies":
-                        StringMap<Object> returnLatestMovies = new StringMap<>();
-                        returnLatestMovies.put("Action", "LatestMovies");
-                        returnLatestMovies.put("LatestMovies", Main.connectionREST.getLatestMovies());
-                        sendSmtToClient(Main.gson.toJson(returnLatestMovies));
-                        System.out.println(returnLatestMovies.toString());
+                        returnData.put("Action", "LatestMovies");
+                        returnData.put("LatestMovies", Main.connectionREST.getLatestMovies());
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
+                        break;
+                    case "MovieDetail":
+                        returnData.put("Action", "MovieDetail");
+                        Movie movie = Main.connectionREST.getMovie((Integer) data.get("id"));
+                        returnData.putAll(movie.toStringMap());
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
+                        break;
+                    default:
+                        returnData.put("Action", "Alert");
+                        returnData.put("Message", "Wrong Action");
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
+                        break;
                 }
 
             }

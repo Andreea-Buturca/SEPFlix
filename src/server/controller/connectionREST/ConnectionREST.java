@@ -34,6 +34,14 @@ public class ConnectionREST {
         return latestMoviesList;
     }
 
+    public Movie getMovie(int id) {
+        String urlAddress = "movie/" + id;
+        String output = this.getRequest(urlAddress, "");
+        StringMap<Object> response = Main.gson.fromJson(output, StringMap.class);
+        Movie movie = new Movie(response);
+        return movie;
+    }
+
 
     private String getRequest(String urlAddress, String getParameters) {
         String output = null;
