@@ -70,8 +70,10 @@ public class ListMainController implements Initializable {
             String[] token = year.split("-");
             year = token[0];
             String url = (String) latestMovies.get(i).get("poster_path");
+            Double idnum = (Double) latestMovies.get(i).get("id");
+            String id = Double.toString(idnum);
             try {
-                addTile(title,year,url);
+                addTile(title,year,url, id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,19 +81,21 @@ public class ListMainController implements Initializable {
     }
 
 
-    public void addTile(String movieTitle, String prodYear, String url) throws IOException {
+    public void addTile(String movieTitle, String prodYear, String url, String movieID) throws IOException {
         URL paneOneUrl = getClass().getResource("../view/tile.fxml");
         AnchorPane tile = FXMLLoader.load(paneOneUrl);
 
         ImageView imageview = (ImageView) tile.getChildren().get(0);
         Label title = (Label) tile.getChildren().get(1);
         Label year = (Label) tile.getChildren().get(2);
+        Label id = (Label) tile.getChildren().get(3);
 
         // TODO: 21-May-17 Solve issue when title is too long
         title.setText(movieTitle);
         year.setText(prodYear);
         String imageURL = "https://image.tmdb.org/t/p/w500"+url;
         imageview.setImage(new Image(imageURL));
+        id.setText(movieID);
 
         imageview.setFitWidth(250);
         imageview.setFitHeight(200);

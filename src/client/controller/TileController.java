@@ -1,5 +1,6 @@
 package client.controller;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.input.ContextMenuEvent;
 
@@ -8,9 +9,17 @@ import javafx.scene.input.ContextMenuEvent;
  */
 public class TileController {
 
-    public void movieInfo(ContextMenuEvent contextMenuEvent) {
-        System.out.println(contextMenuEvent.getSource().toString());
-        Label label =(Label) contextMenuEvent.getSource();
-        label.setText("clicked");
+    public Label idLabel;
+
+
+    public void showMovieInfo(ActionEvent actionEvent) {
+        Helper.addDataToRequest("Action", "MovieDetail");
+        System.out.println(idLabel.getText());
+        Double id = Double.parseDouble(idLabel.getText());
+        System.out.println(id);
+        Helper.addDataToRequest("id", id);
+        Helper.sendRequest();
+
+
     }
 }

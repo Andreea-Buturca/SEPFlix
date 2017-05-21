@@ -48,6 +48,9 @@ public class ClientReceiver implements Runnable {
                     case "LatestMovies":
                         ArrayList<StringMap<Object>> latestMovies = (ArrayList<StringMap<Object>>) response.get("LatestMovies");
                         Main.latestMovies = latestMovies;
+                    case "MovieDetail":
+                        StringMap<Object> movie = (StringMap<Object>) response.get("MovieDetail");
+                        System.out.println(movie);
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
