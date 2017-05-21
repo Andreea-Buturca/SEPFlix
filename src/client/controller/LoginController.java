@@ -29,6 +29,10 @@ public class LoginController {
         Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
         Helper.sendRequest();
 
+        //todo main screen class and send this request
+        Helper.addDataToRequest("Action", "LatestMovies");
+        Helper.sendRequest();
+
         BorderPane root = new BorderPane();
         URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
         MenuBar bar = FXMLLoader.load(menuBarUrl);

@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ public class Main extends Application {
 
     public static DatabaseConnection databaseConnection;
     public static ConnectionREST connectionREST;
+    public static Gson gson;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -25,14 +27,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //launch(args);
-
+        gson = new Gson();
         ServerConnection serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
         databaseConnection = DatabaseConnection.getDatabaseConnection();
         connectionREST = new ConnectionREST();
-        System.out.println(connectionREST.getLatestMovies("movie/popular"));
+        System.out.println(connectionREST.getLatestMovies());
         //connectionREST.getRequest("search/movie", "&query=Pe");
         System.out.println("som tu");
-
     }
 }

@@ -1,6 +1,5 @@
 package server.controller.connectionSocket;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
 import server.Main;
 import server.model.User;
@@ -29,7 +28,7 @@ public class ServerCommunication implements Runnable {
                 String json = (String) inFromClient.readObject();
                 //todo access to model through something
                 System.out.println(json);
-                StringMap<Object> data = new Gson().fromJson(json, StringMap.class);
+                StringMap<Object> data = Main.gson.fromJson(json, StringMap.class);
 
                 switch ((String) data.get("Action")) {
                     case "register":
@@ -50,7 +49,7 @@ public class ServerCommunication implements Runnable {
                         } else {
                             returnData.put("Status", "error");
                         }
-                        sendSmtToClient(new Gson().toJson(returnData));
+                        sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "editProfile":
                         System.out.println(data.toString());
@@ -64,9 +63,11 @@ public class ServerCommunication implements Runnable {
                         Main.databaseConnection.updateUserInformations(userEdit);
                         break;
                     case "LatestMovies":
-                        //ArrayList<Movie> = Main.databaseConnection.getMoviesList
-                        //returnData.put("LatestMovies", Main.connectionREST.getLatestMovies())
-                        System.out.println("movies");
+                        StringMap<Object> returnLatestMovies = new StringMap<>();
+                        returnLatestMovies.put("Action", "LatestMovies");
+                        returnLatestMovies.put("LatestMovies", Main.connectionREST.getLatestMovies());
+                        sendSmtToClient(Main.gson.toJson(returnLatestMovies));
+                        System.out.println(returnLatestMovies.toString());
                 }
 
             }

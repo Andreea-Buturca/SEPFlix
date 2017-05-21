@@ -1,7 +1,8 @@
 package server.controller.connectionREST;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
+import server.Main;
+import server.model.Movie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,20 +20,18 @@ public class ConnectionREST {
     private final String apiKey = "?api_key=b97edb3572a6a9f660d0b90dc10453b6";
 
 
-    public ArrayList<StringMap<Object>> getLatestMovies(String urlAddress) {
+    public ArrayList<StringMap<Object>> getLatestMovies() {
+        String urlAddress = "movie/popular";
         String output = this.getRequest(urlAddress, "");
-        Gson gson = new Gson();
-        StringMap<Object> test = gson.fromJson(output, StringMap.class);
-        //ArrayList<HashMap<String, Object>> data = gson.fromJson((String) test.get("results"), ArrayList.class);
-        System.out.println(test.toString());
-        ArrayList<Object> test2 = (ArrayList) test.get("results");
-        System.out.println(test2.get(1));
-        StringMap<Object> test3 = (StringMap<Object>) test2.get(1);
-        System.out.println(test2.get(1));
-        System.out.println(test2.get(1));
-        System.out.println(test3.get("poster_path"));
-        //System.out.println(data.get(1).get("vote_average"));
-        return new ArrayList<StringMap<Object>>();
+        StringMap<Object> response = Main.gson.fromJson(output, StringMap.class);
+        ArrayList<StringMap<Object>> fullLatestMoviesList = (ArrayList) response.get("results");
+        //cleaning unnecessary data
+        ArrayList<StringMap<Object>> latestMoviesList = new ArrayList<>();
+        for (StringMap<Object> movie : fullLatestMoviesList) {
+            Movie movieObject = new Movie(movie);
+            latestMoviesList.add(movieObject.toStringMap());
+        }
+        return latestMoviesList;
     }
 
 
