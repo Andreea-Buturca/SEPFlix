@@ -38,7 +38,7 @@ public class Main extends Application {
         URL menuBarUrl = getClass().getResource("view/menubarGuest.fxml");
         MenuBar bar = FXMLLoader.load(menuBarUrl);
 
-        URL paneOneUrl = getClass().getResource("view/homeScreen.fxml");
+        URL paneOneUrl = getClass().getResource("view/listOfMovies.fxml");
         AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
 
 

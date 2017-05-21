@@ -32,7 +32,7 @@ public class MenuController {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/homeScreen.fxml");
+            URL paneOneUrl = getClass().getResource("../view/listOfMoviesScreen.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
@@ -40,7 +40,7 @@ public class MenuController {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
+            URL paneOneUrl = getClass().getResource("../view/login.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);

@@ -12,7 +12,7 @@
          </items></Menu>
     <Menu mnemonicParsing="false" text="Movies">
       <items>
-        <MenuItem fx:id="list" mnemonicParsing="false" onAction="#changeViewMenu" text="List" />
+        <MenuItem fx:id="list" mnemonicParsing="false" onAction="#changeViewMenu" text="My List" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profile">
