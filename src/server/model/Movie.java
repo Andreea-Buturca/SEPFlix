@@ -68,9 +68,15 @@ public class Movie {
             this.title = resultSet.getString("title");
             this.releaseYear = resultSet.getString("release_year");
             this.ratingImbd = resultSet.getDouble("rating_Imbd");
-            //todo big movie object arrayList genders
-            if (resultSet.getString("Genres") != null) {
-                this.genres = resultSet.getString("genres");
+            //todo big movie object arrayList genders, ok?!
+            if ((ArrayList<ResultSet>) resultSet.getArray("Genres") != null) {
+                for (ResultSet genre : (ArrayList<ResultSet>) resultSet.getArray("genres")) {
+                    if (this.genres == null) {
+                        this.genres = (String) genre.getString("name");
+                    } else {
+                        this.genres = this.genres + ", " + (String) genre.getString("name");
+                    }
+                }
                 this.ratingSepFlix = resultSet.getDouble("reating_SepFlix");
                 this.overview = resultSet.getString("overview");
             }
@@ -151,13 +157,20 @@ public class Movie {
         movie.put("title", this.title);
         movie.put("release_date", this.releaseYear);
         movie.put("vote_average", this.ratingImbd);
-        //todo big movie object arrayList genders
-        if (this.genres != null) {
-            movie.put("genres", this.genres);
-            movie.put("overview", this.overview);
+        //todo big movie object arrayList genders / ok?!!
+        if ((ArrayList<StringMap<Object>>) movie.get("genres") != null) {
+            for (StringMap<Object> genre : (ArrayList<StringMap<Object>>) movie.get("genres")) {
+                if (this.genres == null) {
+                    movie.put("genres", (String) genre.get("name"));
+                } else {
+                    movie.put("genres", this.genres + ", " + (String) genre.get("name"));
+                }
+                movie.put("overview", this.overview);
+            }
         }
         return movie;
     }
+
 
     public String toStringSmall() {
         return this.poster + ", title: " + this.title + ", release year" + this.releaseYear;
