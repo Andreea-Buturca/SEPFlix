@@ -35,7 +35,7 @@ public class ListMainController implements Initializable {
         Helper.sendRequest();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class ListMainController implements Initializable {
         // TODO: 21-May-17 Solve issue when title is too long
         title.setText(movieTitle);
         year.setText(prodYear);
-        String imageURL = "https://image.tmdb.org/t/p/w500"+url;
+        String imageURL = "https://image.tmdb.org/t/p/w320"+url;
         imageview.setImage(new Image(imageURL));
         id.setText(movieID);
 
