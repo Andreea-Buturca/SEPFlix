@@ -55,21 +55,25 @@ public class ShowprofileController implements Initializable {
             surnameField.setEditable(false);
             emailField.setEditable(false);
             Helper.addDataToRequest("Action", "editProfile");
-            //todo validation
-            // TODO: 17-May-17 the password is empty for now since password from server is hashed
             Helper.addDataToRequest("Username", usernameField.getText());
-            if (newPassField.getText().equals(confirmPassField.getText())) {
-                Helper.addDataToRequest("OldPassword", Helper.get_SHA_512_SecurePassword(oldPassField.getText()));
-                Helper.addDataToRequest("NewPassword", Helper.get_SHA_512_SecurePassword(newPassField.getText()));
-            }else{
-                Helper.addDataToRequest("OldPassword", "");
-                Helper.addDataToRequest("NewPassword", "");
-            }
             Helper.addDataToRequest("FirstName", nameField.getText());
             Helper.addDataToRequest("SecondName", surnameField.getText());
             Helper.addDataToRequest("Email", emailField.getText());
-            Helper.sendRequest();
-            // TODO: 21-May-17 Save data on server
+            //todo validation
+            if (!oldPassField.getText().isEmpty()) {
+                if (newPassField.getText().equals(confirmPassField.getText())) {
+                    Helper.addDataToRequest("OldPassword", Helper.get_SHA_512_SecurePassword(oldPassField.getText()));
+                    Helper.addDataToRequest("NewPassword", Helper.get_SHA_512_SecurePassword(newPassField.getText()));
+                    Helper.sendRequest();
+                } else {
+                    Helper.alertdisplay("Wrong password", "new password is not the same as the confirm password");
+                    Helper.clearRequest();
+                }
+            }else {
+                Helper.addDataToRequest("OldPassword", null);
+                Helper.addDataToRequest("NewPassword", null);
+                Helper.sendRequest();
+            }
         }
     }
 

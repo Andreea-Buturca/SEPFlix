@@ -122,4 +122,7 @@ public class Helper {
         data.clear();
     }
 
+    public static void clearRequest() {
+        data.clear();
+    }
 }
