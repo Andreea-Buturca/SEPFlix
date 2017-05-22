@@ -8,6 +8,7 @@ import server.Main;
 
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -25,15 +26,23 @@ public class Controller implements Initializable {
             labelYesNo.setText("Yes");
         } else labelYesNo.setText("No");
         labelNoClients.setText(Main.serverConnection.getClients().size() + "");
-        for (Socket client : Main.serverConnection.getClients()) {
-            labelIp.setText(client.getRemoteSocketAddress() + " ");
+        ArrayList<Socket> clients = new ArrayList<Socket>();
+        clients = Main.serverConnection.getClients();
+        String result = "";
+        for (int i = 0; i < clients.size(); i++) {
+            result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
+        labelIp.setText(result);
     }
 
     public void refresh(ActionEvent actionEvent) {
         labelNoClients.setText(Main.serverConnection.getClients().size() + "");
-        for (Socket client : Main.serverConnection.getClients()) {
-            labelIp.setText(client.getRemoteSocketAddress()+"  ");
+        ArrayList<Socket> clients = new ArrayList<Socket>();
+        clients = Main.serverConnection.getClients();
+        String result = "";
+        for (int i = 0; i < clients.size(); i++) {
+            result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
+        labelIp.setText(result);
     }
 }
