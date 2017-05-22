@@ -43,6 +43,12 @@ public class ConnectionREST {
     }
 
 
+    public ArrayList<StringMap<Object>> searchMovie(String s) {
+
+
+        return new ArrayList<StringMap<Object>>();
+    }
+
     private String getRequest(String urlAddress, String getParameters) {
         String output = null;
         try {

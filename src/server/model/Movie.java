@@ -68,7 +68,6 @@ public class Movie {
             this.title = resultSet.getString("title");
             this.releaseYear = resultSet.getString("release_year");
             this.ratingImbd = resultSet.getDouble("rating_Imbd");
-            //todo big movie object arrayList genders, ok?!
             if ((ArrayList<ResultSet>) resultSet.getArray("Genres") != null) {
                 for (ResultSet genre : (ArrayList<ResultSet>) resultSet.getArray("genres")) {
                     if (this.genres == null) {
@@ -157,7 +156,6 @@ public class Movie {
         movie.put("title", this.title);
         movie.put("release_date", this.releaseYear);
         movie.put("vote_average", this.ratingImbd);
-        //todo big movie object arrayList genders / ok?!!
         if ((ArrayList<StringMap<Object>>) movie.get("genres") != null) {
             for (StringMap<Object> genre : (ArrayList<StringMap<Object>>) movie.get("genres")) {
                 if (this.genres == null) {

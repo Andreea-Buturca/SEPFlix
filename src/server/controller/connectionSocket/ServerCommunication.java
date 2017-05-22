@@ -55,14 +55,16 @@ public class ServerCommunication implements Runnable {
                         break;
                     case "editProfile":
                         System.out.println(data.toString());
+                        User userEdit = new User(data, false);
                         if (data.get("NewPassword") != null) {
                             if (!(Main.databaseConnection.getUserByUserName((String) data.get("Username")).getPassword().equals(data.get("OldPassword")))) {
-                                //todo send alert to client
+                                //todo send alert to client Martin
                                 break;
+                            } else {
+                                Main.databaseConnection.changePassword(userEdit);
                             }
                         }
-                        User userEdit = new User(data, false);
-                        Main.databaseConnection.updateUserInformations(userEdit);
+                        Main.databaseConnection.updateUserInformation(userEdit);
                         break;
                     case "LatestMovies":
                         returnData.put("Action", "LatestMovies");
@@ -74,6 +76,12 @@ public class ServerCommunication implements Runnable {
                         returnData.put("Action", "MovieDetail");
                         Movie movie = Main.connectionREST.getMovie((Integer) data.get("id"));
                         returnData.putAll(movie.toStringMap());
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
+                        break;
+                    case "SearchMovie":
+                        returnData.put("Action", "SearchMovie");
+                        returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
                         sendSmtToClient(Main.gson.toJson(returnData));
                         returnData.clear();
                         break;

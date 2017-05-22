@@ -76,18 +76,33 @@ public class DatabaseConnection {
         return user;
     }
 
-    public void updateUserInformations(User user) {
+    public void updateUserInformation(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE users " +
-                            "SET name = ?, surname = ?, email = ?, PASSWORD = ?" +
+                            "SET name = ?, surname = ?, email = ?" +
                             "WHERE user_name = ?;"
             );
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getUserName());
+            statement.setString(4, user.getUserName());
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePassword(User user) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE users " +
+                            "SET  password = ?" +
+                            "WHERE user_name = ?;"
+            );
+            statement.setString(1, user.getPassword());
+            statement.setString(2, user.getUserName());
             statement.execute();
             statement.close();
         } catch (SQLException e) {
