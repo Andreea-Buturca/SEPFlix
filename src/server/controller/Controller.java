@@ -1,11 +1,11 @@
 package server.controller;
 
-import javafx.fxml.Initializable;
-import server.Main;
-import server.controller.connectionSocket.ServerConnection;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import server.Main;
 
-import java.awt.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
