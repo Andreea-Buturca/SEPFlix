@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by martin on 15/05/2017.
@@ -74,11 +75,30 @@ public class ServerCommunication implements Runnable {
                         break;
                     case "MovieDetail":
                         returnData.put("Action", "MovieDetail");
-                        Double id = (double) data.get("id");
-                        Movie movie = Main.connectionREST.getMovie(id.intValue());
+                        Double idDetail = (double) data.get("id");
+                        Movie movie = Main.connectionREST.getMovie(idDetail.intValue());
                         returnData.putAll(movie.toStringMap());
                         sendSmtToClient(Main.gson.toJson(returnData));
                         returnData.clear();
+                        break;
+                    case "FavouriteMovies":
+                        returnData.put("Action", "FavouriteMovies");
+                        ArrayList<Movie> moviesObjects = Main.databaseConnection.getListOfFavourites((String) data.get("Username"));
+                        ArrayList<Object> favouriteMovies = new ArrayList<>();
+                        for (Movie favouriteMovie : moviesObjects) {
+                            favouriteMovies.add(favouriteMovie.toStringMap());
+                        }
+                        returnData.put("FavouriteMovies", favouriteMovies);
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        returnData.clear();
+                        break;
+                    case "AddFavouriteMovie":
+                        Double idAddFavourite = (double) data.get("id");
+                        Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
+                        break;
+                    case "RemoveFavouriteMovie":
+                        Double idRemoveFavourite = (double) data.get("id");
+                        Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
                     case "SearchMovie":
                         returnData.put("Action", "SearchMovie");

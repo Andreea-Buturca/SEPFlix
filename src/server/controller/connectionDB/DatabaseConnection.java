@@ -1,8 +1,11 @@
 package server.controller.connectionDB;
 
+import server.Main;
+import server.model.Movie;
 import server.model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by martin on 15/05/2017.
@@ -108,5 +111,107 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Movie> getListOfFavourites(String username) {
+        ArrayList<Movie> favouriteMovies = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT " +
+                            "  movie.* " +
+                            "FROM favourite_movies favmovies " +
+                            "  LEFT JOIN movies movie ON (movie.id_movie = favmovies.id_movie) " +
+                            "WHERE user_name = ?;"
+            );
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                favouriteMovies.add(new Movie(resultSet));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return favouriteMovies;
+    }
+
+
+    public void addFavouriteMovie(String userName, int movie_id) {
+        try {
+            if (getMovieById(movie_id) == null) {
+                addMovie(Main.connectionREST.getMovie(movie_id));
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO favourite_movies (id_movie, user_name) VALUES (?,?);"
+            );
+            statement.setInt(1, movie_id);
+            statement.setString(2, userName);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFavouriteMovie(String userName, int movie_id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM favourite_movies " +
+                            "WHERE id_movie = ? AND user_name = ?; "
+            );
+            statement.setInt(1, movie_id);
+            statement.setString(2, userName);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void addMovie(Movie movie) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO movies " +
+                            "(id_movie, poster, title, genders, release_year, rating_imdb) " +
+                            "VALUES (?,?,?,?,?,?); "
+            );
+            statement.setInt(1, movie.getId());
+            statement.setString(2, movie.getPoster());
+            statement.setString(3, movie.getTitle());
+            statement.setString(4, movie.getGenres());
+            statement.setDate(5, movie.getSQLReleaseYear());
+            statement.setDouble(6, movie.getRatingImbd());
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Movie getMovieById(int movie_id) {
+
+        Movie movie = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM movies WHERE id_movie = ? LIMIT 1;"
+            );
+            statement.setInt(1, movie_id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                movie = new Movie(resultSet);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(movie.toString());
+        return movie;
     }
 }

@@ -2,6 +2,7 @@ package server.model;
 
 import com.google.gson.internal.StringMap;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * Created by andreea on 5/19/2017.
  */
 public class Movie {
-    private double id;
+    private int id;
     private String poster;
     private String title;
     private String releaseYear;
@@ -21,7 +22,7 @@ public class Movie {
     private double ratingSepFlix;
     private String overview;
 
-    public Movie(double id, String poster, String title, String releaseYear, double ratingImbd) {
+    public Movie(int id, String poster, String title, String releaseYear, double ratingImbd) {
         this.id = id;
         this.poster = poster;
         this.title = title;
@@ -32,7 +33,7 @@ public class Movie {
         this.overview = null;
     }
 
-    public Movie(double id, String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
+    public Movie(int id, String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
         this.id = id;
         this.poster = poster;
         this.title = title;
@@ -44,7 +45,8 @@ public class Movie {
     }
 
     public Movie(StringMap<Object> data) {
-        this.id = (Double) data.get("id");
+        Double idDouble = (Double) data.get("id");
+        this.id = idDouble.intValue();
         this.poster = (String) data.get("poster_path");
         this.title = (String) data.get("title");
         this.releaseYear = (String) data.get("release_date");
@@ -63,22 +65,11 @@ public class Movie {
 
     public Movie(ResultSet resultSet) {
         try {
-            this.id = resultSet.getDouble("id");
+            this.id = resultSet.getInt("id_movie");
             this.poster = resultSet.getString("poster");
             this.title = resultSet.getString("title");
             this.releaseYear = resultSet.getString("release_year");
-            this.ratingImbd = resultSet.getDouble("rating_Imbd");
-            /*if ((ArrayList<ResultSet>) resultSet.getArray("Genres") != null) {
-                for (ResultSet genre : (ArrayList<ResultSet>) resultSet.getArray("genres")) {
-                    if (this.genres == null) {
-                        this.genres = (String) genre.getString("name");
-                    } else {
-                        this.genres = this.genres + ", " + (String) genre.getString("name");
-                    }
-                }
-                this.ratingSepFlix = resultSet.getDouble("reating_SepFlix");
-                this.overview = resultSet.getString("overview");
-            }*/
+            this.ratingImbd = resultSet.getDouble("rating_imdb");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,11 +95,11 @@ public class Movie {
         return genres;
     }
 
-    public double getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -170,5 +161,10 @@ public class Movie {
 
     public String toString() {
         return this.poster + ", title: " + this.title + ", release year: " + this.releaseYear + ", genres: " + this.genres + ", rating Imbd: " + this.ratingImbd + ", rating Sep Flix: " + this.ratingSepFlix + ", overview: " + this.overview;
+    }
+
+    public Date getSQLReleaseYear() {
+        Date date = Date.valueOf(this.releaseYear);
+        return date;
     }
 }
