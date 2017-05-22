@@ -74,7 +74,8 @@ public class ServerCommunication implements Runnable {
                         break;
                     case "MovieDetail":
                         returnData.put("Action", "MovieDetail");
-                        Movie movie = Main.connectionREST.getMovie((Integer) data.get("id"));
+                        Double id = (double) data.get("id");
+                        Movie movie = Main.connectionREST.getMovie(id.intValue());
                         returnData.putAll(movie.toStringMap());
                         sendSmtToClient(Main.gson.toJson(returnData));
                         returnData.clear();

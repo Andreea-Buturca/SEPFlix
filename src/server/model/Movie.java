@@ -29,7 +29,7 @@ public class Movie {
         this.genres = null;
         this.ratingImbd = ratingImbd;
         this.ratingSepFlix = 0;
-        this.overview = "";
+        this.overview = null;
     }
 
     public Movie(double id, String poster, String title, String releaseYEar, String genres, double ratingImbd, double ratingSepFlix, String overview) {
@@ -68,7 +68,7 @@ public class Movie {
             this.title = resultSet.getString("title");
             this.releaseYear = resultSet.getString("release_year");
             this.ratingImbd = resultSet.getDouble("rating_Imbd");
-            if ((ArrayList<ResultSet>) resultSet.getArray("Genres") != null) {
+            /*if ((ArrayList<ResultSet>) resultSet.getArray("Genres") != null) {
                 for (ResultSet genre : (ArrayList<ResultSet>) resultSet.getArray("genres")) {
                     if (this.genres == null) {
                         this.genres = (String) genre.getString("name");
@@ -78,7 +78,7 @@ public class Movie {
                 }
                 this.ratingSepFlix = resultSet.getDouble("reating_SepFlix");
                 this.overview = resultSet.getString("overview");
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -156,15 +156,9 @@ public class Movie {
         movie.put("title", this.title);
         movie.put("release_date", this.releaseYear);
         movie.put("vote_average", this.ratingImbd);
-        if ((ArrayList<StringMap<Object>>) movie.get("genres") != null) {
-            for (StringMap<Object> genre : (ArrayList<StringMap<Object>>) movie.get("genres")) {
-                if (this.genres == null) {
-                    movie.put("genres", (String) genre.get("name"));
-                } else {
-                    movie.put("genres", this.genres + ", " + (String) genre.get("name"));
-                }
-                movie.put("overview", this.overview);
-            }
+        if (this.genres != null) {
+            movie.put("genres", this.genres);
+            movie.put("overview", this.overview);
         }
         return movie;
     }
