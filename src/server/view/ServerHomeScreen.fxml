@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.Controller">
    <children>
-      <Label fx:id="labelStartingServer" layoutX="24.0" layoutY="75.0" text="Starting server:">
+      <Label fx:id="labelStartingServer" layoutX="24.0" layoutY="75.0" text="Server running:">
          <font>
             <Font size="30.0" />
          </font>
