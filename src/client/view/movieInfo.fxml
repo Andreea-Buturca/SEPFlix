@@ -48,5 +48,6 @@
             <Font size="15.0" />
          </font>
       </Text>
+      <Button fx:id="trailerButton" layoutX="800.0" layoutY="66.0" mnemonicParsing="false" onAction="#playTrailer" text="Watch Trailer" />
    </children>
 </AnchorPane>

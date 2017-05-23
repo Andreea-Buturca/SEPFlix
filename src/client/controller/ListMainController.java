@@ -65,7 +65,7 @@ public class ListMainController implements Initializable {
         Helper.sendRequest();
     }
 
-    public void searchMovie(ActionEvent actionEvent) {
+    public synchronized void searchMovie(ActionEvent actionEvent) {
         if (!searchField.getText().isEmpty()) {
             System.out.println(searchField.getText());
             /*Helper.addDataToRequest("Action", "SearchMovie");

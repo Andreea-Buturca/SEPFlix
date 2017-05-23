@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import server.mediator.Facade;
 
 import java.io.IOException;
@@ -34,13 +36,20 @@ public class MovieInfoController implements Initializable {
     public Button addToListButton;
     public Button rateButton;
     public Text overviewText;
+    public Button trailerButton;
 
     private Thread controllerThread;
     private StringMap<Object> movieInfo;
+    public Stage secondaryStage;
 
     public MovieInfoController() {
         Main.movieInfoC = this;
         controllerThread = Thread.currentThread();
+    }
+
+    public String getTitle(){
+        if (!movieInfo.isEmpty()) return (String) movieInfo.get("title");
+        else return null;
     }
 
     @Override
@@ -111,4 +120,14 @@ public class MovieInfoController implements Initializable {
     }
 
 
+    public void playTrailer(ActionEvent actionEvent) throws IOException {
+        Stage secondaryStage = new Stage();
+        this.secondaryStage=secondaryStage;
+        URL paneOneUrl = getClass().getResource("../view/trailer.fxml");
+        WebView webView = FXMLLoader.load(paneOneUrl);
+        AnchorPane root = new AnchorPane(webView);
+        Scene scene = new Scene(root);
+        secondaryStage.setScene(scene);
+        secondaryStage.show();
+    }
 }
