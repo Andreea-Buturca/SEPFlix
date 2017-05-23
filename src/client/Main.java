@@ -24,8 +24,7 @@ public class Main extends Application {
     public static User loggedUser;
     public static LoginController loginC;
     public static Stage stage;
-    public static ListMainController listMain;
-    public static ArrayList<StringMap<Object>> latestMovies;
+    public static ListMainController listMainC;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));

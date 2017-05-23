@@ -28,25 +28,34 @@ public class ListMainController implements Initializable {
     public Button searchButton;
     public TextField searchField;
     public TilePane tilepane;
+    private ArrayList<StringMap<Object>> latestMovies;
+    private Thread controllerThread;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public synchronized void initialize(URL location, ResourceBundle resources) {
+        boolean interuppted = false;
         Helper.addDataToRequest("Action", "LatestMovies");
         Helper.sendRequest();
-
         try {
-            Thread.sleep(3000);
+            wait(20000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            interuppted = true;
         }
+        if (interuppted) {
+            addMovies(latestMovies);
+        } else {
+            Helper.alertdisplay("Timeout Error", "Server not responding");
+        }
+    }
 
-        // TODO: 21-May-17 find better solution for this, same as in login
-
-        addMovies(Main.latestMovies);
+    public void interupt(ArrayList<StringMap<Object>> latestMovies) {
+        this.latestMovies = latestMovies;
+        controllerThread.interrupt();
     }
 
     public ListMainController() {
-        Main.listMain = this;
+        controllerThread = Thread.currentThread();
+        Main.listMainC = this;
     }
 
     public void showSearchBar(ActionEvent actionEvent) {
@@ -64,7 +73,7 @@ public class ListMainController implements Initializable {
     }
 
     public void addMovies(ArrayList<StringMap<Object>> latestMovies) {
-        for (int i=0;i<latestMovies.size();i++){
+        for (int i = 0; i < latestMovies.size(); i++) {
             String title = (String) latestMovies.get(i).get("title");
             String year = (String) latestMovies.get(i).get("release_date");
             String[] token = year.split("-");
@@ -73,7 +82,7 @@ public class ListMainController implements Initializable {
             Double idnum = (Double) latestMovies.get(i).get("id");
             String id = Double.toString(idnum);
             try {
-                addTile(title,year,url, id);
+                addTile(title, year, url, id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -93,7 +102,7 @@ public class ListMainController implements Initializable {
         // TODO: 21-May-17 Solve issue when title is too long
         title.setText(movieTitle);
         year.setText(prodYear);
-        String imageURL = "https://image.tmdb.org/t/p/w320"+url;
+        String imageURL = "https://image.tmdb.org/t/p/w320" + url;
         imageview.setImage(new Image(imageURL));
         id.setText(movieID);
 

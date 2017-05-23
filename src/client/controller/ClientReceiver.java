@@ -38,16 +38,16 @@ public class ClientReceiver implements Runnable {
                     case "login":
                         if (response.get("Status").equals("success")) {
                             Main.loggedUser = new User(response, false);
-                            Main.loginC.errorCode = 1;
+                            Main.loginC.interupt(0);
                             // TODO: 17-May-17 password from server is hashed, i need method to unhash it.
                             // TODO: 17-May-17 bring model classes to client I guess
 
                         } else {
-                            Main.loginC.errorCode = 2;
+                            Main.loginC.interupt(1);
                         }
                     case "LatestMovies":
                         ArrayList<StringMap<Object>> latestMovies = (ArrayList<StringMap<Object>>) response.get("LatestMovies");
-                        Main.latestMovies = latestMovies;
+                        Main.listMainC.interupt(latestMovies);
                     case "MovieDetail":
                         StringMap<Object> movie = (StringMap<Object>) response.get("MovieDetail");
                         System.out.println(movie);

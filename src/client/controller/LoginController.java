@@ -21,22 +21,38 @@ public class LoginController {
     public TextField usernameField;
     public PasswordField passwordField;
     public Button loginButton;
-    public int errorCode = -1;
+    private int errorCode = -1;
+    private Thread controlllerThread;
 
     public LoginController() {
         Main.loginC=this;
+        this.controlllerThread = Thread.currentThread();
     }
 
-    public void logIn(ActionEvent actionEvent) throws IOException, InterruptedException {
+    public synchronized void logIn(ActionEvent actionEvent) throws IOException {
         //todo validation
+        boolean interupted=false;
         Helper.addDataToRequest("Action", "login");
         Helper.addDataToRequest("Username", usernameField.getText());
         Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
         Helper.sendRequest();
-        Thread.sleep(1500);
-        if (errorCode==1) loginView();
-        else if (errorCode==2) loginError();
+        try {
+            wait(25000);
+        } catch (InterruptedException e) {
+            System.out.println("interupting");
+            interupted=true;
+        }
+        if (interupted) {
+            if (errorCode == 0) loginView();
+            else if (errorCode == 1) loginError();
+        }else Helper.alertdisplay("Timeout Error","Server is not responding");
         // TODO: 21-May-17 find better way to do this
+    }
+
+    public void interupt(int errorCode){
+        this.errorCode = errorCode;
+        controlllerThread.interrupt();
+
     }
 
     private void loginView() throws IOException {
