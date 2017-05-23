@@ -8,6 +8,7 @@ import javafx.scene.web.WebView;
 
 import java.io.*;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class C {
     public TextField searchField;
 
     public void Play(ActionEvent actionEvent) throws IOException {
-        String id = getIDfromYT(searchField.getText());
+        String id = getIDfromYT(URLEncoder.encode(searchField.getText(), "UTF-8"));
         ytView.getEngine().load(
                 "https://www.youtube.com/embed/"+id
         );
@@ -32,11 +33,8 @@ public class C {
                 "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+title+"+trailer&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
         Gson gson = new Gson();
         StringMap<Object> results = gson.fromJson(json, StringMap.class);
-        System.out.println(results);
-        System.out.println(results.get("items"));
         ArrayList<StringMap<Object>> items = (ArrayList<StringMap<Object>>) results.get("items");
         StringMap<Object> iditem = (StringMap<Object>) items.get(0).get("id");
-        System.out.println(iditem.get("videoId"));
         return (String) iditem.get("videoId");
     }
 
@@ -54,7 +52,6 @@ public class C {
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = readAll(rd);
-            //json = new JSONObject(jsonText);
             return jsonText;
         } finally {
             is.close();
