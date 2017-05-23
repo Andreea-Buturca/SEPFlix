@@ -23,6 +23,7 @@ public class MenuController {
     public MenuItem logIn;
     public MenuItem register;
     public MenuItem homescreen;
+    public MenuItem trailer;
 
     public void changeViewMenu(ActionEvent actionEvent) throws IOException {
 
@@ -57,6 +58,14 @@ public class MenuController {
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
             URL paneOneUrl = getClass().getResource("../view/registerUser.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+            root.setTop(bar);
+            root.setCenter(paneOne);
+        }else if ((actionEvent.getSource() == trailer)){
+            root = new BorderPane();
+            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/player.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);

@@ -13,6 +13,7 @@
     <Menu mnemonicParsing="false" text="Movies">
       <items>
         <MenuItem fx:id="list" mnemonicParsing="false" onAction="#changeViewMenu" text="My List" />
+            <MenuItem fx:id="trailer" mnemonicParsing="false" onAction="#changeViewMenu" text="Movie Trailer" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profile">
