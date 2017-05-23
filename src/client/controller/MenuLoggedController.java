@@ -37,7 +37,7 @@ public class MenuLoggedController {
             root.setTop(bar);
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
-            if (Facade.hasFavourites(Main.loggedUser)){
+            //if (Facade.hasFavourites(Main.loggedUser)){
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
@@ -45,9 +45,9 @@ public class MenuLoggedController {
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
-            }else {
+            /*}else {
                 Helper.alertdisplay("No Favourites", "You have no favourite movies in list");
-            }
+            }*/
 
         } else if ((actionEvent.getSource() == myprofile)) {
             root = new BorderPane();

@@ -9,6 +9,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import server.model.User;
+import sun.nio.cs.ext.MacArabic;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -58,6 +59,13 @@ public class ClientReceiver implements Runnable {
                         // TODO: 23-May-17 for now im saving response not stringmap of movie :D
                         Main.movieInfoC.interupt(response);
                         break;
+                    case "SearchMovie":
+                        ArrayList<StringMap<Object>> movies = (ArrayList<StringMap<Object>>) response.get("SearchList");
+                        Main.listMainC.interupt(movies);
+                        break;
+                    case "FavouriteMovies":
+                        ArrayList<StringMap<Object>> favourites = (ArrayList<StringMap<Object>>) response.get("FavouriteMovies");
+                        Main.facouritesC.interupt(favourites);
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

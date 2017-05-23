@@ -61,15 +61,30 @@ public class ListMainController implements Initializable {
     public void showSearchBar(ActionEvent actionEvent) {
         searchField.setVisible(true);
         searchButton.setVisible(false);
-
         Helper.addDataToRequest("Action", "LatestMovies");
         Helper.sendRequest();
     }
 
     public void searchMovie(ActionEvent actionEvent) {
-        System.out.println(searchField.getText());
-        searchField.setVisible(false);
-        searchButton.setVisible(true);
+        if (!searchField.getText().isEmpty()) {
+            System.out.println(searchField.getText());
+            /*Helper.addDataToRequest("Action", "SearchMovie");
+            Helper.addDataToRequest("SearchField", searchField.getText());
+            Helper.sendRequest();
+            boolean interuppted = false;
+            try {
+                wait(20000);
+            } catch (InterruptedException e) {
+                interuppted = true;
+            }
+            if (interuppted) {
+                addMovies(latestMovies);
+            } else {
+                Helper.alertdisplay("Timeout Error", "Server not responding");
+            }*/
+            searchField.setVisible(false);
+            searchButton.setVisible(true);
+        }
     }
 
     public void addMovies(ArrayList<StringMap<Object>> latestMovies) {
@@ -99,7 +114,6 @@ public class ListMainController implements Initializable {
         Label year = (Label) tile.getChildren().get(2);
         Label id = (Label) tile.getChildren().get(3);
 
-        // TODO: 21-May-17 Solve issue when title is too long
         title.setText(movieTitle);
         year.setText(prodYear);
         String imageURL = "https://image.tmdb.org/t/p/w320" + url;

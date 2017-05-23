@@ -1,9 +1,6 @@
 package client;
 
-import client.controller.ClientConnection;
-import client.controller.ListMainController;
-import client.controller.LoginController;
-import client.controller.MovieInfoController;
+import client.controller.*;
 import com.google.gson.internal.StringMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +24,7 @@ public class Main extends Application {
     public static Stage stage;
     public static ListMainController listMainC;
     public static MovieInfoController movieInfoC;
+    public static FavouritesController facouritesC;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));

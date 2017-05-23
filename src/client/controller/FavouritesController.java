@@ -18,6 +18,7 @@ import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -27,14 +28,37 @@ public class FavouritesController implements Initializable {
     public Label usernameLabel;
     public Button removeButton;
     public ListView favouritesListView;
+    private ArrayList<StringMap<Object>> favourites;
+    private Thread controllerThread;
+
+    public FavouritesController() {
+        Main.facouritesC = this;
+        controllerThread = Thread.currentThread();
+    }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<FavouriteMovie> movies = FXCollections.observableArrayList();
-        for (StringMap<Object> info : Facade.getUserFavourite(Main.loggedUser)) {
-            movies.add(new FavouriteMovie(info));
+    public synchronized void initialize(URL location, ResourceBundle resources) {
+        Helper.addDataToRequest("Action", "FavouriteMovies");
+        Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
+        Helper.sendRequest();
+        boolean interupted = false;
+        try {
+            wait(15000);
+        } catch (InterruptedException e) {
+            interupted = true;
         }
-        favouritesListView.setItems(movies);
+        if (interupted) {
+            ObservableList<FavouriteMovie> movies = FXCollections.observableArrayList();
+            for (StringMap<Object> info : favourites) {
+                movies.add(new FavouriteMovie(info));
+            }
+            favouritesListView.setItems(movies);
+        }else Helper.alertdisplay("Timeout Error", "Server is not responding");
+    }
+
+    public void interupt(ArrayList<StringMap<Object>> favourites){
+        this.favourites = favourites;
+        controllerThread.interrupt();
     }
 
     public void removeFromFavourites(ActionEvent actionEvent) throws IOException {
@@ -48,7 +72,8 @@ public class FavouritesController implements Initializable {
             Facade.removeFromFavourites(Main.loggedUser, (Double) movie.get("id"));
         }
         Helper.successdisplay("Removed", "Selected movies have been deleted from your favourites");
-        if (!Facade.hasFavourites(Main.loggedUser)) {
+        //Main.stage.show();
+        /*if (!Facade.hasFavourites(Main.loggedUser)) {
             BorderPane root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
@@ -59,7 +84,7 @@ public class FavouritesController implements Initializable {
             Scene scene = new Scene(root);
             Main.stage.setScene(scene);
             Main.stage.show();
-        }
+        }*/
     }
 
     /**
