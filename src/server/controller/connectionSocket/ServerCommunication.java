@@ -77,6 +77,7 @@ public class ServerCommunication implements Runnable {
                         returnData.put("Action", "MovieDetail");
                         Double idDetail = (double) data.get("id");
                         Movie movie = Main.connectionREST.getMovie(idDetail.intValue());
+                        System.out.println(movie);
                         returnData.putAll(movie.toStringMap());
                         sendSmtToClient(Main.gson.toJson(returnData));
                         returnData.clear();
@@ -91,6 +92,7 @@ public class ServerCommunication implements Runnable {
                         returnData.put("FavouriteMovies", favouriteMovies);
                         sendSmtToClient(Main.gson.toJson(returnData));
                         returnData.clear();
+                        // TODO: 23-May-17 dont send me arraylist of movie objects but stringmap of its info, look at favourite controller
                         break;
                     case "AddFavouriteMovie":
                         Double idAddFavourite = (double) data.get("id");

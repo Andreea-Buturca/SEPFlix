@@ -45,15 +45,24 @@ public class ClientReceiver implements Runnable {
                         } else {
                             Main.loginC.interupt(1);
                         }
+                        break;
                     case "LatestMovies":
                         ArrayList<StringMap<Object>> latestMovies = (ArrayList<StringMap<Object>>) response.get("LatestMovies");
                         Main.listMainC.interupt(latestMovies);
+                        break;
                     case "MovieDetail":
+                        Thread.sleep(500);
+                        System.out.println("idem tu");
                         StringMap<Object> movie = (StringMap<Object>) response.get("MovieDetail");
                         System.out.println(movie);
+                        // TODO: 23-May-17 for now im saving response not stringmap of movie :D
+                        Main.movieInfoC.interupt(response);
+                        break;
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -46,7 +46,6 @@ public class LoginController {
             if (errorCode == 0) loginView();
             else if (errorCode == 1) loginError();
         }else Helper.alertdisplay("Timeout Error","Server is not responding");
-        // TODO: 21-May-17 find better way to do this
     }
 
     public void interupt(int errorCode){

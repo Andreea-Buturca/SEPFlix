@@ -6,36 +6,32 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.MovieInfoController">
    <children>
-      <Label fx:id="titleLabel" layoutX="500.0" layoutY="34.0" text="MovieName">
-         <font>
-            <Font size="50.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="moviePosterImageView" fitHeight="352.0" fitWidth="335.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image-not-found.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="yearLabel" layoutX="500.0" layoutY="107.0" text="2017">
+      <Label fx:id="titleLabel" layoutX="363.0" layoutY="49.0" text="MovieName">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <Label fx:id="genreLabel" layoutX="500.0" layoutY="182.0" text="Genre">
+      <ImageView fx:id="moviePosterImageView" fitHeight="480.0" fitWidth="320.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="yearLabel" layoutX="366.0" layoutY="114.0" text="2017">
          <font>
-            <Font size="30.0" />
+            <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="imbdLabel" layoutX="500.0" layoutY="260.0" text="imbdRating">
+      <Label fx:id="genreLabel" layoutX="363.0" layoutY="165.0" text="Genre">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="imbdLabel" layoutX="367.0" layoutY="239.0" text="imbdRating">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="sepflixLabel" layoutX="656.0" layoutY="260.0" text="sepflixRating">
+      <Label fx:id="sepflixLabel" layoutX="522.0" layoutY="239.0" text="sepflixRating">
          <font>
             <Font size="20.0" />
          </font>
@@ -45,7 +41,12 @@
             <Image url="@logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="addToListButton" layoutX="502.0" layoutY="360.0" mnemonicParsing="false" onAction="#addToMyList" prefHeight="35.0" prefWidth="100.0" text="Add to MyList" />
-      <Button fx:id="rateButton" layoutX="663.0" layoutY="360.0" mnemonicParsing="false" onAction="#rate" prefHeight="35.0" prefWidth="100.0" text="Rate" />
+      <Button fx:id="addToListButton" layoutX="74.0" layoutY="525.0" mnemonicParsing="false" onAction="#addToMyList" prefHeight="35.0" prefWidth="100.0" text="Add to MyList" AnchorPane.bottomAnchor="25.0" />
+      <Button fx:id="rateButton" layoutX="174.0" layoutY="525.0" mnemonicParsing="false" onAction="#rate" prefHeight="35.0" prefWidth="100.0" text="Rate" AnchorPane.bottomAnchor="25.0" />
+      <Text fx:id="overviewText" layoutX="366.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OverView" wrappingWidth="412.13671875">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

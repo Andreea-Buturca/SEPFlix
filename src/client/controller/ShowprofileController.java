@@ -51,29 +51,42 @@ public class ShowprofileController implements Initializable {
 
     public void save(ActionEvent actionEvent) {
         if (Main.loggedUser != null) {
-            nameField.setEditable(false);
-            surnameField.setEditable(false);
-            emailField.setEditable(false);
             Helper.addDataToRequest("Action", "editProfile");
             Helper.addDataToRequest("Username", usernameField.getText());
             Helper.addDataToRequest("FirstName", nameField.getText());
+            Main.loggedUser.setFirstName(nameField.getText());
             Helper.addDataToRequest("SecondName", surnameField.getText());
+            Main.loggedUser.setLastName(surnameField.getText());
             Helper.addDataToRequest("Email", emailField.getText());
+            Main.loggedUser.setEmail(emailField.getText());
             //todo validation
             if (!oldPassField.getText().isEmpty()) {
                 if (newPassField.getText().equals(confirmPassField.getText())) {
                     Helper.addDataToRequest("OldPassword", Helper.get_SHA_512_SecurePassword(oldPassField.getText()));
                     Helper.addDataToRequest("NewPassword", Helper.get_SHA_512_SecurePassword(newPassField.getText()));
                     Helper.sendRequest();
+                    //System.out.println("sending "+ oldPassField.getText()+" and "+ newPassField.getText());
+                    // TODO: 23-May-17 not saving password on server side
                 } else {
                     Helper.alertdisplay("Wrong password", "new password is not the same as the confirm password");
                     Helper.clearRequest();
                 }
-            }else {
+            } else {
                 Helper.addDataToRequest("OldPassword", null);
                 Helper.addDataToRequest("NewPassword", null);
                 Helper.sendRequest();
             }
+            nameField.setEditable(false);
+            surnameField.setEditable(false);
+            emailField.setEditable(false);
+            oldPassField.setVisible(false);
+            oldPassField.setText("");
+            newPassField.setVisible(false);
+            newPassField.setText("");
+            confirmPassField.setVisible(false);
+            confirmPassField.setText("");
+            changepassButton.setVisible(false);
+            Helper.successdisplay("Saved", "Your data has been saved");
         }
     }
 

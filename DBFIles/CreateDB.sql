@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.favourite_movies;
+DROP TABLE IF EXISTS public.movies;
 
 CREATE TABLE public.users
 (

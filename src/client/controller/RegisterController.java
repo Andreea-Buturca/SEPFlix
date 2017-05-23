@@ -26,5 +26,6 @@ public class RegisterController {
         Helper.addDataToRequest("SecondName", secondNameField.getText());
         Helper.addDataToRequest("Email", emailField.getText());
         Helper.sendRequest();
+        Helper.successdisplay("Registered", "You are now user of SEPFlix");
     }
 }

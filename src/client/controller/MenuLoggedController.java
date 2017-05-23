@@ -9,6 +9,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,13 +37,18 @@ public class MenuLoggedController {
             root.setTop(bar);
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
-           /* root = new BorderPane();
+            if (Facade.hasFavourites(Main.loggedUser)){
+            root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
+            URL paneOneUrl = getClass().getResource("../view/listOfFavourites.fxml");
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            root.setCenter(paneOne);*/
+            root.setCenter(paneOne);
+            }else {
+                Helper.alertdisplay("No Favourites", "You have no favourite movies in list");
+            }
+
         } else if ((actionEvent.getSource() == myprofile)) {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");

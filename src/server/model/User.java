@@ -7,17 +7,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The Class represents a User
  * Created by andreea on 5/15/2017.
  */
 public class User {
+
     private String password;
     private String userName;
     private String firstName;
     private String lastName;
     private String email;
+
+    ArrayList<StringMap<Object>> favourites = new ArrayList<>();
 
     /**
      * Constructs a User object by taking a HashMap and a boolean as arguments
@@ -69,6 +74,29 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public boolean hasFavourites() {
+        return !favourites.isEmpty();
+    }
+
+    public void addFavourite(StringMap<Object> movie) {
+        favourites.add(movie);
+    }
+
+    public void removeFavourite(Double id) {
+        ArrayList<StringMap<Object>> toremove = new ArrayList<>();
+        for (StringMap<Object> movie : favourites) {
+            Double idM = (Double) movie.get("id");
+            if (Objects.equals(idM, id)) {
+                toremove.add(movie);
+            }
+        }
+        favourites.removeAll(toremove);
+    }
+
+    public ArrayList<StringMap<Object>> getFavourites() {
+        return favourites;
     }
 
     /**
