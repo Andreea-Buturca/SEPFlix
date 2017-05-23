@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import server.mediator.Facade;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,7 +33,7 @@ public class ShowprofileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         changepassButton.setVisible(false);
         if (Main.loggedUser != null) {
-            usernameField.setText(Main.loggedUser.getUserName());
+            usernameField.setText(Facade.getUsername(Main.loggedUser));
             nameField.setText(Main.loggedUser.getFirstName());
             surnameField.setText(Main.loggedUser.getLastName());
             emailField.setText(Main.loggedUser.getEmail());
