@@ -36,6 +36,7 @@ public class ShowprofileController implements Initializable {
             nameField.setText(Main.loggedUser.getFirstName());
             surnameField.setText(Main.loggedUser.getLastName());
             emailField.setText(Main.loggedUser.getEmail());
+            // TODO: 23.5.2017 Switch to Facade!
         }
 
     }
