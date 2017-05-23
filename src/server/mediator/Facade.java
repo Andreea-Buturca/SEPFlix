@@ -27,6 +27,15 @@ public class Facade {
     public static String getUsername(User user){
         return user.getUserName();
     }
+    public static String getFirstName(User user){
+        return user.getFirstName();
+    }
+    public static String getLastName(User user){
+        return user.getLastName();
+    }
+    public static String getEmail(User user){
+        return user.getEmail();
+    }
 
     public static void removeFromFavourites(User loggedUser, Double id) {
         loggedUser.removeFavourite(id);

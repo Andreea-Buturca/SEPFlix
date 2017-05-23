@@ -34,9 +34,9 @@ public class ShowprofileController implements Initializable {
         changepassButton.setVisible(false);
         if (Main.loggedUser != null) {
             usernameField.setText(Facade.getUsername(Main.loggedUser));
-            nameField.setText(Main.loggedUser.getFirstName());
-            surnameField.setText(Main.loggedUser.getLastName());
-            emailField.setText(Main.loggedUser.getEmail());
+            nameField.setText(Facade.getFirstName(Main.loggedUser));
+            surnameField.setText(Facade.getLastName(Main.loggedUser));
+            emailField.setText(Facade.getEmail(Main.loggedUser));
             // TODO: 23.5.2017 Switch to Facade!
         }
 
