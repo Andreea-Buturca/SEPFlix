@@ -9,9 +9,11 @@ import server.Main;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class Controller implements Initializable, Observer {
     public Label labelStartingServer;
     public Label labelYesNo;
     public Label labelClients;
@@ -35,6 +37,10 @@ public class Controller implements Initializable {
         labelIp.setText(result);
     }
 
+    public Controller() {
+        Main.serverConnection.addObserver(this);
+    }
+
     public void refresh(ActionEvent actionEvent) {
         labelNoClients.setText(Main.serverConnection.getClients().size() + "");
         ArrayList<Socket> clients = new ArrayList<Socket>();
@@ -44,5 +50,11 @@ public class Controller implements Initializable {
             result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
         labelIp.setText(result);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        ArrayList<Socket> clients = (ArrayList<Socket>) arg;
+        //other implementation
     }
 }

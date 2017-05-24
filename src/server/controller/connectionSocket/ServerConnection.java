@@ -3,11 +3,12 @@ package server.controller.connectionSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Created by martin on 15/05/2017.
  */
-public class ServerConnection implements Runnable {
+public class ServerConnection extends Observable implements Runnable {
     private static final int PORT = 6666;
     private static ArrayList<Socket> clients = new ArrayList<>();
 
@@ -34,6 +35,8 @@ public class ServerConnection implements Runnable {
                 ServerCommunication serverCommunication = new ServerCommunication(connectionSocket);
                 new Thread(serverCommunication, "Communication #" + count).start();
                 clients.add(connectionSocket);
+                super.setChanged();
+                super.notifyObservers(clients);
                 count++;
             }
         } catch (Exception e) {
