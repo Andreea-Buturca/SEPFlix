@@ -28,14 +28,19 @@ public class ListMainController implements Initializable {
     public Button searchButton;
     public TextField searchField;
     public TilePane tilepane;
+    public Label popularLabel;
     private ArrayList<StringMap<Object>> latestMovies;
     private Thread controllerThread;
+    private boolean searched = false;
 
     @Override
     public synchronized void initialize(URL location, ResourceBundle resources) {
+        if (!searched) {
+            Helper.addDataToRequest("Action", "LatestMovies");
+            Helper.sendRequest();
+            popularLabel.setText("Popular movies");
+        }
         boolean interuppted = false;
-        Helper.addDataToRequest("Action", "LatestMovies");
-        Helper.sendRequest();
         try {
             wait(20000);
         } catch (InterruptedException e) {
@@ -46,6 +51,7 @@ public class ListMainController implements Initializable {
         } else {
             Helper.alertdisplay("Timeout Error", "Server not responding");
         }
+        searched = false;
     }
 
     public void interupt(ArrayList<StringMap<Object>> latestMovies) {
@@ -66,9 +72,10 @@ public class ListMainController implements Initializable {
     }
 
     public synchronized void searchMovie(ActionEvent actionEvent) {
-        if (!searchField.getText().isEmpty()) {
+       /* if (!searchField.getText().isEmpty()) {
+            popularLabel.setText("Search result");
             System.out.println(searchField.getText());
-            /*Helper.addDataToRequest("Action", "SearchMovie");
+            Helper.addDataToRequest("Action", "SearchMovie");
             Helper.addDataToRequest("SearchField", searchField.getText());
             Helper.sendRequest();
             boolean interuppted = false;
@@ -78,13 +85,15 @@ public class ListMainController implements Initializable {
                 interuppted = true;
             }
             if (interuppted) {
+                searched = true;
                 addMovies(latestMovies);
             } else {
                 Helper.alertdisplay("Timeout Error", "Server not responding");
-            }*/
+            }
             searchField.setVisible(false);
             searchButton.setVisible(true);
-        }
+            Main.stage.show();
+        }*/
     }
 
     public void addMovies(ArrayList<StringMap<Object>> latestMovies) {
