@@ -59,6 +59,26 @@ public class DatabaseConnection {
         }
     }
 
+    public ArrayList<User> getUsers() {
+        ArrayList<User> usersList = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM users;"
+            );
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                usersList.add(new User(resultSet, false));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usersList;
+    }
+
     public User getUserByUserName(String userName) {
         User user = null;
         try {
@@ -77,6 +97,20 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void removeUserByUserName(String userName) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM users WHERE user_name = ?;"
+            );
+            statement.setString(1, userName);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateUserInformation(User user) {

@@ -52,6 +52,15 @@ public class MovieInfoController implements Initializable {
         else return null;
     }
 
+    public String getYear() {
+        if (!movieInfo.isEmpty()) {
+            String year = (String) movieInfo.get("release_date");
+            String[] token = year.split("-");
+            year = token[0];
+            return year;
+        } else return null;
+    }
+
     @Override
     public synchronized void initialize(URL location, ResourceBundle resources) {
         boolean interupted = false;

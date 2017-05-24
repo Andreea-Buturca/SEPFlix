@@ -37,6 +37,7 @@ public class ServerConnection extends Observable implements Runnable {
                 clients.add(connectionSocket);
                 super.setChanged();
                 super.notifyObservers(clients);
+                //todo Martin notify on disconnect
                 count++;
             }
         } catch (Exception e) {

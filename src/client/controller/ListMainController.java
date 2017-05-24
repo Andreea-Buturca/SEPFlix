@@ -7,14 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +27,7 @@ public class ListMainController implements Initializable {
     public TextField searchField;
     public TilePane tilepane;
     public Label popularLabel;
+    public ScrollPane scrollPane;
     private ArrayList<StringMap<Object>> latestMovies;
     private Thread controllerThread;
     private boolean searched = false;
@@ -39,17 +38,18 @@ public class ListMainController implements Initializable {
             Helper.addDataToRequest("Action", "LatestMovies");
             Helper.sendRequest();
             popularLabel.setText("Popular movies");
-        }
-        boolean interuppted = false;
-        try {
-            wait(20000);
-        } catch (InterruptedException e) {
-            interuppted = true;
-        }
-        if (interuppted) {
-            addMovies(latestMovies);
-        } else {
-            Helper.alertdisplay("Timeout Error", "Server not responding");
+
+            boolean interuppted = false;
+            try {
+                wait(20000);
+            } catch (InterruptedException e) {
+                interuppted = true;
+            }
+            if (interuppted) {
+                addMovies(latestMovies);
+            } else {
+                Helper.alertdisplay("Timeout Error", "Server not responding");
+            }
         }
         searched = false;
     }
@@ -67,12 +67,10 @@ public class ListMainController implements Initializable {
     public void showSearchBar(ActionEvent actionEvent) {
         searchField.setVisible(true);
         searchButton.setVisible(false);
-        Helper.addDataToRequest("Action", "LatestMovies");
-        Helper.sendRequest();
     }
 
     public synchronized void searchMovie(ActionEvent actionEvent) {
-       /* if (!searchField.getText().isEmpty()) {
+        if (!searchField.getText().isEmpty()) {
             popularLabel.setText("Search result");
             System.out.println(searchField.getText());
             Helper.addDataToRequest("Action", "SearchMovie");
@@ -86,14 +84,14 @@ public class ListMainController implements Initializable {
             }
             if (interuppted) {
                 searched = true;
+                tilepane.getChildren().clear();
                 addMovies(latestMovies);
             } else {
                 Helper.alertdisplay("Timeout Error", "Server not responding");
             }
             searchField.setVisible(false);
             searchButton.setVisible(true);
-            Main.stage.show();
-        }*/
+        }
     }
 
     public void addMovies(ArrayList<StringMap<Object>> latestMovies) {

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import server.controller.connectionDB.DatabaseConnection;
 import server.controller.connectionREST.ConnectionREST;
 import server.controller.connectionSocket.ServerConnection;
+import server.mediator.ServerLogger;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Main extends Application {
     public static DatabaseConnection databaseConnection;
     public static ServerConnection serverConnection;
     public static ConnectionREST connectionREST;
+    public static ServerLogger serverLogger;
     public static Gson gson;
     private static BorderPane root = new BorderPane();
     public static Stage stage;
@@ -47,16 +49,19 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         gson = new Gson();
+        serverLogger = new ServerLogger();
         serverConnection = new ServerConnection();
         new Thread(serverConnection).start();
         databaseConnection = DatabaseConnection.getDatabaseConnection();
         connectionREST = new ConnectionREST();
+
         //System.out.println(connectionREST.getLatestMovies());
         //System.out.println(connectionREST.getMovie(283995));
         //Movie movie = connectionREST.getMovie(283995);
         //databaseConnection.addFavouriteMovie("testik", 283995);
         //System.out.println(databaseConnection.getMovieById(2839295));
         //connectionREST.getRequest("search/movie", "&query=Pe");
+        //System.out.println(databaseConnection.getUsers());
 //        for (StringMap<Object> testik: connectionREST.searchMovie("Man")
 //             ) {
 //            System.out.println(testik.toString());
