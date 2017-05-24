@@ -1,6 +1,6 @@
 package server.controller;
 
-import client.Main;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +8,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import server.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,24 +23,31 @@ public class MenuController {
     public MenuItem usersManag;
 
     public void changeServerMenu(ActionEvent actionEvent) throws IOException {
-        BorderPane root = null;
+        BorderPane root = new BorderPane();
+
         if ((actionEvent.getSource() == homescreen)) {
             root = new BorderPane();
-            MenuBar bar = FXMLLoader.load(getClass().getResource("../view/menuServer.fxml"));
+            URL menuBarUrl = getClass().getResource("../view/menuServer.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/ServerHomeScreen.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            AnchorPane paneOne = FXMLLoader.load(getClass().getResource("../view/ServerHomeScreen.fxml"));
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == serverLog)) {
             root = new BorderPane();
-            MenuBar bar = FXMLLoader.load(getClass().getResource("../view/menuServer.fxml"));
+            URL menuBarUrl = getClass().getResource("../view/menuServer.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/ServerLog.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            AnchorPane paneOne = FXMLLoader.load(getClass().getResource("../view/ServerLog.fxml")); //!!!
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == usersManag)) {
             root = new BorderPane();
-            MenuBar bar = FXMLLoader.load(getClass().getResource("../view/menuServer.fxml"));
+            URL menuBarUrl = getClass().getResource("../view/menuServer.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/UsersManagement.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            AnchorPane paneOne = FXMLLoader.load(getClass().getResource("../view/UsersManagement.fxml"));
             root.setCenter(paneOne);
         }
         if (root != null) {

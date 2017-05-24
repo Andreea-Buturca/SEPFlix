@@ -47,7 +47,6 @@ public class Controller implements Initializable, Observer {
         ObservableList<String> ipaddressList= FXCollections.observableArrayList();
         ipaddressList.addAll(result);
         listView.setItems(ipaddressList);
-       // labelIp.setText(result);
     }
 
 
@@ -63,7 +62,6 @@ public class Controller implements Initializable, Observer {
         ObservableList<String> ipaddressList= FXCollections.observableArrayList();
         ipaddressList.addAll(result);
         listView.setItems(ipaddressList);
-       // labelIp.setText(result);
     }
 
     @Override
