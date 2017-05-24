@@ -38,6 +38,10 @@ public class Main extends Application {
         //databaseConnection.addFavouriteMovie("testik", 283995);
         //System.out.println(databaseConnection.getMovieById(2839295));
         //connectionREST.getRequest("search/movie", "&query=Pe");
+//        for (StringMap<Object> testik: connectionREST.searchMovie("Man")
+//             ) {
+//            System.out.println(testik.toString());
+//        }
 
         launch(args);
     }

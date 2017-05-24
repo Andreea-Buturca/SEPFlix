@@ -34,3 +34,28 @@ CREATE TABLE public.favourite_movies (
   PRIMARY KEY (id_movie, user_name)
 );
 --TODO cascade
+
+CREATE TABLE public.rate_movies (
+  id_movie     INT         NOT NULL
+    REFERENCES public.movies (id_movie)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  user_name    VARCHAR(25) NOT NULL
+    REFERENCES public.users (user_name)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  rate_sepflix DECIMAL     NOT NULL,
+  PRIMARY KEY (id_movie, user_name)
+);
+
+CREATE TABLE public.comment_movies (
+  id_movie  INT         NOT NULL
+    REFERENCES public.movies (id_movie)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  user_name VARCHAR(25) NOT NULL
+    REFERENCES public.users (user_name)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  comment   VARCHAR(255)
+);

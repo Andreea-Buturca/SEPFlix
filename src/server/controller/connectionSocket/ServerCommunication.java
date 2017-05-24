@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by martin on 15/05/2017.
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class ServerCommunication implements Runnable {
     private ObjectInputStream inFromClient;
     private ObjectOutputStream outToClient;
+    private String authToken;
 
     public ServerCommunication(Socket clientSocket) throws IOException {
         outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -35,16 +37,20 @@ public class ServerCommunication implements Runnable {
 
                 switch ((String) data.get("Action")) {
                     case "register":
+                        //if (authenticate((String) data.get("Token"))) break; //todo alert message
                         User userRegister = new User(data, false);
                         Main.databaseConnection.registerUser(userRegister);
                         break;
                     case "login":
+                        //if (authenticate((String) data.get("Token"))) break; //todo alert message
                         returnData.put("Action", "login");
                         User userLogin = Main.databaseConnection.getUserByUserName((String) data.get("Username"));
                         if (userLogin != null) {
                             if (userLogin.getPassword().equals(data.get("Password"))) {
                                 returnData.putAll(userLogin.toMap(false));
                                 returnData.put("Status", "success");
+                                this.authToken = UUID.randomUUID().toString();
+                                returnData.put("Token", this.authToken);
                             } else {
                                 returnData.put("Status", "error");
                             }
@@ -55,6 +61,7 @@ public class ServerCommunication implements Runnable {
                         returnData.clear();
                         break;
                     case "editProfile":
+                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
                         System.out.println(data.toString());
                         User userEdit = new User(data, false);
                         if (data.get("NewPassword") != null) {
@@ -83,6 +90,7 @@ public class ServerCommunication implements Runnable {
                         returnData.clear();
                         break;
                     case "FavouriteMovies":
+                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
                         returnData.put("Action", "FavouriteMovies");
                         ArrayList<Movie> moviesObjects = Main.databaseConnection.getListOfFavourites((String) data.get("Username"));
                         ArrayList<Object> favouriteMovies = new ArrayList<>();
@@ -95,10 +103,12 @@ public class ServerCommunication implements Runnable {
                         // TODO: 23-May-17 dont send me arraylist of movie objects but stringmap of its info, look at favourite controller
                         break;
                     case "AddFavouriteMovie":
+                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
                         Double idAddFavourite = (double) data.get("id");
                         Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
                         break;
                     case "RemoveFavouriteMovie":
+                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
                         Double idRemoveFavourite = (double) data.get("id");
                         Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
@@ -129,5 +139,12 @@ public class ServerCommunication implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean authenticate(String token) {
+        System.out.println("som tu tak");
+        if (authToken == null && token == null) return false;
+        return authToken.equals(token);
+
     }
 }

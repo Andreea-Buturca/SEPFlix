@@ -7,8 +7,10 @@ import server.model.Movie;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -43,10 +45,23 @@ public class ConnectionREST {
     }
 
 
-    public ArrayList<StringMap<Object>> searchMovie(String s) {
-
-
-        return new ArrayList<StringMap<Object>>();
+    public ArrayList<StringMap<Object>> searchMovie(String name) {
+        String urlAddress = "search/movie";
+        String output = null;
+        try {
+            output = this.getRequest(urlAddress, "&query=" + URLEncoder.encode(name, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        StringMap<Object> response = Main.gson.fromJson(output, StringMap.class);
+        ArrayList<StringMap<Object>> fullSearchResult = (ArrayList) response.get("results");
+        //cleaning unnecessary data
+        ArrayList<StringMap<Object>> searchResult = new ArrayList<>();
+        for (StringMap<Object> movie : fullSearchResult) {
+            Movie movieObject = new Movie(movie);
+            searchResult.add(movieObject.toStringMap());
+        }
+        return searchResult;
     }
 
     private String getRequest(String urlAddress, String getParameters) {
