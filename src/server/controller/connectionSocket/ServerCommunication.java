@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -19,10 +20,16 @@ public class ServerCommunication implements Runnable {
     private ObjectInputStream inFromClient;
     private ObjectOutputStream outToClient;
     private String authToken;
+    private Socket clientSocket;
+    private StringMap<Object> data;
+    private StringMap<Object> returnData;
 
     public ServerCommunication(Socket clientSocket) throws IOException {
-        outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
-        inFromClient = new ObjectInputStream(clientSocket.getInputStream());
+        this.clientSocket = clientSocket;
+        this.outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
+        this.inFromClient = new ObjectInputStream(clientSocket.getInputStream());
+        this.data = new StringMap<>();
+        this.returnData = new StringMap<>();
     }
 
     public void run() {
@@ -32,17 +39,24 @@ public class ServerCommunication implements Runnable {
                 String json = (String) inFromClient.readObject();
                 //todo access to model through something
                 System.out.println(json);
-                StringMap<Object> data = Main.gson.fromJson(json, StringMap.class);
-                StringMap<Object> returnData = new StringMap<>();
+                data = Main.gson.fromJson(json, StringMap.class);
+                returnData = new StringMap<>();
 
                 switch ((String) data.get("Action")) {
                     case "register":
-                        //if (authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (authenticate((String) data.get("Token"))) {
+                            sendAlert("You are already authenticated!", "register");
+                            break;
+                        }*/
+                        //todo alert username is taken, email
                         User userRegister = new User(data, false);
                         Main.databaseConnection.registerUser(userRegister);
                         break;
                     case "login":
-                        //if (authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (authenticate((String) data.get("Token"))) {
+                            sendAlert("You are already authenticated!", "login");
+                            break;
+                        }*/
                         returnData.put("Action", "login");
                         User userLogin = Main.databaseConnection.getUserByUserName((String) data.get("Username"));
                         if (userLogin != null) {
@@ -53,20 +67,23 @@ public class ServerCommunication implements Runnable {
                                 returnData.put("Token", this.authToken);
                             } else {
                                 returnData.put("Status", "error");
+                                //todo change to alert
                             }
                         } else {
                             returnData.put("Status", "error");
                         }
                         sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
                         break;
                     case "editProfile":
-                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "editProfile");
+                            break;
+                        }*/
                         System.out.println(data.toString());
                         User userEdit = new User(data, false);
                         if (data.get("NewPassword") != null) {
                             if (!(Main.databaseConnection.getUserByUserName((String) data.get("Username")).getPassword().equals(data.get("OldPassword")))) {
-                                //todo send alert to client Martin
+                                sendAlert("Wrong Password!", "editProfile");
                                 break;
                             } else {
                                 Main.databaseConnection.changePassword(userEdit);
@@ -78,7 +95,6 @@ public class ServerCommunication implements Runnable {
                         returnData.put("Action", "LatestMovies");
                         returnData.put("LatestMovies", Main.connectionREST.getLatestMovies());
                         sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
                         break;
                     case "MovieDetail":
                         returnData.put("Action", "MovieDetail");
@@ -87,10 +103,12 @@ public class ServerCommunication implements Runnable {
                         System.out.println(movie);
                         returnData.putAll(movie.toStringMap());
                         sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
                         break;
                     case "FavouriteMovies":
-                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "FavouriteMovies");
+                            break;
+                        }*/
                         returnData.put("Action", "FavouriteMovies");
                         ArrayList<Movie> moviesObjects = Main.databaseConnection.getListOfFavourites((String) data.get("Username"));
                         ArrayList<Object> favouriteMovies = new ArrayList<>();
@@ -99,16 +117,20 @@ public class ServerCommunication implements Runnable {
                         }
                         returnData.put("FavouriteMovies", favouriteMovies);
                         sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
-                        // TODO: 23-May-17 dont send me arraylist of movie objects but stringmap of its info, look at favourite controller
                         break;
                     case "AddFavouriteMovie":
-                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "AddFavouriteMovie");
+                            break;
+                        }*/
                         Double idAddFavourite = (double) data.get("id");
                         Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
                         break;
                     case "RemoveFavouriteMovie":
-                        //if (!authenticate((String) data.get("Token"))) break; //todo alert message
+                        /*if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "RemoveFavouriteMovie");
+                            break;
+                        }*/
                         Double idRemoveFavourite = (double) data.get("id");
                         Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
@@ -116,20 +138,48 @@ public class ServerCommunication implements Runnable {
                         returnData.put("Action", "SearchMovie");
                         returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
                         sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
+                        break;
+                    case "Trailer":
+                        returnData.put("Action", "Trailer");
+                        //todo after moving YT REST
+                        //returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
+                        sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     default:
-                        returnData.put("Action", "Alert");
-                        returnData.put("Message", "Wrong Action");
-                        sendSmtToClient(Main.gson.toJson(returnData));
-                        returnData.clear();
+                        sendAlert("Wrong Action");
                         break;
                 }
-
+                logAction((String) data.get("Action"));
+                returnData.clear();
+                data.clear();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendAlert(String message, String fromAction) {
+        StringMap<Object> returnData = new StringMap<>();
+        returnData.put("Action", "Alert");
+        if (fromAction != null) {
+            returnData.put("FromAction", fromAction);
+        }
+        returnData.put("Message", message);
+        logAction("Alert");
+        sendSmtToClient(Main.gson.toJson(returnData));
+    }
+
+    private void sendAlert(String message) {
+        sendAlert(message, null);
+    }
+
+    private void logAction(String action) {
+        StringMap<Object> actionMap = new StringMap<>();
+        actionMap.put("IP", clientSocket.getRemoteSocketAddress());
+        actionMap.put("Action", action);
+        actionMap.put("LoggedIn", this.authToken != null);
+        actionMap.put("Time", new Date());
+        Main.serverLogger.addAction(actionMap);
     }
 
     public void sendSmtToClient(String json) {
@@ -142,9 +192,7 @@ public class ServerCommunication implements Runnable {
     }
 
     private boolean authenticate(String token) {
-        System.out.println("som tu tak");
         if (authToken == null && token == null) return false;
         return authToken.equals(token);
-
     }
 }

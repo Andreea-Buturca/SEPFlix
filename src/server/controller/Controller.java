@@ -50,11 +50,14 @@ public class Controller implements Initializable, Observer {
             result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
         labelIp.setText(result);
+        //Main.serverLogger.saveLog();
     }
 
+    //todo after implementation delete method getClients() Martin
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Socket> clients = (ArrayList<Socket>) arg;
         //other implementation
+        System.out.println("observer is working!!!!!!!!");
     }
 }
