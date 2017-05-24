@@ -67,8 +67,6 @@ public class ListMainController implements Initializable {
     public void showSearchBar(ActionEvent actionEvent) {
         searchField.setVisible(true);
         searchButton.setVisible(false);
-        Helper.addDataToRequest("Action", "LatestMovies");
-        Helper.sendRequest();
     }
 
     public synchronized void searchMovie(ActionEvent actionEvent) {
