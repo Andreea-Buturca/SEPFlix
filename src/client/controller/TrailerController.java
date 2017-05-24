@@ -3,7 +3,6 @@ package client.controller;
 import client.Main;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.web.WebView;
 
@@ -26,7 +25,7 @@ public class TrailerController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         String id = null;
         try {
-            id = getIDfromYT(URLEncoder.encode(Main.movieInfoC.getTitle(), "UTF-8"));
+            id = getIDfromYT(URLEncoder.encode(Main.movieInfoC.getTitle(), "UTF-8"), Main.movieInfoC.getYear());
         } catch (IOException e) {
             //
         }
@@ -37,9 +36,9 @@ public class TrailerController implements Initializable{
         Main.movieInfoC.secondaryStage.show();
     }
 
-    private String getIDfromYT(String title) throws IOException {
+    private String getIDfromYT(String title, String year) throws IOException {
         String json = readJsonFromUrl(
-                "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+title+"+trailer&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
+                "https://www.googleapis.com/youtube/v3/search?part=snippet&q=trailer+" + title + "+" + year + "&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
         Gson gson = new Gson();
         StringMap<Object> results = gson.fromJson(json, StringMap.class);
         ArrayList<StringMap<Object>> items = (ArrayList<StringMap<Object>>) results.get("items");
