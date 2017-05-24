@@ -1,9 +1,13 @@
 package server.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
 import server.Main;
 
 import java.net.Socket;
@@ -19,11 +23,17 @@ public class Controller implements Initializable, Observer {
     public Label labelClients;
     public Label labelNoClients;
     public Label labelIpAddress;
-    public Label labelIp;
     public Button buttonRefresh;
+    public ListView listView;
+
+    public Controller() {
+        Main.serverConnection.addObserver(this);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+          BorderPane root = new BorderPane();
         if (Main.serverConnection != null) {
             labelYesNo.setText("Yes");
         } else labelYesNo.setText("No");
@@ -34,12 +44,13 @@ public class Controller implements Initializable, Observer {
         for (int i = 0; i < clients.size(); i++) {
             result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
-        labelIp.setText(result);
+        ObservableList<String> ipaddressList= FXCollections.observableArrayList();
+        ipaddressList.addAll(result);
+        listView.setItems(ipaddressList);
+       // labelIp.setText(result);
     }
 
-    public Controller() {
-        Main.serverConnection.addObserver(this);
-    }
+
 
     public void refresh(ActionEvent actionEvent) {
         labelNoClients.setText(Main.serverConnection.getClients().size() + "");
@@ -49,7 +60,10 @@ public class Controller implements Initializable, Observer {
         for (int i = 0; i < clients.size(); i++) {
             result += (i+1)+": "+ clients.get(i).getRemoteSocketAddress() + "  \n";
         }
-        labelIp.setText(result);
+        ObservableList<String> ipaddressList= FXCollections.observableArrayList();
+        ipaddressList.addAll(result);
+        listView.setItems(ipaddressList);
+       // labelIp.setText(result);
     }
 
     @Override
