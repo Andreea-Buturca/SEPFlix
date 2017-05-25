@@ -23,6 +23,7 @@
 hs_err_pid*
 ### Example user template template
 ### Example user template
+*.xls
 
 # IntelliJ project files
 .idea

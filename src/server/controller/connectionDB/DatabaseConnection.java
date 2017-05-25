@@ -207,6 +207,24 @@ public class DatabaseConnection {
 
     }
 
+    public void RateMovie(String userName, int movie_id, double rate) {
+        try {
+            if (getMovieById(movie_id) == null) {
+                addMovie(Main.connectionREST.getMovie(movie_id));
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO rate_movies (id_movie, user_name) VALUES (?,?);"
+            );
+            statement.setInt(1, movie_id);
+            statement.setString(2, userName);
+            //todo
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addMovie(Movie movie) {
         try {
             PreparedStatement statement = connection.prepareStatement(

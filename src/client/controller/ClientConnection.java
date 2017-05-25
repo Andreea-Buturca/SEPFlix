@@ -29,14 +29,13 @@ public class ClientConnection {
         }
     }
 
-    public static ClientConnection getClientConnection()
-    {
-        if(clientConnection==null)
-        {
-            clientConnection= new ClientConnection();
+    public static ClientConnection getClientConnection() {
+        if (clientConnection == null) {
+            clientConnection = new ClientConnection();
         }
         return clientConnection;
     }
+
     public ClientConnection(String host) {
         this.host = host;
         try {

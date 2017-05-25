@@ -1,6 +1,7 @@
 package server.model;
 
 import com.google.gson.internal.StringMap;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -16,11 +17,11 @@ import java.util.Objects;
  */
 public class User {
 
-    private String password;
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private SimpleStringProperty password;
+    private SimpleStringProperty userName;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty lastName;
+    private SimpleStringProperty email;
 
     ArrayList<StringMap<Object>> favourites = new ArrayList<>();
 
@@ -31,11 +32,11 @@ public class User {
      * @param hashPassword boolean for hashpassword
      */
     public User(StringMap<Object> data, boolean hashPassword) {
-        this.userName = (String) data.get("Username");
+        this.userName = new SimpleStringProperty((String) data.get("Username"));
         setPassword((String) data.get("Password"), hashPassword);
-        this.firstName = (String) data.get("FirstName");
-        this.lastName = (String) data.get("SecondName");
-        this.email = (String) data.get("Email");
+        this.firstName = new SimpleStringProperty((String) data.get("FirstName"));
+        this.lastName = new SimpleStringProperty((String) data.get("SecondName"));
+        this.email = new SimpleStringProperty((String) data.get("Email"));
     }
 
     /**
@@ -47,11 +48,11 @@ public class User {
      */
     public User(ResultSet resultSet, boolean hashPassword) {
         try {
-            this.userName = resultSet.getString("user_name");
+            this.userName = new SimpleStringProperty(resultSet.getString("user_name"));
             setPassword(resultSet.getString("password"), hashPassword);
-            this.firstName = resultSet.getString("name");
-            this.lastName = resultSet.getString("surname");
-            this.email = resultSet.getString("email");
+            this.firstName = new SimpleStringProperty(resultSet.getString("name"));
+            this.lastName = new SimpleStringProperty(resultSet.getString("surname"));
+            this.email = new SimpleStringProperty(resultSet.getString("email"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,11 +70,11 @@ public class User {
      * @param hashPassword the user's hashPassword
      */
     public User(String userName, String password, String firstName, String lastName, String email, boolean hashPassword) {
-        this.userName = userName;
+        this.userName = new SimpleStringProperty(userName);
         setPassword(password, hashPassword);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.email = new SimpleStringProperty(email);
     }
 
     public boolean hasFavourites() {
@@ -105,7 +106,7 @@ public class User {
      * @return the email
      */
     public String getEmail() {
-        return email;
+        return email.get();
     }
 
     /**
@@ -114,7 +115,7 @@ public class User {
      * @return first name
      */
     public String getFirstName() {
-        return firstName;
+        return firstName.get();
     }
 
     /**
@@ -123,7 +124,7 @@ public class User {
      * @return last name
      */
     public String getLastName() {
-        return lastName;
+        return lastName.get();
     }
 
     /**
@@ -132,7 +133,7 @@ public class User {
      * @return the password
      */
     public String getPassword() {
-        return password;
+        return password.get();
     }
 
     /**
@@ -141,7 +142,7 @@ public class User {
      * @return user name
      */
     public String getUserName() {
-        return userName;
+        return userName.get();
     }
 
     /**
@@ -150,7 +151,7 @@ public class User {
      * @param email the email to be set
      */
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 
     /**
@@ -159,7 +160,7 @@ public class User {
      * @param firstName the first name to be set up
      */
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName.set(firstName);
     }
 
     /**
@@ -168,7 +169,7 @@ public class User {
      * @param lastName the user's last name to be set up
      */
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName.set(lastName);
     }
 
     /**
@@ -179,9 +180,9 @@ public class User {
      */
     public void setPassword(String password, boolean hashPassword) {
         if (hashPassword) {
-            this.password = this.get_SHA_512_SecurePassword(password);
+            this.password = new SimpleStringProperty(this.get_SHA_512_SecurePassword(password));
         } else {
-            this.password = password;
+            this.password = new SimpleStringProperty(password);
         }
     }
 
@@ -191,7 +192,7 @@ public class User {
      * @param userName the user name to be set up
      */
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName.set(userName);
     }
 
     /**
@@ -243,7 +244,7 @@ public class User {
      * @return String representation of user
      */
     public String toString() {
-        return "User name: " + this.userName;
+        return "User name: " + this.userName.get();
     }
 
     /**
@@ -252,6 +253,6 @@ public class User {
      * @return String representation of user
      */
     public String toStringFull() {
-        return "User name: " + this.userName + ", first name: " + this.firstName + ", last name: " + this.lastName + ", email: " + this.email;
+        return "User name: " + this.userName.get() + ", first name: " + this.firstName.get() + ", last name: " + this.lastName.get() + ", email: " + this.email.get();
     }
 }

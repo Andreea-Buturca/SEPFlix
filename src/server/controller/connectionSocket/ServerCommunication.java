@@ -134,6 +134,9 @@ public class ServerCommunication implements Runnable {
                         Double idRemoveFavourite = (double) data.get("id");
                         Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
+                    case "RateMovie":
+
+                        break;
                     case "SearchMovie":
                         returnData.put("Action", "SearchMovie");
                         returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));

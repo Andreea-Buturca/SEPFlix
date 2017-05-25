@@ -1,23 +1,23 @@
 package server.controller;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
-import javafx.util.Callback;
+import javafx.scene.control.cell.PropertyValueFactory;
 import server.Main;
-import server.controller.connectionDB.DatabaseConnection;
+import server.model.User;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
- * Created by andreea on 5/24/2017.
+ * Created by martin on 25/05/2017.
  */
-public class ControllerUsersManagement {
+public class ControllerUsersManagement implements Initializable {
     public Button buttonRemove;
     public TableView table;
     public TableColumn username;
@@ -27,80 +27,22 @@ public class ControllerUsersManagement {
     public Button buttonAddCredit;
     public Button buttonHistory;
 
-    public void getAllData() {
-     /*   User user1 = new User("a", "a", "a", "a", "a.yahoo.com", true);
-        User user2 = new User("b", "b", "b", "b", "b.yahoo.com", true);
-        ArrayList<User> users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-
-        ObservableList<ObservableList> data = FXCollections.observableArrayList();
-        ObservableList<String> row = FXCollections.observableArrayList();
-        for(int i=0;i<users.size();i++)
-        {
-            row.add(users.get(i).toString());
-        }
-        data.add(row);
-
-        table.setItems(data);*/
-
-
-        // https://stackoverflow.com/questions/18941093/how-to-fill-up-a-tableview-with-database-data
-        DatabaseConnection c;
-        ObservableList<ObservableList> data = FXCollections.observableArrayList();
-        if (Main.serverConnection != null) {
-            try {
-                c = DatabaseConnection.getDatabaseConnection();
-                for (int i = 0; i < 4; i++) {
-                    final int j = i;
-                    TableColumn col = new TableColumn();
-                    col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                            return new SimpleStringProperty(param.getValue().get(j).toString());
-                        }
-                    });
-
-                    table.getColumns().addAll(col);
-                    System.out.println("Column [" + i + "] ");
-                }
-
-
-                for(int i=0;i<c.getUsers().size();i++) {
-                    //Iterate Row
-                    ObservableList<String> row = FXCollections.observableArrayList();
-                    for (int j = 1; j <= c.getUsers().size(); j++) {
-                        //Iterate Column
-                        row.add(c.getUsers().get(j).toString());
-                    }
-                    System.out.println("Row [1] added " + row);
-                    data.add(row);
-
-                }
-
-                //FINALLY ADDED TO TableView
-                table.setItems(data);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error on Building Data");
-            }
-        }
-    }
-
-    public void start(Stage stage) throws Exception {
-        //TableView
-        table = new TableView();
-        getAllData();
-
-        //Main Scene
-        Scene scene = new Scene(table);
-
-        stage.setScene(scene);
-        stage.show();
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<User> users = FXCollections.observableArrayList(Main.databaseConnection.getUsers());
+        username.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+        firstName.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+        lastName.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+        table.setItems(users);
     }
 
     public void removeUser(ActionEvent actionEvent) {
-        DatabaseConnection c = DatabaseConnection.getDatabaseConnection();
+        if (table.getSelectionModel().getSelectedItem() != null) {
+            User user = (User) table.getSelectionModel().getSelectedItem();
+            Main.databaseConnection.removeUserByUserName(user.getUserName());
+        } else {
+            //todo alert
+        }
     }
 
     public void addCredit(ActionEvent actionEvent) {
@@ -108,4 +50,6 @@ public class ControllerUsersManagement {
 
     public void showHistory(ActionEvent actionEvent) {
     }
+
+
 }

@@ -25,13 +25,13 @@ public class LoginController {
     private Thread controlllerThread;
 
     public LoginController() {
-        Main.loginC=this;
+        Main.loginC = this;
         this.controlllerThread = Thread.currentThread();
     }
 
     public synchronized void logIn(ActionEvent actionEvent) throws IOException {
         //todo validation
-        boolean interupted=false;
+        boolean interupted = false;
         Helper.addDataToRequest("Action", "login");
         Helper.addDataToRequest("Username", usernameField.getText());
         Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));
@@ -40,15 +40,15 @@ public class LoginController {
             wait(25000);
         } catch (InterruptedException e) {
             System.out.println("interupting");
-            interupted=true;
+            interupted = true;
         }
         if (interupted) {
             if (errorCode == 0) loginView();
             else if (errorCode == 1) loginError();
-        }else Helper.alertdisplay("Timeout Error","Server is not responding");
+        } else Helper.alertdisplay("Timeout Error", "Server is not responding");
     }
 
-    public void interupt(int errorCode){
+    public void interupt(int errorCode) {
         this.errorCode = errorCode;
         controlllerThread.interrupt();
 
@@ -67,7 +67,7 @@ public class LoginController {
         Main.stage.show();
     }
 
-    private void loginError(){
+    private void loginError() {
         Helper.alertdisplay("Error", "Wrong username or password.");
     }
 }
