@@ -4,6 +4,8 @@ import client.controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +15,7 @@ import server.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -59,6 +62,26 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
         stage = primaryStage;
+        stage.setOnCloseRequest(we -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Exit");
+            alert.setHeaderText("You are trying to close Sepflix");
+            alert.setContentText("Are you ok with this?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    clientConnection.getClientReceiverThread().stop();
+                    clientConnection.getSocket().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.close();
+                System.exit(0);
+            } else {
+                we.consume();
+            }
+        });
     }
 
 

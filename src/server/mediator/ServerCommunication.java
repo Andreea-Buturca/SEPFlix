@@ -1,7 +1,8 @@
-package server.controller.connectionSocket;
+package server.mediator;
 
 import com.google.gson.internal.StringMap;
 import server.Main;
+import server.controller.connectionSocket.ServerConnection;
 import server.model.Log;
 import server.model.Movie;
 import server.model.User;
@@ -160,6 +161,13 @@ public class ServerCommunication implements Runnable {
                 data.clear();
             }
         } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Client is disconnected");
+            e.printStackTrace();
+        }
+        try {
+            clientSocket.close();
+            ServerConnection.removeClient(clientSocket);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

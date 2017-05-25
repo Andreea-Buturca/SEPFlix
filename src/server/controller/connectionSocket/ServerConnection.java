@@ -1,5 +1,7 @@
 package server.controller.connectionSocket;
 
+import server.mediator.ServerCommunication;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ public class ServerConnection extends Observable implements Runnable {
             }
         }
         return clients;
+    }
+
+    public static void removeClient(Socket client) {
+        clients.remove(client);
     }
 
     @Override

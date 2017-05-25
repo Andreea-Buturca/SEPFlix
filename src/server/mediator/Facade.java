@@ -1,8 +1,6 @@
 package server.mediator;
 
 import com.google.gson.internal.StringMap;
-import server.Main;
-import server.controller.connectionDB.DatabaseConnection;
 import server.model.User;
 
 import java.util.ArrayList;

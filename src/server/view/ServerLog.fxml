@@ -8,7 +8,7 @@
    <children>
       <ImageView fitHeight="155.0" fitWidth="376.0" layoutX="315.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@logo.png" />
+             <Image url="@assets/logo.png"/>
          </image>
       </ImageView>
       <TableView fx:id="table" layoutX="20.0" layoutY="155.0" prefHeight="339.0" prefWidth="969.0">

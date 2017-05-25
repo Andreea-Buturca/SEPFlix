@@ -1,4 +1,4 @@
-package server.controller.connectionREST;
+package server.mediator;
 
 import com.google.gson.internal.StringMap;
 import server.Main;

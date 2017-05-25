@@ -1,4 +1,4 @@
-package server.controller.connectionDB;
+package server.mediator;
 
 import server.Main;
 import server.model.Movie;

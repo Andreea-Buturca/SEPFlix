@@ -16,6 +16,7 @@ public class ClientConnection {
     private ObjectInputStream inFromServer;
     private ObjectOutputStream outToServer;
     private Socket socket;
+    private Thread clientReceiverThread;
 
     private ClientConnection() {
         try {
@@ -23,7 +24,8 @@ public class ClientConnection {
             outToServer = new ObjectOutputStream(socket.getOutputStream());
             inFromServer = new ObjectInputStream(socket.getInputStream());
             ClientReceiver clientReceiver = new ClientReceiver(inFromServer);
-            new Thread(clientReceiver, "Reciever").start();
+            clientReceiverThread = new Thread(clientReceiver, "Reciever");
+            clientReceiverThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,6 +49,14 @@ public class ClientConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public Thread getClientReceiverThread() {
+        return clientReceiverThread;
     }
 
     public void sendSmtToServer(String json) {
