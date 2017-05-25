@@ -1,6 +1,5 @@
 package server.mediator;
 
-import com.google.gson.internal.StringMap;
 import javafx.stage.FileChooser;
 import jxl.CellView;
 import jxl.Workbook;
@@ -9,10 +8,10 @@ import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.write.*;
 import server.Main;
+import server.model.Log;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
@@ -22,14 +21,14 @@ import java.util.Observable;
  */
 public class ServerLogger extends Observable {
 
-    private ArrayList<StringMap<Object>> actionsLog;
+    private ArrayList<Log> actionsLog;
 
     public ServerLogger() {
         this.actionsLog = new ArrayList<>();
     }
 
-    public synchronized void addAction(StringMap<Object> action) {
-        actionsLog.add(action);
+    public synchronized void addAction(Log log) {
+        actionsLog.add(log);
         super.setChanged();
         super.notifyObservers(this.actionsLog);
         System.out.println(actionsLog.toString());
@@ -92,17 +91,17 @@ public class ServerLogger extends Observable {
                 Label labelLogged;
                 Label labelTime;
                 for (int i = 0; i < actionsLog.size(); i++) {
-                    InetSocketAddress ip = (InetSocketAddress) actionsLog.get(i).get("IP");
-                    Date date = (Date) actionsLog.get(i).get("Time");
-                    if (actionsLog.get(i).get("Action").equals("Alert")) {
-                        labelIp = new Label(0, i + 1, ip.toString(), redBackground);
-                        labelAction = new Label(1, i + 1, (String) actionsLog.get(i).get("Action"), redBackground);
-                        labelLogged = new Label(2, i + 1, ((boolean) actionsLog.get(i).get("LoggedIn")) ? "Yes" : "No", redBackground);
+                    Date date = (Date) actionsLog.get(i).getDate();
+                    if (actionsLog.get(i).getAction().equals("Alert")) {
+                        String action = actionsLog.get(i).getAction() + " - " + actionsLog.get(i).getMessage();
+                        labelIp = new Label(0, i + 1, actionsLog.get(i).getIp(), redBackground);
+                        labelAction = new Label(1, i + 1, action, redBackground);
+                        labelLogged = new Label(2, i + 1, (actionsLog.get(i).getLoggedIn()) ? "Yes" : "No", redBackground);
                         labelTime = new Label(3, i + 1, date.toString(), redBackground);
                     } else {
-                        labelIp = new Label(0, i + 1, ip.toString());
-                        labelAction = new Label(1, i + 1, (String) actionsLog.get(i).get("Action"));
-                        labelLogged = new Label(2, i + 1, ((boolean) actionsLog.get(i).get("LoggedIn")) ? "Yes" : "No");
+                        labelIp = new Label(0, i + 1, actionsLog.get(i).getIp());
+                        labelAction = new Label(1, i + 1, actionsLog.get(i).getAction());
+                        labelLogged = new Label(2, i + 1, (actionsLog.get(i).getLoggedIn()) ? "Yes" : "No");
                         labelTime = new Label(3, i + 1, date.toString());
                     }
                     sheet.addCell(labelIp);

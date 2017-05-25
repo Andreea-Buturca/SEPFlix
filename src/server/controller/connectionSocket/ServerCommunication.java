@@ -2,6 +2,7 @@ package server.controller.connectionSocket;
 
 import com.google.gson.internal.StringMap;
 import server.Main;
+import server.model.Log;
 import server.model.Movie;
 import server.model.User;
 
@@ -10,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -79,7 +79,6 @@ public class ServerCommunication implements Runnable {
                             sendAlert("Wrong authentication!", "editProfile");
                             break;
                         }*/
-                        System.out.println(data.toString());
                         User userEdit = new User(data, false);
                         if (data.get("NewPassword") != null) {
                             if (!(Main.databaseConnection.getUserByUserName((String) data.get("Username")).getPassword().equals(data.get("OldPassword")))) {
@@ -99,8 +98,11 @@ public class ServerCommunication implements Runnable {
                     case "MovieDetail":
                         returnData.put("Action", "MovieDetail");
                         Double idDetail = (double) data.get("id");
-                        Movie movie = Main.connectionREST.getMovie(idDetail.intValue());
-                        System.out.println(movie);
+                        Movie movie;
+                        movie = Main.databaseConnection.getMovieById(idDetail.intValue());
+                        if (movie == null) {
+                            movie = Main.connectionREST.getMovie(idDetail.intValue());
+                        }
                         returnData.putAll(movie.toStringMap());
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
@@ -135,7 +137,8 @@ public class ServerCommunication implements Runnable {
                         Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
                     case "RateMovie":
-
+                        Double idRate = (double) data.get("id");
+                        Main.databaseConnection.rateMovie((String) data.get("Username"), idRate.intValue(), (double) data.get("Rate"));
                         break;
                     case "SearchMovie":
                         returnData.put("Action", "SearchMovie");
@@ -168,7 +171,7 @@ public class ServerCommunication implements Runnable {
             returnData.put("FromAction", fromAction);
         }
         returnData.put("Message", message);
-        logAction("Alert");
+        logAction("Alert", message);
         sendSmtToClient(Main.gson.toJson(returnData));
     }
 
@@ -176,13 +179,18 @@ public class ServerCommunication implements Runnable {
         sendAlert(message, null);
     }
 
+    private void logAction(String action, String message) {
+        Log log;
+        if (message != null) {
+            log = new Log(clientSocket.getRemoteSocketAddress().toString(), action, this.authToken != null);
+        } else {
+            log = new Log(clientSocket.getRemoteSocketAddress().toString(), action, message, this.authToken != null);
+        }
+        Main.serverLogger.addAction(log);
+    }
+
     private void logAction(String action) {
-        StringMap<Object> actionMap = new StringMap<>();
-        actionMap.put("IP", clientSocket.getRemoteSocketAddress());
-        actionMap.put("Action", action);
-        actionMap.put("LoggedIn", this.authToken != null);
-        actionMap.put("Time", new Date());
-        Main.serverLogger.addAction(actionMap);
+        logAction(action, null);
     }
 
     public void sendSmtToClient(String json) {

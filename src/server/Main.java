@@ -55,6 +55,9 @@ public class Main extends Application {
         databaseConnection = DatabaseConnection.getDatabaseConnection();
         connectionREST = new ConnectionREST();
 
+//        databaseConnection.rateMovie("martin", 283995, 9.8);
+//        databaseConnection.rateMovie("martin", 126889, 8.8);
+//        databaseConnection.rateMovie("martin1", 126889, 5.3);
         //System.out.println(connectionREST.getLatestMovies());
         //System.out.println(connectionREST.getMovie(283995));
         //Movie movie = connectionREST.getMovie(283995);

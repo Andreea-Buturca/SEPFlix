@@ -8,26 +8,26 @@ import java.util.Date;
 /**
  * Created by Stela on 25.5.2017.
  */
-public class ModelLog {
+public class Log {
     private SimpleStringProperty ip;
     private SimpleStringProperty action;
     private SimpleStringProperty message;
     private SimpleBooleanProperty loggedIn;
     private Date date;
 
-    public ModelLog(String ip, String action, String message,Boolean loggedIn, Date date){
+    public Log(String ip, String action, String message, Boolean loggedIn) {
         this.ip = new SimpleStringProperty(ip);
         this.action = new SimpleStringProperty(action);
         this.message = new SimpleStringProperty(message);
         this.loggedIn = new SimpleBooleanProperty(loggedIn);
-        this.date = date;
+        this.date = new Date();
     }
 
-    public ModelLog(String ip, String action, Boolean loggedIn, Date date){
+    public Log(String ip, String action, Boolean loggedIn) {
         this.ip = new SimpleStringProperty(ip);
         this.action = new SimpleStringProperty(action);
         this.loggedIn = new SimpleBooleanProperty(loggedIn);
-        this.date = date;
+        this.date = new Date();
     }
 
     public String getIp(){
@@ -46,4 +46,13 @@ public class ModelLog {
         return date;
     }
 
+    public String toString() {
+        return "Log{" +
+                "ip=" + ip.get() +
+                ", action=" + action.get() +
+                ", message=" + message.get() +
+                ", loggedIn=" + loggedIn.get() +
+                ", date=" + date.toString() +
+                '}';
+    }
 }

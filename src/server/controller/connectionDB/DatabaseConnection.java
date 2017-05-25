@@ -207,17 +207,17 @@ public class DatabaseConnection {
 
     }
 
-    public void RateMovie(String userName, int movie_id, double rate) {
+    public void rateMovie(String userName, int movie_id, double rate) {
         try {
             if (getMovieById(movie_id) == null) {
                 addMovie(Main.connectionREST.getMovie(movie_id));
             }
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO rate_movies (id_movie, user_name) VALUES (?,?);"
+                    "INSERT INTO rate_movies (id_movie, user_name, rate_sepflix) VALUES (?, ?, ?);"
             );
             statement.setInt(1, movie_id);
             statement.setString(2, userName);
-            //todo
+            statement.setDouble(3, rate);
             statement.execute();
             statement.close();
         } catch (SQLException e) {
@@ -229,15 +229,16 @@ public class DatabaseConnection {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO movies " +
-                            "(id_movie, poster, title, genders, release_year, rating_imdb) " +
-                            "VALUES (?,?,?,?,?,?); "
+                            "(id_movie, poster, title, genres, overview, release_year, rating_imdb) " +
+                            "VALUES (?,?,?,?,?,?,?); "
             );
             statement.setInt(1, movie.getId());
             statement.setString(2, movie.getPoster());
             statement.setString(3, movie.getTitle());
             statement.setString(4, movie.getGenres());
-            statement.setDate(5, movie.getSQLReleaseYear());
-            statement.setDouble(6, movie.getRatingImbd());
+            statement.setString(5, movie.getOverview());
+            statement.setDate(6, movie.getSQLReleaseYear());
+            statement.setDouble(7, movie.getRatingImbd());
             statement.execute();
             statement.close();
         } catch (SQLException e) {
@@ -263,7 +264,6 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //System.out.println(movie.toString());
         return movie;
     }
 }

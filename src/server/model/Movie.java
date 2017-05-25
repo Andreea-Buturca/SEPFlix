@@ -68,8 +68,11 @@ public class Movie {
             this.id = resultSet.getInt("id_movie");
             this.poster = resultSet.getString("poster");
             this.title = resultSet.getString("title");
+            this.overview = resultSet.getString("overview");
+            this.genres = resultSet.getString("genres");
             this.releaseYear = resultSet.getString("release_year");
             this.ratingImbd = resultSet.getDouble("rating_imdb");
+            this.ratingSepFlix = resultSet.getDouble("rating_sepflix");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -150,6 +153,7 @@ public class Movie {
         if (this.genres != null) {
             movie.put("genres", this.genres);
             movie.put("overview", this.overview);
+            movie.put("vote_sepflix", this.ratingSepFlix);
         }
         return movie;
     }
