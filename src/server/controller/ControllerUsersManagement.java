@@ -28,6 +28,23 @@ public class ControllerUsersManagement {
     public Button buttonHistory;
 
     public void getAllData() {
+     /*   User user1 = new User("a", "a", "a", "a", "a.yahoo.com", true);
+        User user2 = new User("b", "b", "b", "b", "b.yahoo.com", true);
+        ArrayList<User> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+        ObservableList<String> row = FXCollections.observableArrayList();
+        for(int i=0;i<users.size();i++)
+        {
+            row.add(users.get(i).toString());
+        }
+        data.add(row);
+
+        table.setItems(data);*/
+
+
         // https://stackoverflow.com/questions/18941093/how-to-fill-up-a-tableview-with-database-data
         DatabaseConnection c;
         ObservableList<ObservableList> data = FXCollections.observableArrayList();
