@@ -3,9 +3,9 @@ package server;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -15,7 +15,6 @@ import server.controller.connectionSocket.ServerConnection;
 import server.mediator.ServerLogger;
 
 import java.net.URL;
-import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -39,9 +38,10 @@ public class Main extends Application {
         root.setCenter(paneOne);
 
         Scene scene = new Scene(root, 1000, 600);
-
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("view/assets/icon.png")));
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Server");
+        primaryStage.setTitle("SEPFlix Server");
+        primaryStage.setResizable(false);
         primaryStage.show();
         stage = primaryStage;
     }
