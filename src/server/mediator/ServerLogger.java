@@ -31,7 +31,10 @@ public class ServerLogger extends Observable {
         actionsLog.add(log);
         super.setChanged();
         super.notifyObservers(this.actionsLog);
-        System.out.println(actionsLog.toString());
+    }
+
+    public ArrayList<Log> getActionsLog() {
+        return actionsLog;
     }
 
     public void saveLog() {
@@ -42,13 +45,15 @@ public class ServerLogger extends Observable {
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel file (*.xls)", "*.xls");
             fileChooser.getExtensionFilters().add(extFilter);
 
-            //Show save file dialog
+            //Show save file dialog and create file
             File file = fileChooser.showSaveDialog(Main.stage);
             if (file != null) {
+                //create xls file and sheet
                 WritableWorkbook workbook = null;
                 workbook = Workbook.createWorkbook(file);
                 WritableSheet sheet = workbook.createSheet("Log", 0);
 
+                //format columns
                 CellView columnView1 = sheet.getColumnView(0);
                 CellView columnView2 = sheet.getColumnView(1);
                 CellView columnView3 = sheet.getColumnView(2);
@@ -62,7 +67,7 @@ public class ServerLogger extends Observable {
                 sheet.setColumnView(2, columnView3);
                 sheet.setColumnView(3, columnView4);
 
-
+                //cell formats
                 WritableFont headFont = new WritableFont(WritableFont.ARIAL,
                         WritableFont.DEFAULT_POINT_SIZE,
                         WritableFont.BOLD,
@@ -77,6 +82,7 @@ public class ServerLogger extends Observable {
                 WritableCellFormat redBackground = new WritableCellFormat();
                 redBackground.setBackground(Colour.RED);
 
+                //head of table
                 Label headLabelIp = new Label(0, 0, "IP", head);
                 Label headLabelAction = new Label(1, 0, "Action", head);
                 Label headLabelLogged = new Label(2, 0, "Logged In", head);
@@ -86,6 +92,7 @@ public class ServerLogger extends Observable {
                 sheet.addCell(headLabelLogged);
                 sheet.addCell(headLabelTime);
 
+                //data
                 Label labelIp;
                 Label labelAction;
                 Label labelLogged;

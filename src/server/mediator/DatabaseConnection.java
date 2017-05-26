@@ -225,6 +225,40 @@ public class DatabaseConnection {
         }
     }
 
+    public void commentMovie(String userName, int movie_id, String comment) {
+        try {
+            if (getMovieById(movie_id) == null) {
+                addMovie(Main.connectionREST.getMovie(movie_id));
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO comment_movies (id_movie, user_name, comment) VALUES (?, ?, ?);"
+            );
+            statement.setInt(1, movie_id);
+            statement.setString(2, userName);
+            statement.setString(3, comment);
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getMovieComments(int movie_id) {
+        try {
+            if (getMovieById(movie_id) == null) {
+                addMovie(Main.connectionREST.getMovie(movie_id));
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO comment_movies (id_movie, user_name, comment) VALUES (?, ?, ?);"
+            );
+            statement.setInt(1, movie_id);
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addMovie(Movie movie) {
         try {
             PreparedStatement statement = connection.prepareStatement(

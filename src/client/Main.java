@@ -86,7 +86,11 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        clientConnection = ClientConnection.getClientConnection();
+        createConnection();
         launch(args);
+    }
+
+    public static void createConnection() {
+        clientConnection = ClientConnection.getClientConnection();
     }
 }

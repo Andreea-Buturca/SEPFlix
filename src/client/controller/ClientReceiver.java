@@ -3,17 +3,10 @@ package client.controller;
 import client.Main;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import server.model.User;
-import sun.nio.cs.ext.MacArabic;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -68,10 +61,11 @@ public class ClientReceiver implements Runnable {
                         Main.facouritesC.interupt(favourites);
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+            //todo Marek
+            //Helper.alertdisplay("Server", "Connection lost!");
+            System.out.println("Server down");
+            Main.createConnection();
         }
     }
 }
