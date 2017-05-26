@@ -39,6 +39,11 @@ public class Helper {
 
     }
 
+    protected static boolean validateRateNumber(TextField textField) {
+        return textField.getText().matches("[1]?[0-9]?(\\.[0-9]?)?");
+
+    }
+
     /**
      * Validates if textfield text has given length.
      */

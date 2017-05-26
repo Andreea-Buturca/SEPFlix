@@ -38,6 +38,7 @@ public class MovieInfoController implements Initializable {
     public ListView comentList;
     public TextField rateField;
     public Button commentButton;
+    public TextField commentField;
 
     private Thread controllerThread;
     private StringMap<Object> movieInfo;
@@ -76,17 +77,9 @@ public class MovieInfoController implements Initializable {
     }
 
     private void loadMovieInfo() {
-        System.out.println(movieInfo.get("id"));
-        System.out.println(movieInfo.get("title"));
-        System.out.println(movieInfo.get("overview"));
-        System.out.println(movieInfo.get("release_date"));
-        System.out.println(movieInfo.get("vote_average"));
-        System.out.println(movieInfo.get("genres"));
-
         String posterpath = (String) movieInfo.get("poster_path");
         String imageURL = "https://image.tmdb.org/t/p/w320" + posterpath;
         moviePosterImageView.setImage(new Image(imageURL));
-
         titleLabel.setText((String) movieInfo.get("title"));
         String year = (String) movieInfo.get("release_date");
         String[] token = year.split("-");
@@ -95,6 +88,10 @@ public class MovieInfoController implements Initializable {
         genreLabel.setText((String) movieInfo.get("genres"));
         Double voteimbd = (Double) movieInfo.get("vote_average");
         imbdLabel.setText("Imbd: "+voteimbd.toString());
+        if (movieInfo.get("vote_sepflix") != null) {
+            Double d = (Double) movieInfo.get("vote_sepflix");
+            sepflixLabel.setText("SEPFlix: " + d.toString());
+        } else sepflixLabel.setText("No sepflix rate");
         overviewText.setText((String)movieInfo.get("overview"));
     }
 
@@ -126,8 +123,39 @@ public class MovieInfoController implements Initializable {
         }
     }
 
-    public void rate(ActionEvent actionEvent) {
-
+    public void rate(ActionEvent actionEvent) throws IOException {
+        if (Main.loggedUser == null) {
+            BorderPane root = new BorderPane();
+            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/login.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+            root.setTop(bar);
+            root.setCenter(paneOne);
+            Scene scene = new Scene(root);
+            Main.stage.setScene(scene);
+            Main.stage.show();
+        } else {
+            if (!Helper.validateRateNumber(rateField)) {
+                Helper.alertdisplay("Wrong Input", "You have entered wrong value in rate field");
+                return;
+            } else {
+                Double d = Double.parseDouble(rateField.getText());
+                if (d > 10) {
+                    Helper.alertdisplay("Wrong value", "Yu can only rate between 0-10");
+                    return;
+                }
+            }
+            Double d = Double.parseDouble(rateField.getText());
+            System.out.println(d);
+            Helper.addDataToRequest("Action", "RateMovie");
+            Helper.addDataToRequest("id", movieInfo.get("id"));
+            Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
+            Helper.addDataToRequest("Token", Main.token);
+            Helper.addDataToRequest("Rate", d);
+            Helper.sendRequest();
+            // wait
+        }
     }
 
 
@@ -142,6 +170,24 @@ public class MovieInfoController implements Initializable {
         secondaryStage.show();
     }
 
-    public void comment(ActionEvent actionEvent) {
+    public void comment(ActionEvent actionEvent) throws IOException {
+        if (Main.loggedUser == null) {
+            BorderPane root = new BorderPane();
+            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/login.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+            root.setTop(bar);
+            root.setCenter(paneOne);
+            Scene scene = new Scene(root);
+            Main.stage.setScene(scene);
+            Main.stage.show();
+        } else if (!commentField.getText().isEmpty()) {
+            Helper.addDataToRequest("Action", "Comment");
+            Helper.addDataToRequest("Token", Main.token);
+            Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
+            Helper.addDataToRequest("Comment", commentField.getText());
+            //Helper.sendRequest();
+        }
     }
 }

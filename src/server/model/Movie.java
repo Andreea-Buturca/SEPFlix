@@ -143,7 +143,6 @@ public class Movie {
     }
 
     public StringMap<Object> toStringMap() {
-
         StringMap<Object> movie = new StringMap<>();
         movie.put("id", this.id);
         movie.put("poster_path", this.poster);
