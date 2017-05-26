@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.TileController">
    <children>
-      <ImageView fitHeight="480.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" />
+      <ImageView fitHeight="480.0" fitWidth="320.0" onMouseClicked="#showMovieInfoMouse" pickOnBounds="true"
+                 preserveRatio="true" AnchorPane.leftAnchor="0.0"/>
       <Label alignment="CENTER" layoutX="6.0" layoutY="480.0" maxWidth="310.0" prefWidth="310.0" text="MovieName" textAlignment="CENTER" AnchorPane.leftAnchor="6.0">
          <font>
             <Font size="18.0" />

@@ -54,6 +54,7 @@ public class ShowprofileController implements Initializable {
     public void save(ActionEvent actionEvent) {
         if (Main.loggedUser != null) {
             Helper.addDataToRequest("Action", "editProfile");
+            Helper.addDataToRequest("Token", Main.token);
             Helper.addDataToRequest("Username", usernameField.getText());
             Helper.addDataToRequest("FirstName", nameField.getText());
             Main.loggedUser.setFirstName(nameField.getText());

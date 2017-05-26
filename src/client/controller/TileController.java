@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -20,8 +20,7 @@ public class TileController {
 
     public Label idLabel;
 
-
-    public void showMovieInfo(ActionEvent actionEvent) throws IOException {
+    private void movieInfo() throws IOException {
         Helper.addDataToRequest("Action", "MovieDetail");
         System.out.println(idLabel.getText());
         Double id = Double.parseDouble(idLabel.getText());
@@ -45,5 +44,13 @@ public class TileController {
         Scene scene = new Scene(root);
         Main.stage.setScene(scene);
         Main.stage.show();
+    }
+
+    public void showMovieInfo(ActionEvent actionEvent) throws IOException {
+        movieInfo();
+    }
+
+    public void showMovieInfoMouse(MouseEvent mouseEvent) throws IOException {
+        movieInfo();
     }
 }

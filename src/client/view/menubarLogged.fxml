@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-
+<?import javafx.scene.control.*?>
 <MenuBar prefHeight="20.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.MenuLoggedController">
   <menus>
     <Menu fx:id="home" mnemonicParsing="false" text="Home">
@@ -13,6 +10,7 @@
     <Menu mnemonicParsing="false" text="Movies">
       <items>
         <MenuItem fx:id="list" mnemonicParsing="false" onAction="#changeViewMenu" text="My List" />
+          <MenuItem fx:id="trailer" mnemonicParsing="false" onAction="#changeViewMenu" text="Movie Trailer"/>
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profile">

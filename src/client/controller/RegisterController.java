@@ -1,9 +1,18 @@
 package client.controller;
 
+import client.Main;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by Marek on 15-May-17.
@@ -16,7 +25,7 @@ public class RegisterController {
     public TextField emailField;
     public PasswordField passwordField;
 
-    public void registerUser(ActionEvent actionEvent) {
+    public void registerUser(ActionEvent actionEvent) throws IOException {
         //todo validation
 
         Helper.addDataToRequest("Action", "register");
@@ -27,5 +36,16 @@ public class RegisterController {
         Helper.addDataToRequest("Email", emailField.getText());
         Helper.sendRequest();
         Helper.successdisplay("Registered", "You are now user of SEPFlix");
+
+        BorderPane root = new BorderPane();
+        URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+        MenuBar bar = FXMLLoader.load(menuBarUrl);
+        URL paneOneUrl = getClass().getResource("../view/login.fxml");
+        AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+        root.setTop(bar);
+        root.setCenter(paneOne);
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        Main.stage.show();
     }
 }

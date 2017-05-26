@@ -49,6 +49,7 @@ public class ServerCommunication implements Runnable {
                             sendAlert("You are already authenticated!", "register");
                             break;
                         }*/
+                        // TODO: 26-May-17 how can i send you token? I will get it after login
                         //todo alert username is taken, email
                         User userRegister = new User(data, false);
                         Main.databaseConnection.registerUser(userRegister);

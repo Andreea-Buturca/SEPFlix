@@ -27,6 +27,7 @@ public class Main extends Application {
     public static ListMainController listMainC;
     public static MovieInfoController movieInfoC;
     public static FavouritesController facouritesC;
+    public static String token;
     /*@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));

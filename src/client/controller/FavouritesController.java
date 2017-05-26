@@ -8,10 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import server.mediator.Facade;
@@ -28,6 +25,7 @@ public class FavouritesController implements Initializable {
     public Label usernameLabel;
     public Button removeButton;
     public ListView favouritesListView;
+    public MenuItem infoMenu;
     private ArrayList<StringMap<Object>> favourites;
     private Thread controllerThread;
 
@@ -39,8 +37,10 @@ public class FavouritesController implements Initializable {
     @Override
     public synchronized void initialize(URL location, ResourceBundle resources) {
         Helper.addDataToRequest("Action", "FavouriteMovies");
+        Helper.addDataToRequest("Token", Main.token);
         Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
         Helper.sendRequest();
+        usernameLabel.setText(Facade.getUsername(Main.loggedUser));
         boolean interupted = false;
         try {
             wait(15000);
@@ -66,25 +66,38 @@ public class FavouritesController implements Initializable {
         for (FavouriteMovie m : movies) {
             StringMap<Object> movie = m.getInfo();
             Helper.addDataToRequest("Action", "RemoveFavouriteMovie");
+            Helper.addDataToRequest("Token", Main.token);
             Helper.addDataToRequest("id", movie.get("id"));
             Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
             Helper.sendRequest();
             Facade.removeFromFavourites(Main.loggedUser, (Double) movie.get("id"));
         }
         Helper.successdisplay("Removed", "Selected movies have been deleted from your favourites");
-        //Main.stage.show();
-        /*if (!Facade.hasFavourites(Main.loggedUser)) {
-            BorderPane root = new BorderPane();
+    }
+
+    public void showInfo(ActionEvent actionEvent) throws IOException {
+        ObservableList<FavouriteMovie> movies = favouritesListView.getSelectionModel().getSelectedItems();
+        Helper.addDataToRequest("Action", "MovieDetail");
+        Double id = (Double) movies.get(0).getInfo().get("id");
+        System.out.println(id);
+        Helper.addDataToRequest("id", id);
+        Helper.sendRequest();
+        BorderPane root = new BorderPane();
+        if (Main.loggedUser != null) {
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
-            URL paneOneUrl = getClass().getResource("../view/listOfMovies.fxml");
-            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
-            root.setCenter(paneOne);
-            Scene scene = new Scene(root);
-            Main.stage.setScene(scene);
-            Main.stage.show();
-        }*/
+        } else {
+            URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            root.setTop(bar);
+        }
+        URL paneOneUrl = getClass().getResource("../view/movieInfo.fxml");
+        AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+        root.setCenter(paneOne);
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        Main.stage.show();
     }
 
     /**

@@ -4,12 +4,10 @@ import client.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +21,7 @@ public class MenuLoggedController {
     public MenuItem myprofile;
     public MenuItem logout;
     public MenuItem homescreen;
+    public MenuItem trailer;
 
     public void changeViewMenu(ActionEvent actionEvent) throws IOException {
 
@@ -37,7 +36,6 @@ public class MenuLoggedController {
             root.setTop(bar);
             root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == list)) {
-            //if (Facade.hasFavourites(Main.loggedUser)){
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
@@ -45,10 +43,14 @@ public class MenuLoggedController {
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
-            /*}else {
-                Helper.alertdisplay("No Favourites", "You have no favourite movies in list");
-            }*/
-
+        } else if ((actionEvent.getSource() == trailer)) {
+            root = new BorderPane();
+            URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");
+            MenuBar bar = FXMLLoader.load(menuBarUrl);
+            URL paneOneUrl = getClass().getResource("../view/player.fxml");
+            AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
+            root.setTop(bar);
+            root.setCenter(paneOne);
         } else if ((actionEvent.getSource() == myprofile)) {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarLogged.fxml");

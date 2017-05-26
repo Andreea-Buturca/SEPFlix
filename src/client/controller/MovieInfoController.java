@@ -6,9 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +35,9 @@ public class MovieInfoController implements Initializable {
     public Button rateButton;
     public Text overviewText;
     public Button trailerButton;
+    public ListView comentList;
+    public TextField rateField;
+    public Button commentButton;
 
     private Thread controllerThread;
     private StringMap<Object> movieInfo;
@@ -118,6 +119,7 @@ public class MovieInfoController implements Initializable {
             Facade.addMovieToFavourites(Main.loggedUser, movieInfo);
             Helper.successdisplay("Added", "Movie was added to you favourites");
             Helper.addDataToRequest("Action", "AddFavouriteMovie");
+            Helper.addDataToRequest("Token", Main.token);
             Helper.addDataToRequest("id", movieInfo.get("id"));
             Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
             Helper.sendRequest();
@@ -138,5 +140,8 @@ public class MovieInfoController implements Initializable {
         Scene scene = new Scene(root);
         secondaryStage.setScene(scene);
         secondaryStage.show();
+    }
+
+    public void comment(ActionEvent actionEvent) {
     }
 }
