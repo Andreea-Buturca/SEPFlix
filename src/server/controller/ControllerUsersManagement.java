@@ -40,12 +40,14 @@ public class ControllerUsersManagement implements Initializable {
         if (table.getSelectionModel().getSelectedItem() != null) {
             User user = (User) table.getSelectionModel().getSelectedItem();
             Main.databaseConnection.removeUserByUserName(user.getUserName());
+            HelperServer.successdisplay("Success", "User removed!");
         } else {
-            //todo alert
+           HelperServer.alertdisplay("Alert", "Select a user!");
         }
     }
 
     public void addCredit(ActionEvent actionEvent) {
+
     }
 
     public void showHistory(ActionEvent actionEvent) {
