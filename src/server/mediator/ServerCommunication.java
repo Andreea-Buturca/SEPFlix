@@ -162,13 +162,12 @@ public class ServerCommunication implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Client is disconnected");
-            e.printStackTrace();
-        }
-        try {
-            clientSocket.close();
+            try {
+                clientSocket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             ServerConnection.removeClient(clientSocket);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

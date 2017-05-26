@@ -19,16 +19,10 @@ public class ClientConnection {
     private Thread clientReceiverThread;
 
     private ClientConnection() {
-        try {
-            socket = new Socket(host, PORT);
-            outToServer = new ObjectOutputStream(socket.getOutputStream());
-            inFromServer = new ObjectInputStream(socket.getInputStream());
-            ClientReceiver clientReceiver = new ClientReceiver(inFromServer);
-            clientReceiverThread = new Thread(clientReceiver, "Reciever");
-            clientReceiverThread.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        createConnection();
+        ClientReceiver clientReceiver = new ClientReceiver(inFromServer);
+        clientReceiverThread = new Thread(clientReceiver, "Reciever");
+        clientReceiverThread.start();
     }
 
     public static ClientConnection getClientConnection() {
@@ -38,17 +32,22 @@ public class ClientConnection {
         return clientConnection;
     }
 
-    public ClientConnection(String host) {
-        this.host = host;
+    private void createConnection() {
         try {
             socket = new Socket(host, PORT);
             outToServer = new ObjectOutputStream(socket.getOutputStream());
             inFromServer = new ObjectInputStream(socket.getInputStream());
-            ClientReceiver clientReceiver = new ClientReceiver(inFromServer);
-            new Thread(clientReceiver, "Reciever").start();
         } catch (IOException e) {
-            e.printStackTrace();
+            createConnection();
         }
+    }
+
+    public ClientConnection(String host) {
+        this.host = host;
+        createConnection();
+        ClientReceiver clientReceiver = new ClientReceiver(inFromServer);
+        new Thread(clientReceiver, "Reciever").start();
+
     }
 
     public Socket getSocket() {
