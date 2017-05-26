@@ -24,8 +24,6 @@ public class ControllerUsersManagement implements Initializable {
     public TableColumn firstName;
     public TableColumn lastName;
     public TableColumn credit;
-    public Button buttonAddCredit;
-    public Button buttonHistory;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,13 +43,4 @@ public class ControllerUsersManagement implements Initializable {
            HelperServer.alertdisplay("Alert", "Select a user!");
         }
     }
-
-    public void addCredit(ActionEvent actionEvent) {
-
-    }
-
-    public void showHistory(ActionEvent actionEvent) {
-    }
-
-
 }
