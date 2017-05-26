@@ -32,7 +32,6 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Button fx:id="buttonRefresh" layoutX="433.0" layoutY="517.0" mnemonicParsing="false" onAction="#refresh" prefHeight="35.0" prefWidth="100.0" text="Refresh" />
       <Label fx:id="labelYesNo" layoutX="232.0" layoutY="75.0" text="Yes/No">
          <font>
             <Font size="30.0" />
