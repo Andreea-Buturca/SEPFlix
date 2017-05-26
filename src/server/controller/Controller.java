@@ -42,7 +42,6 @@ public class Controller implements Initializable, Observer {
     private void updateTable() {
         clients = Main.serverConnection.getClients();
         if (clients != null) {
-            System.out.println(clients.size());
             labelNoClients.setText(clients.size() + "");
             ArrayList<String> clientsIp = new ArrayList<>();
             for (Socket socket : clients) {
