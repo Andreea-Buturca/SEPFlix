@@ -9,23 +9,24 @@ import java.sql.SQLException;
  * Created by Stela on 26.5.2017.
  */
 public class Comment {
-    String comment;
-    int idMovie;
-    String username;
+    private String comment;
+    private int idMovie;
+    private String username;
 
-    public Comment(String comment, int idMovie, String username){
+    public Comment(String comment, int idMovie, String username) {
         this.comment = comment;
         this.idMovie = idMovie;
         this.username = username;
     }
 
-    public Comment(StringMap<Object> data){
+    public Comment(StringMap<Object> data) {
         Double idDouble = (Double) data.get("id");
         this.idMovie = idDouble.intValue();
         this.username = (String) data.get("user_name");
         this.comment = (String) data.get("comment");
     }
-    public Comment(ResultSet resultSet){
+
+    public Comment(ResultSet resultSet) {
         try {
             this.idMovie = resultSet.getInt("id_movie");
             this.comment = resultSet.getString("comment");
@@ -35,20 +36,23 @@ public class Comment {
         }
     }
 
-    public String getComment(){
+    public String getComment() {
         return comment;
     }
-    public String getUsername(){
+
+    public String getUsername() {
         return username;
     }
-    public int getidMovie(){
+
+    public int getidMovie() {
         return idMovie;
     }
-    public StringMap<Object> toStringMap(){
+
+    public StringMap<Object> toStringMap() {
         StringMap<Object> comment = new StringMap<>();
         comment.put("user_name", this.username);
         comment.put("comment", this.comment);
-        comment.put("id_Movie",this.idMovie);
+        comment.put("id_Movie", this.idMovie);
         return comment;
     }
 }

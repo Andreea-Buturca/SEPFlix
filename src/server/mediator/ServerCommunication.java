@@ -38,7 +38,6 @@ public class ServerCommunication implements Runnable {
             while (true) {
                 //todo handle status if something invalid
                 String json = (String) inFromClient.readObject();
-                //todo access to model through something
                 System.out.println(json);
                 data = Main.gson.fromJson(json, StringMap.class);
                 returnData = new StringMap<>();

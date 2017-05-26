@@ -100,7 +100,13 @@ public class ServerLogger extends Observable {
                 for (int i = 0; i < actionsLog.size(); i++) {
                     Date date = (Date) actionsLog.get(i).getDate();
                     if (actionsLog.get(i).getAction().equals("Alert")) {
-                        String action = actionsLog.get(i).getAction() + " - " + actionsLog.get(i).getMessage();
+                        String action;
+                        if (actionsLog.get(i).getMessage() == null) {
+
+                            action = actionsLog.get(i).getAction();
+                        } else {
+                            action = actionsLog.get(i).getAction() + " - " + actionsLog.get(i).getMessage();
+                        }
                         labelIp = new Label(0, i + 1, actionsLog.get(i).getIp(), redBackground);
                         labelAction = new Label(1, i + 1, action, redBackground);
                         labelLogged = new Label(2, i + 1, (actionsLog.get(i).getLoggedIn()) ? "Yes" : "No", redBackground);

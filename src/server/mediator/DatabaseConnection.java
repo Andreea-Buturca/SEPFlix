@@ -1,6 +1,7 @@
 package server.mediator;
 
 import server.Main;
+import server.model.Comment;
 import server.model.Movie;
 import server.model.User;
 
@@ -27,7 +28,6 @@ public class DatabaseConnection {
                     , USER
                     , PASSWORD);
             connection.setSchema("public");
-            //connection.prepareStatement();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -243,28 +243,31 @@ public class DatabaseConnection {
         }
     }
 
-    public void getMovieComments(int movie_id) {
+    public ArrayList<Comment> getMovieComments(int movie_id) {
+        ArrayList<Comment> comments = new ArrayList<>();
         try {
-            if (getMovieById(movie_id) == null) {
-                addMovie(Main.connectionREST.getMovie(movie_id));
-            }
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO comment_movies (id_movie, user_name, comment) VALUES (?, ?, ?);"
+                    "SELECT * FROM comment_movies WHERE id_movie = ?;"
             );
             statement.setInt(1, movie_id);
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                comments.add(new Comment(resultSet));
+            }
+            resultSet.close();
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return comments;
     }
 
     public void addMovie(Movie movie) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO movies " +
-                            "(id_movie, poster, title, genres, overview, release_year, rating_imdb) " +
-                            "VALUES (?,?,?,?,?,?,?); "
+                            "(id_movie, poster, title, genres, overview, release_year, rating_imdb)" +
+                            "VALUES (?,?,?,?,?,?,?);"
             );
             statement.setInt(1, movie.getId());
             statement.setString(2, movie.getPoster());
@@ -281,7 +284,6 @@ public class DatabaseConnection {
     }
 
     public Movie getMovieById(int movie_id) {
-
         Movie movie = null;
         try {
             PreparedStatement statement = connection.prepareStatement(
@@ -289,14 +291,19 @@ public class DatabaseConnection {
             );
             statement.setInt(1, movie_id);
 
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                movie = new Movie(resultSet);
+            ResultSet resultSetMovies = statement.executeQuery();
+
+            if (resultSetMovies.next()) {
+                movie = new Movie(resultSetMovies);
+                movie.setComments(getMovieComments(movie_id));
             }
-            resultSet.close();
+            resultSetMovies.close();
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        if (movie != null) {
+            movie.setComments(getMovieComments(movie_id));
         }
         return movie;
     }

@@ -23,7 +23,7 @@ public class User {
     private SimpleStringProperty lastName;
     private SimpleStringProperty email;
 
-    ArrayList<StringMap<Object>> favourites = new ArrayList<>();
+    private final ArrayList<StringMap<Object>> favourites = new ArrayList<>();
 
     /**
      * Constructs a User object by taking a HashMap and a boolean as arguments
@@ -57,24 +57,6 @@ public class User {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * Constructs a new User object
-     *
-     * @param userName     the user's username
-     * @param password     the password chosen by the user
-     * @param firstName    the user's first name
-     * @param lastName     the user's last name
-     * @param email        the user's email
-     * @param hashPassword the user's hashPassword
-     */
-    public User(String userName, String password, String firstName, String lastName, String email, boolean hashPassword) {
-        this.userName = new SimpleStringProperty(userName);
-        setPassword(password, hashPassword);
-        this.firstName = new SimpleStringProperty(firstName);
-        this.lastName = new SimpleStringProperty(lastName);
-        this.email = new SimpleStringProperty(email);
     }
 
     public boolean hasFavourites() {
@@ -178,21 +160,12 @@ public class User {
      * @param password     the user's password to be set up
      * @param hashPassword boolean for setting the password
      */
-    public void setPassword(String password, boolean hashPassword) {
+    private void setPassword(String password, boolean hashPassword) {
         if (hashPassword) {
             this.password = new SimpleStringProperty(this.get_SHA_512_SecurePassword(password));
         } else {
             this.password = new SimpleStringProperty(password);
         }
-    }
-
-    /**
-     * sets up the user name
-     *
-     * @param userName the user name to be set up
-     */
-    public void setUserName(String userName) {
-        this.userName.set(userName);
     }
 
     /**
@@ -247,12 +220,4 @@ public class User {
         return "User name: " + this.userName.get();
     }
 
-    /**
-     * returns a string representation of the user, in a complete format
-     *
-     * @return String representation of user
-     */
-    public String toStringFull() {
-        return "User name: " + this.userName.get() + ", first name: " + this.firstName.get() + ", last name: " + this.lastName.get() + ", email: " + this.email.get();
-    }
 }

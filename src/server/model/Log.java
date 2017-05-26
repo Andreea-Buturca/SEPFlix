@@ -9,11 +9,11 @@ import java.util.Date;
  * Created by Stela on 25.5.2017.
  */
 public class Log {
-    private SimpleStringProperty ip;
-    private SimpleStringProperty action;
-    private SimpleStringProperty message;
-    private SimpleBooleanProperty loggedIn;
-    private Date date;
+    private final SimpleStringProperty ip;
+    private final SimpleStringProperty action;
+    private final SimpleStringProperty message;
+    private final SimpleBooleanProperty loggedIn;
+    private final Date date;
 
     public Log(String ip, String action, String message, Boolean loggedIn) {
         this.ip = new SimpleStringProperty(ip);
@@ -27,6 +27,7 @@ public class Log {
         this.ip = new SimpleStringProperty(ip);
         this.action = new SimpleStringProperty(action);
         this.loggedIn = new SimpleBooleanProperty(loggedIn);
+        this.message = new SimpleStringProperty();
         this.date = new Date();
     }
 
