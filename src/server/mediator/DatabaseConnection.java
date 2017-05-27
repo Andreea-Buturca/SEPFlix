@@ -18,7 +18,7 @@ public class DatabaseConnection {
     private final String PASSWORD = DBParameters.getPASSWORD();
     private final String DATABASE = DBParameters.getDATABASE();
     private static DatabaseConnection databaseConnection;
-    Connection connection = null;
+    private Connection connection = null;
 
     private DatabaseConnection() {
         try {
@@ -243,7 +243,7 @@ public class DatabaseConnection {
         }
     }
 
-    public ArrayList<Comment> getMovieComments(int movie_id) {
+    private ArrayList<Comment> getMovieComments(int movie_id) {
         ArrayList<Comment> comments = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(
@@ -262,7 +262,7 @@ public class DatabaseConnection {
         return comments;
     }
 
-    public void addMovie(Movie movie) {
+    private void addMovie(Movie movie) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO movies " +

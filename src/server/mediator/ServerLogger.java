@@ -21,7 +21,7 @@ import java.util.Observable;
  */
 public class ServerLogger extends Observable {
 
-    private ArrayList<Log> actionsLog;
+    private final ArrayList<Log> actionsLog;
 
     public ServerLogger() {
         this.actionsLog = new ArrayList<>();
@@ -98,7 +98,7 @@ public class ServerLogger extends Observable {
                 Label labelLogged;
                 Label labelTime;
                 for (int i = 0; i < actionsLog.size(); i++) {
-                    Date date = (Date) actionsLog.get(i).getDate();
+                    Date date = actionsLog.get(i).getDate();
                     if (actionsLog.get(i).getAction().equals("Alert")) {
                         String action;
                         if (actionsLog.get(i).getMessage() == null) {

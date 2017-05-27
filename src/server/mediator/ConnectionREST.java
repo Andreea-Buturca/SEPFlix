@@ -19,9 +19,6 @@ import java.util.ArrayList;
  */
 public class ConnectionREST {
 
-    private final String baseUrl = "https://api.themoviedb.org/3/";
-    private final String apiKey = "?api_key=b97edb3572a6a9f660d0b90dc10453b6";
-
 
     public ArrayList<StringMap<Object>> getLatestMovies() {
         String urlAddress = "movie/popular";
@@ -41,8 +38,7 @@ public class ConnectionREST {
         String urlAddress = "movie/" + id;
         String output = this.getRequest(urlAddress, "");
         StringMap<Object> response = Main.gson.fromJson(output, StringMap.class);
-        Movie movie = new Movie(response);
-        return movie;
+        return new Movie(response);
     }
 
 
@@ -84,6 +80,8 @@ public class ConnectionREST {
     private String getRequest(String urlAddress, String getParameters) {
         String output = null;
         try {
+            String baseUrl = "https://api.themoviedb.org/3/";
+            String apiKey = "?api_key=b97edb3572a6a9f660d0b90dc10453b6";
             URL url = new URL(baseUrl + urlAddress + apiKey + getParameters);
             output = this.getRequest(url);
         } catch (MalformedURLException e) {
@@ -95,8 +93,7 @@ public class ConnectionREST {
     private String getRequest(URL urlAddress) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            URL url = urlAddress;
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) urlAddress.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 

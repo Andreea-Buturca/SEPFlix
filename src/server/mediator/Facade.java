@@ -10,28 +10,31 @@ import java.util.ArrayList;
  */
 public class Facade {
 
-    public static User getUserByUsername(String username){
+    public static User getUserByUsername(String username) {
         return DatabaseConnection.getDatabaseConnection().getUserByUserName(username);
     }
 
-    public static ArrayList<StringMap<Object>> getUserFavourite(User user){
+    public static ArrayList<StringMap<Object>> getUserFavourite(User user) {
         return user.getFavourites();
     }
 
-    public static void addMovieToFavourites(User user, StringMap<Object> movie){
+    public static void addMovieToFavourites(User user, StringMap<Object> movie) {
         user.addFavourite(movie);
     }
 
-    public static String getUsername(User user){
+    public static String getUsername(User user) {
         return user.getUserName();
     }
-    public static String getFirstName(User user){
+
+    public static String getFirstName(User user) {
         return user.getFirstName();
     }
-    public static String getLastName(User user){
+
+    public static String getLastName(User user) {
         return user.getLastName();
     }
-    public static String getEmail(User user){
+
+    public static String getEmail(User user) {
         return user.getEmail();
     }
 
@@ -39,7 +42,7 @@ public class Facade {
         loggedUser.removeFavourite(id);
     }
 
-    public static boolean hasFavourites(User user){
+    public static boolean hasFavourites(User user) {
         return user.hasFavourites();
     }
 }

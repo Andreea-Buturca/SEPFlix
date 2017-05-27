@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
 import server.Main;
 
 import java.net.Socket;
@@ -23,7 +22,6 @@ public class Controller implements Initializable, Observer {
     public Label labelNoClients;
     public Label labelIpAddress;
     public ListView listView;
-    private ArrayList<Socket> clients;
 
     public Controller() {
         Main.serverConnection.addObserver(this);
@@ -31,8 +29,6 @@ public class Controller implements Initializable, Observer {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        BorderPane root = new BorderPane();
         if (Main.serverConnection != null) {
             labelYesNo.setText("Yes");
         } else labelYesNo.setText("No");
@@ -40,7 +36,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void updateTable() {
-        clients = Main.serverConnection.getClients();
+        ArrayList<Socket> clients = Main.serverConnection.getClients();
         if (clients != null) {
             labelNoClients.setText(clients.size() + "");
             ArrayList<String> clientsIp = new ArrayList<>();

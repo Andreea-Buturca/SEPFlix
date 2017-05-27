@@ -31,19 +31,23 @@ public class Log {
         this.date = new Date();
     }
 
-    public String getIp(){
+    public String getIp() {
         return ip.get();
     }
-    public String getAction(){
+
+    public String getAction() {
         return action.get();
     }
-    public String getMessage(){
+
+    public String getMessage() {
         return message.get();
     }
-    public Boolean getLoggedIn(){
+
+    public Boolean getLoggedIn() {
         return loggedIn.get();
     }
-    public Date getDate(){
+
+    public Date getDate() {
         return date;
     }
 

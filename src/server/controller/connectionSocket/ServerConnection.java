@@ -12,7 +12,7 @@ import java.util.Observable;
  */
 public class ServerConnection extends Observable implements Runnable {
     private static final int PORT = 6666;
-    private static ArrayList<Socket> clients = new ArrayList<>();
+    private static final ArrayList<Socket> clients = new ArrayList<>();
 
 
     public ArrayList<Socket> getClients() {

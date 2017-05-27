@@ -21,7 +21,7 @@ public class ServerCommunication implements Runnable {
     private ObjectInputStream inFromClient;
     private ObjectOutputStream outToClient;
     private String authToken;
-    private Socket clientSocket;
+    private final Socket clientSocket;
     private StringMap<Object> data;
     private StringMap<Object> returnData;
 
@@ -210,7 +210,7 @@ public class ServerCommunication implements Runnable {
         logAction(action, null);
     }
 
-    public void sendSmtToClient(String json) {
+    private void sendSmtToClient(String json) {
         try {
             System.out.println(json);
             outToClient.writeObject(json);

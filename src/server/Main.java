@@ -28,7 +28,7 @@ public class Main extends Application {
     public static ConnectionREST connectionREST;
     public static ServerLogger serverLogger;
     public static Gson gson;
-    private static BorderPane root = new BorderPane();
+    private static final BorderPane root = new BorderPane();
     public static Stage stage;
 
     @Override

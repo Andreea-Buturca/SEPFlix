@@ -40,7 +40,7 @@ public class ControllerUsersManagement implements Initializable {
             Main.databaseConnection.removeUserByUserName(user.getUserName());
             HelperServer.successdisplay("Success", "User removed!");
         } else {
-           HelperServer.alertdisplay("Alert", "Select a user!");
+            HelperServer.alertdisplay("Alert", "Select a user!");
         }
     }
 }
