@@ -141,6 +141,10 @@ public class ServerCommunication implements Runnable {
                         Double idRate = (double) data.get("id");
                         Main.databaseConnection.rateMovie((String) data.get("Username"), idRate.intValue(), (double) data.get("Rate"));
                         break;
+                    case "CommentMovie":
+                        Double idCommentMovie = (double) data.get("id");
+                        Main.databaseConnection.commentMovie((String) data.get("Username"), idCommentMovie.intValue(), (String) data.get("Comment"));
+                        break;
                     case "SearchMovie":
                         returnData.put("Action", "SearchMovie");
                         returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
