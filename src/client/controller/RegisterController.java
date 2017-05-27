@@ -26,8 +26,15 @@ public class RegisterController {
     public PasswordField passwordField;
 
     public void registerUser(ActionEvent actionEvent) throws IOException {
-        //todo validation
-
+        if (!Helper.validateEmail(emailField)) {
+            Helper.alertdisplay("Wrong Input", "Email format is not correct");
+            return;
+        }
+        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty() || firstNameField.getText().isEmpty()
+                || secondNameField.getText().isEmpty() || emailField.getText().isEmpty()) {
+            Helper.alertdisplay("Wrong Input", "Fields cannot be empty");
+            return;
+        }
         Helper.addDataToRequest("Action", "register");
         Helper.addDataToRequest("Username", usernameField.getText());
         Helper.addDataToRequest("Password", Helper.get_SHA_512_SecurePassword(passwordField.getText()));

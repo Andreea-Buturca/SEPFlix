@@ -30,7 +30,10 @@ public class LoginController {
     }
 
     public synchronized void logIn(ActionEvent actionEvent) throws IOException {
-        //todo validation
+        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            Helper.alertdisplay("Wrong input", "Fields cannot be empty");
+            return;
+        }
         boolean interupted = false;
         Helper.addDataToRequest("Action", "login");
         Helper.addDataToRequest("Username", usernameField.getText());

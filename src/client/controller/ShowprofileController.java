@@ -53,6 +53,14 @@ public class ShowprofileController implements Initializable {
 
     public void save(ActionEvent actionEvent) {
         if (Main.loggedUser != null) {
+            if (!Helper.validateEmail(emailField)) {
+                Helper.alertdisplay("Wrong Input", "Email format is not correct");
+                return;
+            }
+            if (nameField.getText().isEmpty() || surnameField.getText().isEmpty() || emailField.getText().isEmpty()) {
+                Helper.alertdisplay("Wrong Input", "Fields cannot be empty");
+                return;
+            }
             Helper.addDataToRequest("Action", "editProfile");
             Helper.addDataToRequest("Token", Main.token);
             Helper.addDataToRequest("Username", usernameField.getText());
@@ -62,14 +70,11 @@ public class ShowprofileController implements Initializable {
             Main.loggedUser.setLastName(surnameField.getText());
             Helper.addDataToRequest("Email", emailField.getText());
             Main.loggedUser.setEmail(emailField.getText());
-            //todo validation
             if (!oldPassField.getText().isEmpty()) {
                 if (newPassField.getText().equals(confirmPassField.getText())) {
                     Helper.addDataToRequest("OldPassword", Helper.get_SHA_512_SecurePassword(oldPassField.getText()));
                     Helper.addDataToRequest("NewPassword", Helper.get_SHA_512_SecurePassword(newPassField.getText()));
                     Helper.sendRequest();
-                    //System.out.println("sending "+ oldPassField.getText()+" and "+ newPassField.getText());
-                    // TODO: 23-May-17 not saving password on server side
                 } else {
                     Helper.alertdisplay("Wrong password", "new password is not the same as the confirm password");
                     Helper.clearRequest();

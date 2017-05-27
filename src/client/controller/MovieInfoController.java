@@ -166,7 +166,6 @@ public class MovieInfoController implements Initializable {
             Helper.addDataToRequest("Token", Main.token);
             Helper.addDataToRequest("Rate", d);
             Helper.sendRequest();
-            // wait
         }
     }
 
@@ -195,11 +194,13 @@ public class MovieInfoController implements Initializable {
             Main.stage.setScene(scene);
             Main.stage.show();
         } else if (!commentField.getText().isEmpty()) {
-            Helper.addDataToRequest("Action", "Comment");
+            Helper.addDataToRequest("Action", "CommentMovie");
             Helper.addDataToRequest("Token", Main.token);
+            Helper.addDataToRequest("id", movieInfo.get("id"));
             Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
             Helper.addDataToRequest("Comment", commentField.getText());
-            //Helper.sendRequest();
+            Helper.sendRequest();
+            // TODO: 27-May-17  refresh screen maybe?
         }
     }
 }

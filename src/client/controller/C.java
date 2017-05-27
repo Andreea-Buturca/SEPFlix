@@ -22,6 +22,10 @@ public class C {
     }
 
     public synchronized void Play(ActionEvent actionEvent) throws IOException {
+        if (searchField.getText().isEmpty()) {
+            Helper.alertdisplay("Wrong input", "Field cannot be empty");
+            return;
+        }
         Helper.addDataToRequest("Action", "GetTrailerSearched");
         Helper.addDataToRequest("FieldText", searchField.getText());
         Helper.sendRequest();

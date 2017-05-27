@@ -70,6 +70,10 @@ public class ListMainController implements Initializable {
     }
 
     public synchronized void searchMovie(ActionEvent actionEvent) {
+        if (searchField.getText().isEmpty()) {
+            Helper.alertdisplay("Wrong input", "Field cannot be empty");
+            return;
+        }
         if (!searchField.getText().isEmpty()) {
             popularLabel.setText("Search result");
             System.out.println(searchField.getText());
