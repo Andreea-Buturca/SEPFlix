@@ -48,15 +48,17 @@ public class FavouritesController implements Initializable {
             interupted = true;
         }
         if (interupted) {
-            ObservableList<FavouriteMovie> movies = FXCollections.observableArrayList();
-            for (StringMap<Object> info : favourites) {
-                movies.add(new FavouriteMovie(info));
+            if (favourites != null) {
+                ObservableList<FavouriteMovie> movies = FXCollections.observableArrayList();
+                for (StringMap<Object> info : favourites) {
+                    movies.add(new FavouriteMovie(info));
+                }
+                favouritesListView.setItems(movies);
             }
-            favouritesListView.setItems(movies);
-        }else Helper.alertdisplay("Timeout Error", "Server is not responding");
+        } else Helper.alertdisplay("Timeout Error", "Server is not responding");
     }
 
-    public void interupt(ArrayList<StringMap<Object>> favourites){
+    public void interupt(ArrayList<StringMap<Object>> favourites) {
         this.favourites = favourites;
         controllerThread.interrupt();
     }
