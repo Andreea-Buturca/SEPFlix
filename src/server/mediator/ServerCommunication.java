@@ -44,20 +44,19 @@ public class ServerCommunication implements Runnable {
 
                 switch ((String) data.get("Action")) {
                     case "register":
-                        /*if (authenticate((String) data.get("Token"))) {
+                        if (authenticate((String) data.get("Token"))) {
                             sendAlert("You are already authenticated!", "register");
                             break;
-                        }*/
-                        // TODO: 26-May-17 how can i send you token? I will get it after login
+                        }
                         //todo alert username is taken, email
                         User userRegister = new User(data, false);
                         Main.databaseConnection.registerUser(userRegister);
                         break;
                     case "login":
-                        /*if (authenticate((String) data.get("Token"))) {
+                        if (authenticate((String) data.get("Token"))) {
                             sendAlert("You are already authenticated!", "login");
                             break;
-                        }*/
+                        }
                         returnData.put("Action", "login");
                         User userLogin = Main.databaseConnection.getUserByUserName((String) data.get("Username"));
                         if (userLogin != null) {
@@ -76,10 +75,10 @@ public class ServerCommunication implements Runnable {
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "editProfile":
-                        /*if (!authenticate((String) data.get("Token"))) {
+                        if (!authenticate((String) data.get("Token"))) {
                             sendAlert("Wrong authentication!", "editProfile");
                             break;
-                        }*/
+                        }
                         User userEdit = new User(data, false);
                         if (data.get("NewPassword") != null) {
                             if (!(Main.databaseConnection.getUserByUserName((String) data.get("Username")).getPassword().equals(data.get("OldPassword")))) {
@@ -108,10 +107,10 @@ public class ServerCommunication implements Runnable {
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "FavouriteMovies":
-                        /*if (!authenticate((String) data.get("Token"))) {
+                        if (!authenticate((String) data.get("Token"))) {
                             sendAlert("Wrong authentication!", "FavouriteMovies");
                             break;
-                        }*/
+                        }
                         returnData.put("Action", "FavouriteMovies");
                         ArrayList<Movie> moviesObjects = Main.databaseConnection.getListOfFavourites((String) data.get("Username"));
                         ArrayList<Object> favouriteMovies = new ArrayList<>();
@@ -122,26 +121,34 @@ public class ServerCommunication implements Runnable {
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "AddFavouriteMovie":
-                        /*if (!authenticate((String) data.get("Token"))) {
+                        if (!authenticate((String) data.get("Token"))) {
                             sendAlert("Wrong authentication!", "AddFavouriteMovie");
                             break;
-                        }*/
+                        }
                         Double idAddFavourite = (double) data.get("id");
                         Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
                         break;
                     case "RemoveFavouriteMovie":
-                        /*if (!authenticate((String) data.get("Token"))) {
+                        if (!authenticate((String) data.get("Token"))) {
                             sendAlert("Wrong authentication!", "RemoveFavouriteMovie");
                             break;
-                        }*/
+                        }
                         Double idRemoveFavourite = (double) data.get("id");
                         Main.databaseConnection.removeFavouriteMovie((String) data.get("Username"), idRemoveFavourite.intValue());
                         break;
                     case "RateMovie":
+                        if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "RateMovie");
+                            break;
+                        }
                         Double idRate = (double) data.get("id");
                         Main.databaseConnection.rateMovie((String) data.get("Username"), idRate.intValue(), (double) data.get("Rate"));
                         break;
                     case "CommentMovie":
+                        if (!authenticate((String) data.get("Token"))) {
+                            sendAlert("Wrong authentication!", "CommentMovie");
+                            break;
+                        }
                         Double idCommentMovie = (double) data.get("id");
                         Main.databaseConnection.commentMovie((String) data.get("Username"), idCommentMovie.intValue(), (String) data.get("Comment"));
                         break;
@@ -150,10 +157,9 @@ public class ServerCommunication implements Runnable {
                         returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
-                    case "Trailer":
-                        returnData.put("Action", "Trailer");
-                        //todo after moving YT REST
-                        //returnData.put("SearchList", Main.connectionREST.searchMovie((String) data.get("SearchField")));
+                    case "GetTrailer":
+                        returnData.put("Action", "GetTrailer");
+                        returnData.put("VideoURL", Main.connectionREST.getTrailer((String) data.get("MovieName")));
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     default:

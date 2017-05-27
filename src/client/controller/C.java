@@ -1,4 +1,5 @@
 package client.controller;
+
 import client.Main;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
@@ -20,9 +21,11 @@ public class C {
     public TextField searchField;
 
     public void Play(ActionEvent actionEvent) throws IOException {
+        Helper.addDataToRequest("Action", "GetTrailer");
+        Helper.addDataToRequest("MovieName", searchField.getText());
         String id = getIDfromYT(URLEncoder.encode(searchField.getText(), "UTF-8"));
         ytView.getEngine().load(
-                "https://www.youtube.com/embed/"+id
+                "https://www.youtube.com/embed/" + id
         );
         ytView.setPrefSize(600, 400);
         Main.stage.show();
@@ -30,7 +33,7 @@ public class C {
 
     private String getIDfromYT(String title) throws IOException {
         String json = readJsonFromUrl(
-                "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+title+"+trailer&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
+                "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + title + "+trailer&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
         Gson gson = new Gson();
         StringMap<Object> results = gson.fromJson(json, StringMap.class);
         ArrayList<StringMap<Object>> items = (ArrayList<StringMap<Object>>) results.get("items");

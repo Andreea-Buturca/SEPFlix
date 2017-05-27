@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -64,10 +65,37 @@ public class ConnectionREST {
         return searchResult;
     }
 
+    public String getTrailer(String title) {
+        String output = null;
+        try {
+            URL url = new URL("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
+                    URLEncoder.encode(title, "UTF-8") +
+                    "+trailer&type=video&key=AIzaSyDuTI4P28XHLbygh3-50h5TIhPlt3ahAys");
+            output = this.getRequest(url);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        StringMap<Object> results = Main.gson.fromJson(output, StringMap.class);
+        ArrayList<StringMap<Object>> items = (ArrayList<StringMap<Object>>) results.get("items");
+        StringMap<Object> IDItem = (StringMap<Object>) items.get(0).get("id");
+        return "https://www.youtube.com/embed/" + IDItem.get("videoId");
+    }
+
     private String getRequest(String urlAddress, String getParameters) {
         String output = null;
         try {
             URL url = new URL(baseUrl + urlAddress + apiKey + getParameters);
+            output = this.getRequest(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    private String getRequest(URL urlAddress) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            URL url = urlAddress;
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -77,12 +105,15 @@ public class ConnectionREST {
                         + conn.getResponseCode());
             }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            output = br.readLine();
+            String output;
+            while ((output = bufferedReader.readLine()) != null) {
+                stringBuilder.append(output);
+            }
             System.out.println("Output from external Server .... \n");
-            System.out.println(output);
+            System.out.println(stringBuilder.toString());
 
             conn.disconnect();
 
@@ -91,7 +122,7 @@ public class ConnectionREST {
             e.printStackTrace();
 
         }
-        return output;
+        return stringBuilder.toString();
     }
 }
 
