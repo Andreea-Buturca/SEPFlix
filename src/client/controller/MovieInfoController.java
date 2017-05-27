@@ -2,6 +2,8 @@ package client.controller;
 
 import client.Main;
 import com.google.gson.internal.StringMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +20,7 @@ import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -93,6 +96,15 @@ public class MovieInfoController implements Initializable {
             sepflixLabel.setText("SEPFlix: " + d.toString());
         } else sepflixLabel.setText("No sepflix rate");
         overviewText.setText((String)movieInfo.get("overview"));
+        if (movieInfo.get("comments") != null) {
+            ObservableList<String> data = FXCollections.observableArrayList();
+            ArrayList<StringMap<Object>> comments = (ArrayList<StringMap<Object>>) movieInfo.get("comments");
+            for (StringMap<Object> comment : comments) {
+                String string = comment.get("user_name") + ": " + comment.get("comment");
+                data.add(string);
+            }
+            comentList.setItems(data);
+        }
     }
 
     public void interupt(StringMap<Object> movieInfo) {

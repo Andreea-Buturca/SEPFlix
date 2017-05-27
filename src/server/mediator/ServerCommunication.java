@@ -162,6 +162,11 @@ public class ServerCommunication implements Runnable {
                         returnData.put("VideoURL", Main.connectionREST.getTrailer((String) data.get("MovieName")));
                         sendSmtToClient(Main.gson.toJson(returnData));
                         break;
+                    case "GetTrailerSearched":
+                        returnData.put("Action", "GetTrailerSearched");
+                        returnData.put("VideoURL", Main.connectionREST.getTrailer((String) data.get("FieldText")));
+                        sendSmtToClient(Main.gson.toJson(returnData));
+                        break;
                     default:
                         sendAlert("Wrong Action");
                         break;

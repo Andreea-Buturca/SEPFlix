@@ -60,6 +60,15 @@ public class ClientReceiver implements Runnable {
                     case "FavouriteMovies":
                         ArrayList<StringMap<Object>> favourites = (ArrayList<StringMap<Object>>) response.get("FavouriteMovies");
                         Main.facouritesC.interupt(favourites);
+                        break;
+                    case "GetTrailer":
+                        String url = (String) response.get("VideoURL");
+                        Main.trailerC.interupt(url);
+                        break;
+                    case "GetTrailerSearched":
+                        String url1 = (String) response.get("VideoURL");
+                        Main.trailerSearchC.interupt(url1);
+                        break;
                 }
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
