@@ -80,7 +80,10 @@ public class Movie {
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
-
+public ArrayList<Comment> getComments()
+    {
+        return this.comments;
+    }
     public double getRatingImbd() {
         return ratingImbd;
     }
