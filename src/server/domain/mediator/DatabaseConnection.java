@@ -4,6 +4,7 @@ import server.Main;
 import server.domain.model.Comment;
 import server.domain.model.Movie;
 import server.domain.model.User;
+import server.mediator.DBParameters;
 
 import java.sql.*;
 import java.util.ArrayList;
