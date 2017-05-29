@@ -1,9 +1,9 @@
-package server.mediator;
+package server.domain.mediator;
 
 import server.Main;
-import server.model.Comment;
-import server.model.Movie;
-import server.model.User;
+import server.domain.model.Comment;
+import server.domain.model.Movie;
+import server.domain.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class DatabaseConnection {
         return databaseConnection;
     }
 
-    public void registerUser(User user) {
+    public boolean registerUser(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO users " +
@@ -56,7 +56,9 @@ public class DatabaseConnection {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public ArrayList<User> getUsers() {
@@ -172,7 +174,7 @@ public class DatabaseConnection {
     }
 
 
-    public void addFavouriteMovie(String userName, int movie_id) {
+    public boolean addFavouriteMovie(String userName, int movie_id) {
         try {
             if (getMovieById(movie_id) == null) {
                 addMovie(Main.connectionREST.getMovie(movie_id));
@@ -187,7 +189,9 @@ public class DatabaseConnection {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public void removeFavouriteMovie(String userName, int movie_id) {

@@ -1,11 +1,11 @@
-package server.mediator;
+package server.domain.mediator;
 
 import com.google.gson.internal.StringMap;
 import server.Main;
 import server.controller.connectionSocket.ServerConnection;
-import server.model.Log;
-import server.model.Movie;
-import server.model.User;
+import server.domain.model.Log;
+import server.domain.model.Movie;
+import server.domain.model.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -36,7 +36,6 @@ public class ServerCommunication implements Runnable {
     public void run() {
         try {
             while (true) {
-                //todo handle status if something invalid
                 String json = (String) inFromClient.readObject();
                 System.out.println(json);
                 data = Main.gson.fromJson(json, StringMap.class);
@@ -48,9 +47,10 @@ public class ServerCommunication implements Runnable {
                             sendAlert("You are already authenticated!", "register");
                             break;
                         }
-                        //todo alert username is taken, email
                         User userRegister = new User(data, false);
-                        Main.databaseConnection.registerUser(userRegister);
+                        if (!Main.databaseConnection.registerUser(userRegister)) {
+                            sendAlert("Your username or email is taken!", "register");
+                        }
                         break;
                     case "login":
                         if (authenticate((String) data.get("Token"))) {
@@ -65,14 +65,13 @@ public class ServerCommunication implements Runnable {
                                 returnData.put("Status", "success");
                                 this.authToken = UUID.randomUUID().toString();
                                 returnData.put("Token", this.authToken);
+                                sendSmtToClient(Main.gson.toJson(returnData));
                             } else {
-                                returnData.put("Status", "error");
-                                //todo change to alert
+                                sendAlert("Username or password is wrong!", "login");
                             }
                         } else {
-                            returnData.put("Status", "error");
+                            sendAlert("Username or password is wrong!", "login");
                         }
-                        sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "editProfile":
                         if (!authenticate((String) data.get("Token"))) {
@@ -126,7 +125,9 @@ public class ServerCommunication implements Runnable {
                             break;
                         }
                         Double idAddFavourite = (double) data.get("id");
-                        Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
+                        if (!Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue())) {
+                            sendAlert("You have it already in list!", "AddFavouriteMovie");
+                        }
                         break;
                     case "RemoveFavouriteMovie":
                         if (!authenticate((String) data.get("Token"))) {

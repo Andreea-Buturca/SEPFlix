@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.Main;
+import client.domain.mediator.Facade;
 import com.google.gson.internal.StringMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;

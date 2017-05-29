@@ -1,4 +1,4 @@
-package server.model;
+package server.domain.model;
 
 import com.google.gson.internal.StringMap;
 import org.junit.Before;

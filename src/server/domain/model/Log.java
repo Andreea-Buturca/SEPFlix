@@ -1,4 +1,4 @@
-package server.model;
+package server.domain.model;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;

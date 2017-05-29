@@ -1,6 +1,6 @@
 package server.controller.connectionSocket;
 
-import server.mediator.ServerCommunication;
+import server.domain.mediator.ServerCommunication;
 
 import java.net.ServerSocket;
 import java.net.Socket;

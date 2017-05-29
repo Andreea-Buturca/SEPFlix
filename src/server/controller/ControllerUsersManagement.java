@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import server.Main;
-import server.model.User;
+import server.domain.model.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -12,9 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import server.controller.connectionSocket.ServerConnection;
-import server.mediator.ConnectionREST;
-import server.mediator.DatabaseConnection;
-import server.mediator.ServerLogger;
+import server.domain.mediator.ConnectionREST;
+import server.domain.mediator.DatabaseConnection;
+import server.domain.mediator.ServerLogger;
 
 import java.io.IOException;
 import java.net.Socket;

@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import server.Main;
-import server.model.Log;
+import server.domain.model.Log;
 
 import java.net.URL;
 import java.util.Observable;

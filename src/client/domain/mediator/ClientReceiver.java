@@ -1,9 +1,9 @@
-package client.controller;
+package client.domain.mediator;
 
 import client.Main;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
-import server.model.User;
+import server.domain.model.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -34,9 +34,6 @@ public class ClientReceiver implements Runnable {
                             Main.loggedUser = new User(response, false);
                             Main.token = (String) response.get("Token");
                             Main.loginC.interupt(0);
-                            // TODO: 17-May-17 password from server is hashed, i need method to unhash it.
-                            // TODO: 17-May-17 bring model classes to client I guess
-
                         } else {
                             Main.loginC.interupt(1);
                         }

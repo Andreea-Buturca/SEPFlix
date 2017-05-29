@@ -1,5 +1,7 @@
 package client.controller;
 
+import client.domain.mediator.ClientReceiver;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

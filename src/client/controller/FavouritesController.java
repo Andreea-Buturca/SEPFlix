@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.Main;
+import client.domain.mediator.Facade;
 import com.google.gson.internal.StringMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import server.mediator.Facade;
 
 import java.io.IOException;
 import java.net.URL;

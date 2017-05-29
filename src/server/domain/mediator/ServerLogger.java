@@ -1,4 +1,4 @@
-package server.mediator;
+package server.domain.mediator;
 
 import javafx.stage.FileChooser;
 import jxl.CellView;
@@ -8,7 +8,7 @@ import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.write.*;
 import server.Main;
-import server.model.Log;
+import server.domain.model.Log;
 
 import java.io.File;
 import java.io.IOException;

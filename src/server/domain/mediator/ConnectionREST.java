@@ -1,8 +1,8 @@
-package server.mediator;
+package server.domain.mediator;
 
 import com.google.gson.internal.StringMap;
 import server.Main;
-import server.model.Movie;
+import server.domain.model.Movie;
 
 import java.io.BufferedReader;
 import java.io.IOException;

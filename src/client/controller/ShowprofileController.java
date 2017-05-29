@@ -1,13 +1,13 @@
 package client.controller;
 
 import client.Main;
+import client.domain.mediator.Facade;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import server.mediator.Facade;
 
 import java.net.URL;
 import java.util.ResourceBundle;
