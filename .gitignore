@@ -55,7 +55,7 @@ local.properties
 # PyDev specific (Python IDE for Eclipse)
 *.pydevproject
 
-# CDT-specific (C/C++ Development Tooling)
+# CDT-specific (SearchTrailerController/SearchTrailerController++ Development Tooling)
 .cproject
 
 # JDT-specific (Eclipse Java Development Tools)

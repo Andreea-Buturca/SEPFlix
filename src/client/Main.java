@@ -28,7 +28,7 @@ public class Main extends Application {
     public static MovieInfoController movieInfoC;
     public static FavouritesController facouritesC;
     public static TrailerController trailerC;
-    public static C trailerSearchC;
+    public static SearchTrailerController trailerSearchSearchTrailerController;
     public static String token;
     /*@Override
     public void start(Stage primaryStage) throws Exception {

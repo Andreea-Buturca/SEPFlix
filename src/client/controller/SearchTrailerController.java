@@ -10,14 +10,14 @@ import java.io.IOException;
 /**
  * Created by Marek on 23-May-17.
  */
-public class C {
+public class SearchTrailerController {
     public WebView ytView;
     public TextField searchField;
     private String url;
     private Thread controllerThread;
 
-    public C() {
-        Main.trailerSearchC = this;
+    public SearchTrailerController() {
+        Main.trailerSearchSearchTrailerController = this;
         controllerThread = Thread.currentThread();
     }
 
