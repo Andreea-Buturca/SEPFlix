@@ -44,10 +44,8 @@ public class ClientReceiver implements Runnable {
                         break;
                     case "MovieDetail":
                         Thread.sleep(500);
-                        System.out.println("idem tu");
                         StringMap<Object> movie = (StringMap<Object>) response.get("MovieDetail");
                         System.out.println(movie);
-                        // TODO: 23-May-17 for now im saving response not stringmap of movie :D
                         Main.movieInfoC.interupt(response);
                         break;
                     case "SearchMovie":
