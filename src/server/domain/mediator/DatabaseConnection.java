@@ -40,7 +40,7 @@ public class DatabaseConnection {
         return databaseConnection;
     }
 
-    public boolean registerUser(User user) {
+    public void registerUser(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO users " +
@@ -56,9 +56,7 @@ public class DatabaseConnection {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     public ArrayList<User> getUsers() {
@@ -174,7 +172,7 @@ public class DatabaseConnection {
     }
 
 
-    public boolean addFavouriteMovie(String userName, int movie_id) {
+    public void addFavouriteMovie(String userName, int movie_id) {
         try {
             if (getMovieById(movie_id) == null) {
                 addMovie(Main.connectionREST.getMovie(movie_id));
@@ -189,9 +187,7 @@ public class DatabaseConnection {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     public void removeFavouriteMovie(String userName, int movie_id) {

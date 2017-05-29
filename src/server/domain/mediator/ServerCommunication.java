@@ -48,9 +48,6 @@ public class ServerCommunication implements Runnable {
                             break;
                         }
                         User userRegister = new User(data, false);
-                        if (!Main.databaseConnection.registerUser(userRegister)) {
-                            sendAlert("Your username or email is taken!", "register");
-                        }
                         break;
                     case "login":
                         if (authenticate((String) data.get("Token"))) {
@@ -65,13 +62,13 @@ public class ServerCommunication implements Runnable {
                                 returnData.put("Status", "success");
                                 this.authToken = UUID.randomUUID().toString();
                                 returnData.put("Token", this.authToken);
-                                sendSmtToClient(Main.gson.toJson(returnData));
                             } else {
-                                sendAlert("Username or password is wrong!", "login");
+                                returnData.put("Status", "error");
                             }
                         } else {
-                            sendAlert("Username or password is wrong!", "login");
+                            returnData.put("Status", "error");
                         }
+                        sendSmtToClient(Main.gson.toJson(returnData));
                         break;
                     case "editProfile":
                         if (!authenticate((String) data.get("Token"))) {
@@ -125,9 +122,6 @@ public class ServerCommunication implements Runnable {
                             break;
                         }
                         Double idAddFavourite = (double) data.get("id");
-                        if (!Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue())) {
-                            sendAlert("You have it already in list!", "AddFavouriteMovie");
-                        }
                         break;
                     case "RemoveFavouriteMovie":
                         if (!authenticate((String) data.get("Token"))) {
