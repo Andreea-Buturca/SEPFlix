@@ -139,10 +139,32 @@ public class MovieTest {
 
     @Test
     public void toStringMap() throws Exception {
-        assertNotEquals("{id=335799, poster_path=/tWqifoYuwLETmmasnGHO7xBjEtt.jpg, title=Beauty and the Beast, release_date=2017-03-16, vote_average=6.8, genres=Music, Family, Fantasy, Romance, overview=A live-action adaptation of Disney's version of the classic 'Beauty and the Beast' tale of a cursed prince and a beautiful young woman who helps him break the spell., vote_sepflix=0.0, comments=[]}", this.movie.toStringMap());
-        assertEquals("{id=335797, poster_path=/tWqifoYuwLETmmasnGHO7xBjEtt.jpg, title=Beauty and the Beast, release_date=2017-03-16, vote_average=6.8, genres=Music, Family, Fantasy, Romance, overview=A live-action adaptation of Disney's version of the classic 'Beauty and the Beast' tale of a cursed prince and a beautiful young woman who helps him break the spell., vote_sepflix=0.0, comments=[]}", this.movie.toStringMap());
+        StringMap<Object> result = new StringMap<>();
+        StringMap<Object> gender1 = new StringMap<>();
+        StringMap<Object> gender2 = new StringMap<>();
+        StringMap<Object> gender3 = new StringMap<>();
+        StringMap<Object> gender4 = new StringMap<>();
+        gender1.put("name", "Music");
+        gender2.put("name", "Family");
+        gender3.put("name", "Fantasy");
+        gender4.put("name", "Romance");
+        ArrayList<StringMap<Object>> gendersList = new ArrayList<>();
+        gendersList.add(gender1);
+        gendersList.add(gender2);
+        gendersList.add(gender3);
+        gendersList.add(gender4);
+        result.put("id", 335797.00);
+        result.put("poster_path", "/tWqifoYuwLETmmasnGHO7xBjEtt.jpg");
+        result.put("title", "Beauty and the Beast");
+        result.put("overview", "A live-action adaptation of Disney's version of the classic 'Beauty and the Beast' tale of a cursed prince and a beautiful young woman who helps him break the spell.");
+        result.put("genres", gendersList);
+        result.put("release_date", "2017-03-16");
+        result.put("vote_average", 6.80);
 
+        Movie movie2 = new Movie(result);
+        assertEquals(movie2.toStringMap(), this.movie.toStringMap());
     }
+
 
     @Test
     public void getSQLReleaseYear() throws Exception {
