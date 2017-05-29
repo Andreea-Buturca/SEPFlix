@@ -3,7 +3,7 @@ package server.domain.model;
 import com.google.gson.internal.StringMap;
 import org.junit.Before;
 import org.junit.Test;
-import server.mediator.DatabaseConnection;
+import server.domain.mediator.DatabaseConnection;
 
 import java.sql.Date;
 import java.util.ArrayList;
