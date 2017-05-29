@@ -3,9 +3,7 @@ package client.controller;
 import client.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -61,7 +59,7 @@ public class MenuController {
             AnchorPane paneOne = FXMLLoader.load(paneOneUrl);
             root.setTop(bar);
             root.setCenter(paneOne);
-        }else if ((actionEvent.getSource() == trailer)){
+        } else if ((actionEvent.getSource() == trailer)) {
             root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);

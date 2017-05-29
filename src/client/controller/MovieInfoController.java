@@ -52,7 +52,7 @@ public class MovieInfoController implements Initializable {
         controllerThread = Thread.currentThread();
     }
 
-    public String getTitle(){
+    public String getTitle() {
         if (!movieInfo.isEmpty()) return (String) movieInfo.get("title");
         else return null;
     }
@@ -74,9 +74,9 @@ public class MovieInfoController implements Initializable {
         } catch (InterruptedException e) {
             interupted = true;
         }
-        if (interupted){
+        if (interupted) {
             loadMovieInfo();
-        }else Helper.alertdisplay("Timeout Error", "Server not responding");
+        } else Helper.alertdisplay("Timeout Error", "Server not responding");
     }
 
     private void loadMovieInfo() {
@@ -90,12 +90,12 @@ public class MovieInfoController implements Initializable {
         yearLabel.setText(year);
         genreLabel.setText((String) movieInfo.get("genres"));
         Double voteimbd = (Double) movieInfo.get("vote_average");
-        imbdLabel.setText("Imbd: "+voteimbd.toString());
+        imbdLabel.setText("Imbd: " + voteimbd.toString());
         if (movieInfo.get("vote_sepflix") != null) {
             Double d = (Double) movieInfo.get("vote_sepflix");
             sepflixLabel.setText("SEPFlix: " + d.toString());
         } else sepflixLabel.setText("No sepflix rate");
-        overviewText.setText((String)movieInfo.get("overview"));
+        overviewText.setText((String) movieInfo.get("overview"));
         if (movieInfo.get("comments") != null) {
             ObservableList<String> data = FXCollections.observableArrayList();
             ArrayList<StringMap<Object>> comments = (ArrayList<StringMap<Object>>) movieInfo.get("comments");
@@ -113,7 +113,7 @@ public class MovieInfoController implements Initializable {
     }
 
     public void addToMyList(ActionEvent actionEvent) throws IOException {
-        if (Main.loggedUser==null) {
+        if (Main.loggedUser == null) {
             BorderPane root = new BorderPane();
             URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
             MenuBar bar = FXMLLoader.load(menuBarUrl);
@@ -124,7 +124,7 @@ public class MovieInfoController implements Initializable {
             Scene scene = new Scene(root);
             Main.stage.setScene(scene);
             Main.stage.show();
-        }else{
+        } else {
             Facade.addMovieToFavourites(Main.loggedUser, movieInfo);
             Helper.successdisplay("Added", "Movie was added to you favourites");
             Helper.addDataToRequest("Action", "AddFavouriteMovie");
@@ -159,7 +159,6 @@ public class MovieInfoController implements Initializable {
                 }
             }
             Double d = Double.parseDouble(rateField.getText());
-            System.out.println(d);
             Helper.addDataToRequest("Action", "RateMovie");
             Helper.addDataToRequest("id", movieInfo.get("id"));
             Helper.addDataToRequest("Username", Facade.getUsername(Main.loggedUser));
@@ -172,7 +171,7 @@ public class MovieInfoController implements Initializable {
 
     public void playTrailer(ActionEvent actionEvent) throws IOException {
         Stage secondaryStage = new Stage();
-        this.secondaryStage=secondaryStage;
+        this.secondaryStage = secondaryStage;
         URL paneOneUrl = getClass().getResource("../view/trailer.fxml");
         WebView webView = FXMLLoader.load(paneOneUrl);
         AnchorPane root = new AnchorPane(webView);

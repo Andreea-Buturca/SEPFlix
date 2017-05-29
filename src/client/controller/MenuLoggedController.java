@@ -68,7 +68,7 @@ public class MenuLoggedController {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
-        Main.loggedUser=null;
+        Main.loggedUser = null;
         BorderPane root = new BorderPane();
         URL menuBarUrl = getClass().getResource("../view/menubarGuest.fxml");
         MenuBar bar = FXMLLoader.load(menuBarUrl);

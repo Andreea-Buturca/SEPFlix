@@ -109,8 +109,6 @@ public class ConnectionREST {
             while ((output = bufferedReader.readLine()) != null) {
                 stringBuilder.append(output);
             }
-            System.out.println("Output from external Server .... \n");
-            System.out.println(stringBuilder.toString());
 
             conn.disconnect();
 

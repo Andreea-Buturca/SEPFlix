@@ -26,7 +26,6 @@ public class ClientReceiver implements Runnable {
         try {
             while (true) {
                 Object object = inFromServer.readObject();
-                System.out.println(object);
                 StringMap<Object> response = new Gson().fromJson((String) object, StringMap.class);
                 switch ((String) response.get("Action")) {
                     case "login":
@@ -45,7 +44,6 @@ public class ClientReceiver implements Runnable {
                     case "MovieDetail":
                         Thread.sleep(500);
                         StringMap<Object> movie = (StringMap<Object>) response.get("MovieDetail");
-                        System.out.println(movie);
                         Main.movieInfoC.interupt(response);
                         break;
                     case "SearchMovie":
@@ -67,8 +65,6 @@ public class ClientReceiver implements Runnable {
                 }
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            //todo Marek
-            //Helper.alertdisplay("Server", "Connection lost!");
             System.out.println("Server down");
             Main.createConnection();
         }

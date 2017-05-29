@@ -37,7 +37,6 @@ public class ServerCommunication implements Runnable {
         try {
             while (true) {
                 String json = (String) inFromClient.readObject();
-                System.out.println(json);
                 data = Main.gson.fromJson(json, StringMap.class);
                 returnData = new StringMap<>();
 
@@ -48,6 +47,7 @@ public class ServerCommunication implements Runnable {
                             break;
                         }
                         User userRegister = new User(data, false);
+                        Main.databaseConnection.registerUser(userRegister);
                         break;
                     case "login":
                         if (authenticate((String) data.get("Token"))) {
@@ -122,6 +122,7 @@ public class ServerCommunication implements Runnable {
                             break;
                         }
                         Double idAddFavourite = (double) data.get("id");
+                        Main.databaseConnection.addFavouriteMovie((String) data.get("Username"), idAddFavourite.intValue());
                         break;
                     case "RemoveFavouriteMovie":
                         if (!authenticate((String) data.get("Token"))) {
@@ -212,7 +213,6 @@ public class ServerCommunication implements Runnable {
 
     private void sendSmtToClient(String json) {
         try {
-            System.out.println(json);
             outToClient.writeObject(json);
         } catch (IOException e) {
             e.printStackTrace();

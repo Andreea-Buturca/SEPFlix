@@ -45,7 +45,6 @@ CREATE TABLE public.favourite_movies (
     ON UPDATE NO ACTION,
   PRIMARY KEY (id_movie, user_name)
 );
---TODO cascade
 
 CREATE TABLE public.rate_movies (
   id_movie     INT            NOT NULL

@@ -19,13 +19,6 @@ public class Comment {
         this.username = username;
     }
 
-    public Comment(StringMap<Object> data) {
-        Double idDouble = (Double) data.get("id");
-        this.idMovie = idDouble.intValue();
-        this.username = (String) data.get("user_name");
-        this.comment = (String) data.get("comment");
-    }
-
     public Comment(ResultSet resultSet) {
         try {
             this.idMovie = resultSet.getInt("id_movie");
@@ -38,14 +31,6 @@ public class Comment {
 
     public String getComment() {
         return comment;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getidMovie() {
-        return idMovie;
     }
 
     public StringMap<Object> toStringMap() {

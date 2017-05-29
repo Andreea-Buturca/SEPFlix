@@ -22,9 +22,7 @@ public class TileController {
 
     private void movieInfo() throws IOException {
         Helper.addDataToRequest("Action", "MovieDetail");
-        System.out.println(idLabel.getText());
         Double id = Double.parseDouble(idLabel.getText());
-        System.out.println(id);
         Helper.addDataToRequest("id", id);
         Helper.sendRequest();
 

@@ -84,9 +84,11 @@ public class Movie {
     public ArrayList<Comment> getComments() {
         return this.comments;
     }
+
     public String getComment() {
         return this.comments.get(0).getComment();
     }
+
     public double getRatingImbd() {
         return ratingImbd;
     }

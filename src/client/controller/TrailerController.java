@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Marek on 24-May-17.
  */
-public class TrailerController implements Initializable{
+public class TrailerController implements Initializable {
 
 
     public WebView trailerView;

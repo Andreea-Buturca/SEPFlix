@@ -74,15 +74,15 @@ public class MovieTest {
             this.movieMap.put("id", null);
             this.movie = new Movie(movieMap);
             assertEquals(null, this.movie.getId());
-            }
-        catch (NullPointerException e){  }
+        } catch (NullPointerException e) {
+        }
         try {
             this.movieMap.put("id", "123");
             this.movie = new Movie(movieMap);
             assertEquals("123", this.movie.getId());
+        } catch (ClassCastException e) {
         }
-        catch (ClassCastException e){  }
-}
+    }
 
     @Test
     public void getTitle() throws Exception {
@@ -92,8 +92,8 @@ public class MovieTest {
             this.movieMap.put("title", null);
             this.movie = new Movie(movieMap);
             assertEquals(null, this.movie.getTitle());
+        } catch (NullPointerException e) {
         }
-        catch (NullPointerException e){  }
     }
 
     @Test
@@ -117,8 +117,8 @@ public class MovieTest {
             this.movieMap.put("genres", null);
             this.movie = new Movie(movieMap);
             assertEquals(null, this.movie.getGenres());
+        } catch (NullPointerException e) {
         }
-        catch (NullPointerException e){  }
     }
 
     @Test
@@ -148,12 +148,12 @@ public class MovieTest {
     public void getSQLReleaseYear() throws Exception {
         assertEquals(Date.valueOf("2017-03-16"), this.movie.getSQLReleaseYear());
         assertNotEquals("2017 - 03 - 16", this.movie.getSQLReleaseYear());
-        assertNotEquals(2017-03-16, this.movie.getSQLReleaseYear());
-        try{
-            this.movieMap.put("release_date", 2017-03-16);
+        assertNotEquals(2017 - 03 - 16, this.movie.getSQLReleaseYear());
+        try {
+            this.movieMap.put("release_date", 2017 - 03 - 16);
             this.movie = new Movie(movieMap);
-            assertEquals(2017-03-16, this.movie.getSQLReleaseYear());
+            assertEquals(2017 - 03 - 16, this.movie.getSQLReleaseYear());
+        } catch (ClassCastException e) {
         }
-        catch (ClassCastException e){}
     }
 }

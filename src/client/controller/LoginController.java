@@ -42,7 +42,6 @@ public class LoginController {
         try {
             wait(25000);
         } catch (InterruptedException e) {
-            System.out.println("interupting");
             interupted = true;
         }
         if (interupted) {

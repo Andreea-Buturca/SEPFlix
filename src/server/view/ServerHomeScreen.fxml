@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0"
-            prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="server.controller.Controller">
     <children>
         <Label fx:id="labelStartingServer" layoutX="24.0" layoutY="75.0" text="Server running:">
@@ -30,7 +30,7 @@
                 <Font size="30.0"/>
             </font>
         </Label>
-        <Label fx:id="labelNoClients" layoutX="141.0" layoutY="168.0" text="0">
+        <Label fx:id="labelNoClients" layoutX="179.0" layoutY="168.0" text="0">
             <font>
                 <Font size="30.0"/>
             </font>
@@ -40,6 +40,6 @@
                 <Font size="30.0"/>
             </font>
         </Label>
-        <ListView fx:id="listView" layoutX="24.0" layoutY="324.0" prefHeight="167.0" prefWidth="151.0"/>
+        <ListView fx:id="listView" layoutX="187.0" layoutY="275.0" prefHeight="167.0" prefWidth="143.0"/>
     </children>
 </AnchorPane>

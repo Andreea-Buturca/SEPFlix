@@ -81,7 +81,6 @@ public class FavouritesController implements Initializable {
         ObservableList<FavouriteMovie> movies = favouritesListView.getSelectionModel().getSelectedItems();
         Helper.addDataToRequest("Action", "MovieDetail");
         Double id = (Double) movies.get(0).getInfo().get("id");
-        System.out.println(id);
         Helper.addDataToRequest("id", id);
         Helper.sendRequest();
         BorderPane root = new BorderPane();

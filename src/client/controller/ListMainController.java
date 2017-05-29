@@ -76,7 +76,6 @@ public class ListMainController implements Initializable {
         }
         if (!searchField.getText().isEmpty()) {
             popularLabel.setText("Search result");
-            System.out.println(searchField.getText());
             Helper.addDataToRequest("Action", "SearchMovie");
             Helper.addDataToRequest("SearchField", searchField.getText());
             Helper.sendRequest();
