@@ -59,14 +59,26 @@ public class User {
 
     }
 
+    /**
+     * @return true if user has favorites
+     */
     public boolean hasFavourites() {
         return !favourites.isEmpty();
     }
 
+    /**
+     * Adds movie to users list of favorites
+     *
+     * @param movie movie to add to favorites
+     */
     public void addFavourite(StringMap<Object> movie) {
         favourites.add(movie);
     }
 
+    /**
+     * Removes movie from favorites
+     * @param id id of movie to be removed
+     */
     public void removeFavourite(Double id) {
         ArrayList<StringMap<Object>> toremove = new ArrayList<>();
         for (StringMap<Object> movie : favourites) {
@@ -78,6 +90,10 @@ public class User {
         favourites.removeAll(toremove);
     }
 
+    /**
+     *
+     * @return List of favorite movies
+     */
     public ArrayList<StringMap<Object>> getFavourites() {
         return favourites;
     }

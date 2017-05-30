@@ -201,7 +201,6 @@ public class MovieInfoController implements Initializable {
             Helper.sendRequest();
             String comment = Facade.getUsername(Main.loggedUser) + ": " + commentField.getText();
             comentList.getItems().add(comment);
-            // TODO: 27-May-17  refresh screen maybe?
         }
     }
 }

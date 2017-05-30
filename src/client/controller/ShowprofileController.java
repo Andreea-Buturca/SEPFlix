@@ -37,7 +37,6 @@ public class ShowprofileController implements Initializable {
             nameField.setText(Facade.getFirstName(Main.loggedUser));
             surnameField.setText(Facade.getLastName(Main.loggedUser));
             emailField.setText(Facade.getEmail(Main.loggedUser));
-            // TODO: 23.5.2017 Switch to Facade!
         }
 
     }
@@ -100,10 +99,10 @@ public class ShowprofileController implements Initializable {
 
     public void revert(ActionEvent actionEvent) {
         if (Main.loggedUser != null) {
-            usernameField.setText(Main.loggedUser.getUserName());
-            nameField.setText(Main.loggedUser.getFirstName());
-            surnameField.setText(Main.loggedUser.getLastName());
-            emailField.setText(Main.loggedUser.getEmail());
+            usernameField.setText(Facade.getUsername(Main.loggedUser));
+            nameField.setText(Facade.getFirstName(Main.loggedUser));
+            surnameField.setText(Facade.getLastName(Main.loggedUser));
+            emailField.setText(Facade.getEmail(Main.loggedUser));
         }
         nameField.setEditable(false);
         surnameField.setEditable(false);

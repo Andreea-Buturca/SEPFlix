@@ -23,6 +23,12 @@ public class Movie {
     private String overview;
     private ArrayList<Comment> comments = new ArrayList<>();
 
+
+    /**
+     * Constructor for a movie from StringMap
+     *
+     * @param data StringMap to create movie object from
+     */
     public Movie(StringMap<Object> data) {
         Double idDouble = (Double) data.get("id");
         this.id = idDouble.intValue();
@@ -42,6 +48,11 @@ public class Movie {
         }
     }
 
+    /**
+     * Constructor for movie from a resultset
+     *
+     * @param resultSet result set to create movie from
+     */
     public Movie(ResultSet resultSet) {
         try {
             this.id = resultSet.getInt("id_movie");
@@ -57,42 +68,82 @@ public class Movie {
         }
     }
 
+    /**
+     *
+     *
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     *
+     *
+     */
     public String getPoster() {
         return poster;
     }
 
+    /**
+     *
+     *
+     */
     public String getOverview() {
         return overview;
     }
 
+    /**
+     *
+     *
+     */
     public String getGenres() {
         return genres;
     }
 
+    /**
+     *
+     *
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     *
+     */
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
+    /**
+     *
+     *
+     */
     public ArrayList<Comment> getComments() {
         return this.comments;
     }
 
+    /**
+     *
+     *
+     */
     public String getComment() {
         return this.comments.get(0).getComment();
     }
 
+    /**
+     *
+     * @return rating from external server
+     */
     public double getRatingImbd() {
         return ratingImbd;
     }
 
+    /**
+     *
+     * @return movie converted to String map with following keys: id, poster_path, title, release_date, vote_average, genres, overview, vote_sepflix, comments
+     */
     public StringMap<Object> toStringMap() {
         ArrayList<StringMap<Object>> commentsMap = new ArrayList<>();
         StringMap<Object> movie = new StringMap<>();
@@ -113,11 +164,18 @@ public class Movie {
         return movie;
     }
 
-
+    /**
+     *
+     * @return movie object converted to string
+     */
     public String toString() {
         return this.poster + ", title: " + this.title + ", release year: " + this.releaseYear + ", genres: " + this.genres + ", rating Imbd: " + this.ratingImbd + ", rating Sep Flix: " + this.ratingSepFlix + ", overview: " + this.overview;
     }
 
+    /**
+     *
+     * @return Date object of release date
+     */
     public Date getSQLReleaseYear() {
         return Date.valueOf(this.releaseYear);
     }

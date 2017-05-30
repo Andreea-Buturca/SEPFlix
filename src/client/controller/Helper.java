@@ -16,48 +16,19 @@ import java.util.Map;
  */
 public class Helper {
 
-    protected static boolean validateEmptyField(TextField textField) {
-        return !textField.getText().isEmpty();
-
-    }
 
     /**
-     * Validates if textfied contains only numbers.
+     * Validates given textfield
+     * @return true if number in field is between 0-10 and has only one decimal place
      */
-
-    protected static boolean validateNumberField(TextField textField) {
-        return textField.getText().matches("[0-9]+");
-
-    }
-
-    /**
-     * Validates if textfied contain double number.
-     */
-
-    protected static boolean validateDoubleNumberField(TextField textField) {
-        return textField.getText().matches("[0-9]+.[0-9]+");
-
-    }
-
     protected static boolean validateRateNumber(TextField textField) {
         return textField.getText().matches("[1]?[0-9]?(\\.[0-9]?)?");
 
     }
 
     /**
-     * Validates if textfield text has given length.
+     * Validates if textfield contains valid email form.
      */
-
-    protected static boolean validateLength(TextField textField, int length) {
-        if (length < 1) length = length * (-1);
-        return textField.getText().length() == length;
-
-    }
-
-    /**
-     * Validates if email is valid.
-     */
-
     protected static boolean validateEmail(TextField textField) {
         return textField.getText().matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
 
@@ -95,6 +66,12 @@ public class Helper {
         alert.showAndWait();
     }
 
+    /**
+     * Hashes password with preset salt
+     *
+     * @param passwordToHash password to be hashed
+     * @return hashed version of password
+     */
     protected static String get_SHA_512_SecurePassword(String passwordToHash) {
         String salt = "myTopSecredSalt";
         String generatedPassword = null;
@@ -113,20 +90,30 @@ public class Helper {
         return generatedPassword;
     }
 
-    //todo find better spot for these 2 methods Marek
-
     private static Map<String, Object> data = new StringMap<>();
 
+    /**
+     * Adds data to StringMap request for server
+     *
+     * @param name name of action or item
+     * @param item value of item
+     */
     protected static void addDataToRequest(String name, Object item) {
         data.put(name, item);
     }
 
+    /**
+     * Converts request StringMap to json file and sends it to server
+     */
     protected static void sendRequest() {
         String json = new Gson().toJson(data);
         Main.clientConnection.sendSmtToServer(json);
         data.clear();
     }
 
+    /**
+     * Clears request StringMap
+     */
     public static void clearRequest() {
         data.clear();
     }
