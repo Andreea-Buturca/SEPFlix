@@ -15,13 +15,15 @@ public class SearchTrailerController {
     public TextField searchField;
     private String url;
     private Thread controllerThread;
+    private boolean play = false;
 
     public SearchTrailerController() {
-        Main.trailerSearchSearchTrailerController = this;
+        Main.trailerSearchTrailerController = this;
         controllerThread = Thread.currentThread();
     }
 
     public synchronized void Play(ActionEvent actionEvent) throws IOException {
+        this.play = true;
         if (searchField.getText().isEmpty()) {
             Helper.alertdisplay("Wrong input", "Field cannot be empty");
             return;
@@ -48,4 +50,9 @@ public class SearchTrailerController {
         controllerThread.interrupt();
     }
 
+    public void stopPlay() {
+        if (play) {
+            ytView.getEngine().load(null);
+        }
+    }
 }

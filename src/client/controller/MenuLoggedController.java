@@ -26,6 +26,9 @@ public class MenuLoggedController {
     public void changeViewMenu(ActionEvent actionEvent) throws IOException {
 
         BorderPane root = null;
+        if (Main.trailerSearchTrailerController != null) {
+            Main.trailerSearchTrailerController.stopPlay();
+        }
 
         if ((actionEvent.getSource() == homescreen)) {
             root = new BorderPane();

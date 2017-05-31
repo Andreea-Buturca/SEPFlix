@@ -60,7 +60,7 @@ public class ClientReceiver implements Runnable {
                         break;
                     case "GetTrailerSearched":
                         String url1 = (String) response.get("VideoURL");
-                        Main.trailerSearchSearchTrailerController.interupt(url1);
+                        Main.trailerSearchTrailerController.interupt(url1);
                         break;
                 }
             }

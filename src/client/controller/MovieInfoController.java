@@ -176,8 +176,13 @@ public class MovieInfoController implements Initializable {
         WebView webView = FXMLLoader.load(paneOneUrl);
         AnchorPane root = new AnchorPane(webView);
         Scene scene = new Scene(root);
+        secondaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../view/assets/icon.png")));
         secondaryStage.setScene(scene);
+        secondaryStage.setTitle(titleLabel.getText());
         secondaryStage.show();
+        secondaryStage.setOnCloseRequest(we -> {
+            webView.getEngine().load(null);
+        });
     }
 
     public void comment(ActionEvent actionEvent) throws IOException {
